@@ -26,7 +26,7 @@ namespace TodoList.Application.Features.User.Commands.Register
             return new UserDto
             {
                 BirthDate = addedUser.BirthDate,
-                Pseudo = addedUser.UserName,
+                Pseudo = addedUser.UserName!,
                 Lastname = addedUser.Lastname,
                 Firstname = addedUser.Firstname,
                 Id = addedUser.Id.ToString(),

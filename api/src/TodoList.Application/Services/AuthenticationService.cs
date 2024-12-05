@@ -46,7 +46,7 @@ public class AuthenticationService(IUserRepository userRepository, ITokenService
         return new UserDto
         {
             BirthDate = user.BirthDate,
-            Pseudo = user.UserName,
+            Pseudo = user.UserName!,
             Lastname = user.Lastname,
             Firstname = user.Firstname,
             Id = user.Id.ToString(),

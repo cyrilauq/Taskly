@@ -42,7 +42,7 @@ namespace TodoList.Application.Services
         private async Task<ClaimsIdentity> GenerateClaims(IUser user)
         {
             var claims = new ClaimsIdentity();
-            claims.AddClaim(new Claim(ClaimTypes.Name,  user.Email));
+            claims.AddClaim(new Claim(ClaimTypes.Name,  user.Email!));
             claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
             foreach (var role in await _roleRepository.Find(new RoleSearchArgs { UserName = user.UserName }))
             {

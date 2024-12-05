@@ -35,7 +35,9 @@ namespace TodoList.Application.Tests.Services
             {
                 BirthDate = DateOnly.FromDateTime(DateTime.Now),
                 Email = "test@test.com",
-                UserName = "test_user"
+                UserName = "test_user",
+                Firstname = "Test",
+                Lastname = "Test",
             };
 
             var key = Encoding.ASCII.GetBytes(_tokenOptions.Key);

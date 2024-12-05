@@ -10,8 +10,8 @@ namespace TodoList.Infrastructure.Tests.Repository
     [TestClass]
     public class UserRepositoryTests
     {
-        UserRepository _userRepository;
-        TodoListContext context;
+        private UserRepository _userRepository = null!;
+        private TodoListContext context = null!;
 
         [TestInitialize]
         public void SetUp()

@@ -41,7 +41,7 @@ namespace TodoList.Infrastructure.Tests.Utils
                 .Callback<TIDentityUser, string>((user, password) =>
                 {
                     var result = usersDbSetMock.Object.Add(user);
-                    dbContext.Users.Add(user as User);
+                    dbContext.Users.Add((user as User)!);
                     dbContext.SaveChanges();
                 });
 

@@ -5,14 +5,10 @@ using TodoList.Infrastructure.Entities;
 
 namespace TodoList.Infrastructure.Data
 {
-    public class TodoListContext : 
-        IdentityDbContext<User, Role, Guid, IdentityUserClaim<Guid>, UserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
+    public class TodoListContext(DbContextOptions<TodoListContext> options) : 
+        IdentityDbContext<User, Role, Guid, IdentityUserClaim<Guid>, UserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>(options)
     {
         public DbSet<Todo> Todos { get; set; }
-
-        public string DbPath { get; }
-
-        public TodoListContext(DbContextOptions<TodoListContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
