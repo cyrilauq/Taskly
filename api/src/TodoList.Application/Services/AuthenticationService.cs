@@ -1,7 +1,6 @@
 ﻿using TodoList.Application.DTOs;
 using TodoList.Application.IRepository;
 using TodoList.Application.IService;
-using TodoList.Domain.Entities;
 using TodoList.Application.Services.Exceptions;
 using TodoList.Domain.Entities.Interfaces;
 using TodoList.Application.Models;
@@ -14,7 +13,7 @@ public class AuthenticationService(IUserRepository userRepository, ITokenService
     {
         var loggedUser = await userRepository.FindUserByCredentials(loginDto.UserName, loginDto.Password);
         if (loggedUser == null) throw new ResourceNotFoundException("No user found for the given credentials");
-        return ToDto(loggedUser);
+        return await ToDto(loggedUser);
     }
 
     public async Task<UserDto> Register(RegisterDto registerDto)
@@ -34,7 +33,7 @@ public class AuthenticationService(IUserRepository userRepository, ITokenService
                 BirthDate = registerDto.BirthDate
             };
             var addedUser = await userRepository.Add(user, registerDto.Password);
-            return ToDto(addedUser);
+            return await ToDto(addedUser);
         }
         catch
         {
@@ -42,7 +41,7 @@ public class AuthenticationService(IUserRepository userRepository, ITokenService
         }
     }
 
-    private UserDto ToDto(IUser user)
+    private async Task<UserDto> ToDto(IUser user)
     {
         return new UserDto
         {
@@ -51,7 +50,7 @@ public class AuthenticationService(IUserRepository userRepository, ITokenService
             Lastname = user.Lastname,
             Firstname = user.Firstname,
             Id = user.Id.ToString(),
-            Token = tokenService.GenerateToken(user)
+            Token = await tokenService.GenerateToken(user)
         };
     }
 }
