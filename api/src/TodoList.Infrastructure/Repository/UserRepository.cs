@@ -13,6 +13,10 @@ namespace TodoList.Infrastructure.Repository
         {
             var user = ToEntity(entity);
             var addResult = await userManager.CreateAsync(user, password);
+            if(addResult.Succeeded)
+            {
+                await userManager.AddToRolesAsync(user, ["User"]);
+            }
             return addResult.Succeeded ? user : throw new Exception(addResult.Errors.ElementAt(0).Description);
         }
 

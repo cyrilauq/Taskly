@@ -6,6 +6,7 @@ using TodoList.Application.IRepository;
 using TodoList.Infrastructure.Repository;
 using TodoList.Infrastructure.Entities;
 using TodoList.Application.Args;
+using Microsoft.AspNetCore.Identity;
 
 namespace TodoList.Infrastructure
 {
@@ -16,7 +17,9 @@ namespace TodoList.Infrastructure
             services.AddDbContext<TodoListContext>(options => options.UseSqlite("Data Source=C:\\Users\\cyril\\AppData\\Local\\todolist.db"));
 
             services.AddIdentityCore<User>()
-               .AddEntityFrameworkStores<TodoListContext>();
+                .AddRoles<Role>()
+                .AddRoleManager<RoleManager<Role>>()
+                .AddEntityFrameworkStores<TodoListContext>();
 
             services.AddRepositories();
 

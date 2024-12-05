@@ -5,7 +5,8 @@ using TodoList.Infrastructure.Entities;
 
 namespace TodoList.Infrastructure.Data
 {
-    public class TodoListContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
+    public class TodoListContext : 
+        IdentityDbContext<User, Role, Guid, IdentityUserClaim<Guid>, UserRole, IdentityUserLogin<Guid>, IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
     {
         public DbSet<Todo> Todos { get; set; }
 
@@ -16,6 +17,17 @@ namespace TodoList.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Roles)
+                .WithOne(ur => ur.User)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
+            modelBuilder.Entity<Role>()
+                .HasMany(r => r.UserRoles)
+                .WithOne(ur => ur.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
 
             modelBuilder.Entity<Todo>()
                 .Property(p => p.Id)

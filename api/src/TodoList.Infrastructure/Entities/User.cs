@@ -13,5 +13,6 @@ namespace TodoList.Infrastructure.Entities
         public DateTime? DeletedOn { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
+        internal ICollection<UserRole> Roles { get; set; } = [];
     }
 }

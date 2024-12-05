@@ -9,12 +9,14 @@ using TodoList.Infrastructure.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
+
 // Add services to the container.
 
 builder.Services.AddTransient<ExceptionsMiddleware>();
 
 builder.Services.AddPersistenceServices();
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(configuration);
 
 builder.Services.AddJwtAuthorization();
 
@@ -51,9 +53,12 @@ try
 {
     var context = services.GetRequiredService<TodoListContext>();
     var userManager = services.GetRequiredService<UserManager<User>>();
+    var roleManager = services.GetRequiredService<RoleManager<Role>>();
     await context.Database.MigrateAsync();
     if(!userManager.Users.Any())
     {
+        await roleManager.CreateAsync(new Role { Name = "User" });
+        await roleManager.CreateAsync(new Role {  Name = "Admin" });
         var admin = new User
         {
             BirthDate = DateOnly.FromDateTime(DateTime.MinValue),
@@ -63,6 +68,7 @@ try
             UserName = "admin"
         };
         await userManager.CreateAsync(admin, "Pa$$w0rd");
+        await userManager.AddToRolesAsync(admin, ["User", "Admin"]);
         await context.Todos.AddAsync(new Todo 
         {
             Name = "Test",
