@@ -1,6 +1,6 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System.Reflection;
 using TodoList.Application.IService;
 using TodoList.Application.Services;
@@ -9,20 +9,21 @@ namespace TodoList.Application
 {
     public static class ConfigureServices
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<ITokenService, TokenService>()
                 .AddScoped<IAuthenticationService, AuthenticationService>()
-                .AddServiceOptions();
+                .AddServiceOptions(configuration);
+            services.AddHttpContextAccessor();
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             return services;
         }
 
-        public static IServiceCollection AddServiceOptions(this IServiceCollection services)
+        public static IServiceCollection AddServiceOptions(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton(Options.Create(new TokenOptions("3747D5F6-6420-4C9F-B140-39A54E77C3343747D5F6-6420-4C9F-B140-39A54E77C3343747D5F6-6420-4C9F-B140-39A54E77C334")));
+            services.AddOptions<TokenOptions>().BindConfiguration(TokenOptions.TokenOptionsKey);
 
             return services;
         }
