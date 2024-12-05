@@ -18,12 +18,21 @@ namespace TodoList.Application
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
+            services.AddMappers();
+
             return services;
         }
 
         public static IServiceCollection AddServiceOptions(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddOptions<TokenOptions>().BindConfiguration(TokenOptions.TokenOptionsKey);
+
+            return services;
+        }
+
+        private static IServiceCollection AddMappers(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(ConfigureServices).Assembly);
 
             return services;
         }

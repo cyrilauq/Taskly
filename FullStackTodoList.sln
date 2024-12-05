@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Infrastructure.Tests", "api\tests\TodoList.Infrastructure.Tests\TodoList.Infrastructure.Tests.csproj", "{0259095E-3741-4005-AC84-47F89AA28158}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoList.Application.Tests", "api\tests\TodoList.Application.Tests\TodoList.Application.Tests.csproj", "{872A1A6F-B62E-46A6-B3CE-F055C42A33AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Application.Tests", "api\tests\TodoList.Application.Tests\TodoList.Application.Tests.csproj", "{872A1A6F-B62E-46A6-B3CE-F055C42A33AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
