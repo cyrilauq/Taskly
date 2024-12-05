@@ -29,6 +29,7 @@ namespace TodoList.Infrastructure
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<ICRUDRepository<Domain.Entities.Todo, TodoSearchArg>, TodoRepository>();
 
             return services;
