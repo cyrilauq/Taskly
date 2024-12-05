@@ -64,5 +64,3 @@ namespace TodoList.Application.Services
         public int? ValidityInHours { get; set; } = null;
     }
 }
-
-public record TokenOptions(string Key);
