@@ -52,6 +52,17 @@ namespace TodoList.Application.Services
             throw new NotImplementedException();
         }
     }
+
+    public class TokenOptions
+    {
+        public const string TokenOptionsKey = "TokenOptionsConfiguration";
+
+        public string Key { get; set; } = null!;
+        public string? Issuer { get; set; } = null;
+        public string? Audience { get; set; } = null;
+        public int? ValidatyInDays { get; set; } = null;
+        public int? ValidityInHours { get; set; } = null;
+    }
 }
 
 public record TokenOptions(string Key);
