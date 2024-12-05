@@ -19,7 +19,7 @@ namespace TodoList.Application.Features.User.Queries.Login
                 Lastname = loggedUser.Lastname,
                 Firstname = loggedUser.Firstname,
                 Id = loggedUser.Id.ToString(),
-                Token = tokenService.GenerateToken(loggedUser)
+                Token = await tokenService.GenerateToken(loggedUser)
             };
         }
     }

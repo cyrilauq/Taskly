@@ -3,8 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using TodoList.Application.IRepository;
 using TodoList.Application.IService;
-using TodoList.Domain.Entities;
 using TodoList.Domain.Entities.Interfaces;
 
 namespace TodoList.Application.Services
@@ -12,13 +12,15 @@ namespace TodoList.Application.Services
     public class TokenService : ITokenService
     {
         private TokenOptions _tokenOptions = null!;
+        private IRoleRepository _roleRepository;
 
-        public TokenService(IOptions<TokenOptions> tokenOptions) 
+        public TokenService(IOptions<TokenOptions> tokenOptions, IRoleRepository roleRepository) 
         {
             _tokenOptions = tokenOptions.Value;
+            _roleRepository = roleRepository;
         }
 
-        public string GenerateToken(IUser user)
+        public async Task<string> GenerateToken(IUser user)
         {
             var handler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_tokenOptions.Key);
@@ -28,7 +30,7 @@ namespace TodoList.Application.Services
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = GenerateClaims(user),
+                Subject = await GenerateClaims(user),
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = credentials,
             };
@@ -37,12 +39,15 @@ namespace TodoList.Application.Services
             return handler.WriteToken(token);
         }
 
-        private static ClaimsIdentity GenerateClaims(IUser user)
+        private async Task<ClaimsIdentity> GenerateClaims(IUser user)
         {
             var claims = new ClaimsIdentity();
             claims.AddClaim(new Claim(ClaimTypes.Name,  user.Email));
             claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-            claims.AddClaim(new Claim(ClaimTypes.Role, "User"));
+            foreach (var role in await _roleRepository.Find(new RoleSearchArgs { UserName = user.UserName }))
+            {
+                claims.AddClaim(new Claim(ClaimTypes.Role, role));
+            }
 
             return claims;
         }

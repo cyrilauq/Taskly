@@ -5,7 +5,7 @@ namespace TodoList.Application.IService
 {
     public interface ITokenService
     {
-        string GenerateToken(IUser user);
+        Task<string> GenerateToken(IUser user);
         bool ValidateToken(string token);
     }
 }

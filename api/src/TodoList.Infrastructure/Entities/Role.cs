@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using TodoList.Domain.Entities.Interfaces;
 
 namespace TodoList.Infrastructure.Entities
 {

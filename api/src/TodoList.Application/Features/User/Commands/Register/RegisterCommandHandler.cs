@@ -30,7 +30,7 @@ namespace TodoList.Application.Features.User.Commands.Register
                 Lastname = addedUser.Lastname,
                 Firstname = addedUser.Firstname,
                 Id = addedUser.Id.ToString(),
-                Token = tokenService.GenerateToken(addedUser)
+                Token = await tokenService.GenerateToken(addedUser)
             };
         }
     }
