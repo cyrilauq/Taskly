@@ -10,7 +10,7 @@ public class TodoRepository(TodoListContext context) : ITodoRepository
 {
     public async Task<ITodo> AddAsync(ITodo entity)
     {
-        var result = (await context.Todos.AddAsync(entity as Entities.Todo)).Entity;
+        var result = (await context.Todos.AddAsync(new Entities.Todo { Name = entity.Name, Content = entity.Content, UserId = entity.UserId })).Entity;
         await context.SaveChangesAsync();
         return result;
     }
