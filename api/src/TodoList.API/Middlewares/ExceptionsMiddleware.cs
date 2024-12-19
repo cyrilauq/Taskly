@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TodoList.Application.Services.Exceptions;
+using UnauthorizedAccessException = TodoList.Application.Services.Exceptions.UnauthorizedAccessException;
 
 namespace TodoList.API.Middlewares
 {
@@ -40,6 +41,10 @@ namespace TodoList.API.Middlewares
                 return Tuple.Create((int)StatusCodes.Status409Conflict, "Conflict", $"The resource already exists");
             }
             if (exceptionType == typeof(ResourceNotFoundException))
+            {
+                return Tuple.Create((int)StatusCodes.Status404NotFound, "Not Found", $"The resource doesn't exists");
+            }
+            if (exceptionType == typeof(UnauthorizedAccessException))
             {
                 return Tuple.Create((int)StatusCodes.Status404NotFound, "Not Found", $"The resource doesn't exists");
             }
