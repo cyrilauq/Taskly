@@ -6,7 +6,7 @@ using TodoList.Domain.Entities.Interfaces;
 
 namespace TodoList.Infrastructure.Repository;
 
-public class TodoRepository(TodoListContext context) : ICRUDRepository<ITodo, TodoSearchArg>
+public class TodoRepository(TodoListContext context) : ITodoRepository
 {
     public async Task<ITodo> AddAsync(ITodo entity)
     {

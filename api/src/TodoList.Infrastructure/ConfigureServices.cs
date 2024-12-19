@@ -30,7 +30,7 @@ namespace TodoList.Infrastructure
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<ICRUDRepository<ITodo, TodoSearchArg>, TodoRepository>();
+            services.AddScoped<ITodoRepository, TodoRepository>();
 
             return services;
         }
