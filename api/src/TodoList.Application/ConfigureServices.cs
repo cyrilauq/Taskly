@@ -15,6 +15,7 @@ namespace TodoList.Application
                 .AddScoped<IAuthenticationService, AuthenticationService>()
                 .AddServiceOptions(configuration);
             services.AddHttpContextAccessor();
+            services.AddScoped<IUserContext, UserContext>();
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
