@@ -4,10 +4,11 @@ using TodoList.Application.Args;
 using TodoList.Application.DTOs;
 using TodoList.Application.Extensions;
 using TodoList.Application.IRepository;
+using TodoList.Domain.Entities.Interfaces;
 
 namespace TodoList.Application.Features.Todo.Queries.List
 {
-    public class ListTodosQueryHandler(ICRUDRepository<Domain.Entities.Todo, TodoSearchArg> todoRepository, IHttpContextAccessor httpContextAccessor) : IRequestHandler<ListTodosQuery, List<TodoDTO>>
+    public class ListTodosQueryHandler(ICRUDRepository<ITodo, TodoSearchArg> todoRepository, IHttpContextAccessor httpContextAccessor) : IRequestHandler<ListTodosQuery, List<TodoDTO>>
     {
         public async Task<List<TodoDTO>> Handle(ListTodosQuery request, CancellationToken cancellationToken)
         {

@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using TodoList.Domain.Entities;
 using TodoList.Infrastructure.Data;
 using TodoList.Application.IRepository;
 using TodoList.Infrastructure.Repository;
 using TodoList.Infrastructure.Entities;
 using TodoList.Application.Args;
 using Microsoft.AspNetCore.Identity;
+using TodoList.Domain.Entities.Interfaces;
 
 namespace TodoList.Infrastructure
 {
@@ -30,7 +30,7 @@ namespace TodoList.Infrastructure
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<ICRUDRepository<Domain.Entities.Todo, TodoSearchArg>, TodoRepository>();
+            services.AddScoped<ICRUDRepository<ITodo, TodoSearchArg>, TodoRepository>();
 
             return services;
         }

@@ -2,12 +2,13 @@
 using TodoList.Application.DTOs;
 using TodoList.Application.IRepository;
 using TodoList.Application.IService;
-using TodoList.Domain.Entities;
+using TodoList.Application.Models;
 using TodoList.Application.Services.Exceptions;
+using TodoList.Domain.Entities.Interfaces;
 
 namespace TodoList.Application.Services
 {
-    public class TodoService(ICRUDRepository<Todo, TodoSearchArg> todoRepository) : ITodoService
+    public class TodoService(ICRUDRepository<ITodo, TodoSearchArg> todoRepository) : ITodoService
     {
         public Task<bool> Delete(string Id, TodoDTO todo)
         {
@@ -33,7 +34,7 @@ namespace TodoList.Application.Services
             return ToDTO(await todoRepository.UpdateAsync(todoDTO.Id!, ToEntity(todoDTO)));
         }
 
-        private TodoDTO ToDTO(Todo todo)
+        private TodoDTO ToDTO(ITodo todo)
         {
             // TODO
             throw new NotImplementedException();
@@ -46,10 +47,10 @@ namespace TodoList.Application.Services
             return errors.ToArray();
         }
 
-        private Todo ToEntity(TodoDTO todoDTO)
+        private ITodo ToEntity(TodoDTO todoDTO)
         {
             var now = DateTime.UtcNow;
-            return new()
+            return new Todo()
             {
                 IsDone = todoDTO.IsDone,
                 Id = Guid.Parse(todoDTO.Id!),

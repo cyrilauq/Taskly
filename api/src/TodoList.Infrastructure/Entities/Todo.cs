@@ -1,10 +1,19 @@
-﻿using TodoList.Domain.Entities;
+﻿using TodoList.Domain.Entities.Interfaces;
 
 namespace TodoList.Infrastructure.Entities
 {
-    public class Todo : Domain.Entities.Todo
+    public class Todo : ITodo
     {
+        public required string Name { get; set; }
+        public string? Content { get; set; }
+        public bool IsDone { get; set; }
+        public Guid Id { get; set; }
+        public DateTime? DeletedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
+
         // Navigation properties
+        public Guid UserId { get; set; }
         public User User { get; set; } = null!;
     }
 }

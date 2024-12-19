@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Todo\Commands\" />
+    <Folder Include="Features\User\Commands\NewTodo\" />
   </ItemGroup>
 	
   <ItemGroup>

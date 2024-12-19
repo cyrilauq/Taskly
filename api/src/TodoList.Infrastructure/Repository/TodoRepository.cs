@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TodoList.Domain.Entities;
 using TodoList.Application.Args;
 using TodoList.Application.IRepository;
 using TodoList.Infrastructure.Data;
+using TodoList.Domain.Entities.Interfaces;
 
 namespace TodoList.Infrastructure.Repository;
 
-public class TodoRepository(TodoListContext context) : ICRUDRepository<Todo, TodoSearchArg>
+public class TodoRepository(TodoListContext context) : ICRUDRepository<ITodo, TodoSearchArg>
 {
-    public async Task<Todo> AddAsync(Todo entity)
+    public async Task<ITodo> AddAsync(ITodo entity)
     {
         var result = (await context.Todos.AddAsync(entity as Entities.Todo)).Entity;
         await context.SaveChangesAsync();
@@ -20,7 +20,7 @@ public class TodoRepository(TodoListContext context) : ICRUDRepository<Todo, Tod
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<Todo>> GetAllAsync(TodoSearchArg searchArgs)
+    public async Task<IEnumerable<ITodo>> GetAllAsync(TodoSearchArg searchArgs)
     {
         var query = context.Todos.AsQueryable();
 
@@ -32,12 +32,12 @@ public class TodoRepository(TodoListContext context) : ICRUDRepository<Todo, Tod
         return await query.ToListAsync();
     }
 
-    public async Task<Todo> UpdateAsync(string id, Todo entity)
+    public async Task<ITodo> UpdateAsync(string id, ITodo entity)
     {
         if (!await UserExists(entity.UserId)) throw new InvalidOperationException("The entity isn't related to an existing user");
         if (await context.Todos.FindAsync(Guid.Parse(id)) is null || !entity.Id.Equals(Guid.Parse(id))) throw new InvalidOperationException("No entity related to the given id");
         entity.UpdatedOn = DateTime.Now;
-        context.Todos.Update(entity as Infrastructure.Entities.Todo);
+        context.Todos.Update(entity as Entities.Todo);
         await context.SaveChangesAsync();
         return entity;
     }

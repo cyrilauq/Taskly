@@ -1,6 +1,8 @@
-﻿namespace TodoList.Domain.Entities
+﻿using TodoList.Domain.Entities.Interfaces;
+
+namespace TodoList.Application.Models
 {
-    public class Todo : IBaseEntity<Guid>
+    public class Todo : ITodo
     {
         public required string Name { get; set; }
         public string? Content { get; set; }
@@ -10,8 +12,6 @@
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
 
-        // Navigation properties
         public Guid UserId { get; set; }
-        //public User User { get; set; } = null!;
     }
 }
