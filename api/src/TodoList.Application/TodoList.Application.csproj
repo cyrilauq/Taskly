@@ -16,11 +16,6 @@
   <ItemGroup>
     <ProjectReference Include="..\TodoList.Domain\TodoList.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Todo\Commands\" />
-    <Folder Include="Features\User\Commands\NewTodo\" />
-  </ItemGroup>
 	
   <ItemGroup>
 	  <FrameworkReference Include="Microsoft.AspNetCore.App" />
