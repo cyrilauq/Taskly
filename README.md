@@ -1,5 +1,7 @@
 # About the project
 
+Project named "Taskly" for todo list management.
+
 This project will contains three app to manage a user todos:
 - an api in ASP.NET
 - a web client using .NET Blazor WASM
