@@ -2,22 +2,21 @@
 
 <h3>Login</h3>
 
-<form class="w-50">
+<EditForm class="w-50" EditContext="EditContext" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
     <div class="form-group row">
         <label for="login" class="col-sm-2 col-form-label">Login</label>
         <div class="col-sm-4">
-            <input type="text" class="form-control-plaintext" id="login" placeholder="Pseudo or Email">
+            <InputText @bind-Value="LoginModel.Login" placeholder="Pseudo or Email" id="login" />
         </div>
+        <ValidationMessage For="() => LoginModel.Login" />
     </div>
     <div class="form-group row">
         <label for="password" class="col-sm-2 col-form-label">Password</label>
         <div class="col-sm-4">
-            <input type="password" class="form-control-plaintext" id="password" value="Password">
+            <InputText @bind-Value="LoginModel.Password" id="password" />
+            <ValidationMessage For="() => LoginModel.Password" />
         </div>
     </div>
     <button class="btn btn-outline-primary py-1 rounded-3" type="submit">Login</button>
-</form>
-
-@code {
-
-}
+</EditForm>
