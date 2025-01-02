@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Json;
-using TodoList.Web.Application.Services.Interfaces;
+using Taskly.Web.Application.Services.Interfaces;
 
-namespace TodoList.Web.Application.Services
+namespace Taskly.Web.Application.Services
 {
     internal class AuthenticationService(HttpClient httpClient) : IAuthenticationService
     {

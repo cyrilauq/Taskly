@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TodoList.Web.Application.Services;
-using TodoList.Web.Application.Services.Interfaces;
+using Taskly.Web.Application.Services;
+using Taskly.Web.Application.Services.Interfaces;
 
-namespace TodoList.Web.Application
+namespace Taskly.Web.Application
 {
     public static class ConfigureService
     {

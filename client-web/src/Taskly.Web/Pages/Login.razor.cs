@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System.Diagnostics;
-using TodoList.Web.Application.Services.Interfaces;
-using TodoList.Web.Model;
+using Taskly.Web.Application.Services.Interfaces;
+using Taskly.Web.Model;
 
-namespace TodoList.Web.Pages
+namespace Taskly.Web.Pages
 {
     public partial class Login
     {
