@@ -17,9 +17,9 @@ namespace TodoList.API.Middlewares
                 var traceId = Guid.NewGuid();
                 logger.LogError($"Error occure while processing the request, TraceId : ${traceId}, Message : ${ex.Message}, StackTrace: ${ex.StackTrace}");
 
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-
                 var httpError = GetHttpErrorFromException(ex, traceId);
+
+                context.Response.StatusCode = httpError.Item1;
 
                 var problemDetails = new ProblemDetails
                 {
