@@ -2,6 +2,15 @@
 
 <h3>Login</h3>
 
+<p>User is @(AuthState.IsAuthenticated ? "Authenticated" : "Anonymous")</p>
+
+@if(HasError)
+{
+    <div>
+        <p>@(Error)</p>
+    </div>
+}
+
 <EditForm class="w-50" EditContext="EditContext" OnValidSubmit="OnSubmit">
     <DataAnnotationsValidator />
     <div class="form-group row">

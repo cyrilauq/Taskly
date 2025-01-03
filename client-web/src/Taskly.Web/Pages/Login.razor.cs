@@ -1,18 +1,28 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
-using System.Diagnostics;
 using Taskly.Web.Application.Services.Interfaces;
+using Taskly.Web.Application.State.Interfaces;
+using Taskly.Web.Exceptions;
 using Taskly.Web.Model;
 
 namespace Taskly.Web.Pages
 {
-    public partial class Login
+    public partial class Login : ComponentBase
     {
         [Inject]
-        public IAuthenticationService AuthenticationService { get; set; }
+        public required IAuthenticationService AuthenticationService { get; set; }
+        [Inject]
+        public required IAuthState AuthState { get; set; }
+        [Inject]
+        public required NavigationManager NavigationManager { get; set; }
+        [Inject]
+        private AuthenticationStateProvider AuthStateProvider { get; set; }
 
         public LoginModel LoginModel { get; set; } = new LoginModel();
-        public EditContext EditContext { get; set; }
+        public required EditContext EditContext { get; set; }
+        public bool HasError { get => Error != null; }
+        public string? Error = null;
 
         protected override void OnInitialized()
         {
@@ -23,10 +33,30 @@ namespace Taskly.Web.Pages
 
         public async Task OnSubmit()
         {
-            if (await AuthenticationService.LoginWithCredentials(LoginModel.Login, LoginModel.Password))
+            ResetError();
+            try 
             {
-                Debug.WriteLine("Successfully logged in");
+                if (await AuthenticationService.LoginWithCredentials(LoginModel.Login, LoginModel.Password))
+                {
+                    // If not done, then state isn't aware of its changes
+                    await AuthStateProvider.GetAuthenticationStateAsync();
+                    NavigationManager.NavigateTo("/dashboard");
+                }
             }
+            catch(NotFoundException)
+            {
+                SetError("No user found for the given credentials");
+            }
+        }
+
+        private void ResetError()
+        {
+            Error = null;
+        }
+
+        private void SetError(string error)
+        {
+            Error = error;
         }
     }
 }
