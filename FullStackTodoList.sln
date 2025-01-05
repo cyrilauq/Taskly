@@ -40,6 +40,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskly.Web.Application", "c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskly.Web.Exceptions", "client-web\src\Taskly.Web.Exceptions\Taskly.Web.Exceptions.csproj", "{C8DE6E1D-479B-49AA-91A1-C54F971BF84E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taskly.Web.Application.Tests", "client-web\tests\Taskly.Web.Application\Taskly.Web.Application.Tests.csproj", "{42D26DAD-CC40-4BE6-894F-8603C67E561A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{C8DE6E1D-479B-49AA-91A1-C54F971BF84E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8DE6E1D-479B-49AA-91A1-C54F971BF84E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8DE6E1D-479B-49AA-91A1-C54F971BF84E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42D26DAD-CC40-4BE6-894F-8603C67E561A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42D26DAD-CC40-4BE6-894F-8603C67E561A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42D26DAD-CC40-4BE6-894F-8603C67E561A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42D26DAD-CC40-4BE6-894F-8603C67E561A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +106,7 @@ Global
 		{2DCD2F50-D39C-49F0-B0DD-8FE118D786E6} = {EF0FCAC5-9F42-4404-B885-BF976AF603AF}
 		{8751DE18-E800-4105-AE05-1F0969184BDB} = {EF0FCAC5-9F42-4404-B885-BF976AF603AF}
 		{C8DE6E1D-479B-49AA-91A1-C54F971BF84E} = {EF0FCAC5-9F42-4404-B885-BF976AF603AF}
+		{42D26DAD-CC40-4BE6-894F-8603C67E561A} = {CFEDAE14-69A2-4138-9D97-8CDEF846707F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E95BF28C-269C-42E5-9E71-31343239433B}
