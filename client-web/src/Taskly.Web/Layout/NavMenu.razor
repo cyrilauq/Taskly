@@ -1,6 +1,8 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="d-flex">
-        <a class="navbar-brand" href="">Taskly</a>
+    <div class="d-flex align-items-center">
+        <a class="navbar-brand" href="/">
+            <img src="/icons/taskly-icon.PNG" alt="Logo of Taskly" width="50" height="50" />
+        </a>
         <nav class="flex-column">
             <div class="nav-item p-0">
                 <NavLink class="nav-link text-dark bg-transparent" href="" Match="NavLinkMatch.All">
@@ -8,5 +10,11 @@
                 </NavLink>
             </div>
         </nav>
+    </div>
+    <div>
+        @if(UserIsAuthenticated)
+        {
+            <p>Hello <strong>@(UserName)</strong></p>
+        }
     </div>
 </div>
