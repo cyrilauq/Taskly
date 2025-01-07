@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Taskly.Web.Model
+namespace Taskly.Web.Application.Model
 {
     public class LoginModel
     {

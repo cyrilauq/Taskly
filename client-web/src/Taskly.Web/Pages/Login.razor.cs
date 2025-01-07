@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Taskly.Web.Application.Services.Interfaces;
 using Taskly.Web.Application.State.Interfaces;
 using Taskly.Web.Exceptions;
-using Taskly.Web.Model;
+using Taskly.Web.Application.Model;
 
 namespace Taskly.Web.Pages
 {
