@@ -7,6 +7,12 @@
     OnValidSubmit="OnSubmit"
     class="d-flex flex-column col-5 align-items-center"
 >
+    @if(ErrorMessage != null)
+    {
+        <div class="text-danger col-12 border-danger">
+            @(ErrorMessage)
+        </div>
+    }
     <DataAnnotationsValidator />
     <div class="form-group row col-10">
         <label class="d-flex flex-wrap justify-content-between">
