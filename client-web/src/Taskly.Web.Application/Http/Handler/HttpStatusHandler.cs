@@ -14,8 +14,12 @@ namespace Taskly.Web.Application.Http.Handler
             {
                 case HttpStatusCode.NotFound:
                     throw new NotFoundException("Resource not found");
+                case HttpStatusCode.BadRequest:
+                    throw new ValidationException("One or more field aren't valid");
                 case HttpStatusCode.InternalServerError:
                     throw new InternalServerErrorException("An error occured in the server");
+                case HttpStatusCode.Conflict:
+                    throw new ResourceAlreadyExists("The given resource already exists");
                 default:
                     throw new UnExpectedHttpException("");
             }

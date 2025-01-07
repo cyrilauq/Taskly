@@ -20,7 +20,7 @@ namespace Taskly.Web.Application.Services
 
         public async Task<bool> RegisterUser(RegisterModel registerModel)
         {
-            //using var response = await httpClient.PostAsJsonAsync("api/account/register", new {});
+            using var response = await httpClient.PostAsJsonAsync("api/account/register", registerModel);
 
             authState.UserName = registerModel.Email;
             authState.UserId = Guid.NewGuid();
