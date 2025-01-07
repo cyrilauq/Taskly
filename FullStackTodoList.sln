@@ -40,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskly.Web.Application", "c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskly.Web.Exceptions", "client-web\src\Taskly.Web.Exceptions\Taskly.Web.Exceptions.csproj", "{C8DE6E1D-479B-49AA-91A1-C54F971BF84E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taskly.Web.Application.Tests", "client-web\tests\Taskly.Web.Application\Taskly.Web.Application.Tests.csproj", "{42D26DAD-CC40-4BE6-894F-8603C67E561A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Taskly.Web.Application.Tests", "client-web\tests\Taskly.Web.Application\Taskly.Web.Application.Tests.csproj", "{42D26DAD-CC40-4BE6-894F-8603C67E561A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
