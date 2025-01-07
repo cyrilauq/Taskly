@@ -4,9 +4,28 @@ using Taskly.Web.Application.State.Interfaces;
 
 namespace Taskly.Web.Provider
 {
-    internal class AuthStateProvider(IAuthState authState) : AuthenticationStateProvider
+    internal class AuthStateProvider : AuthenticationStateProvider
     {
+        private IAuthState authState;
+
+        public AuthStateProvider(IAuthState authState)
+        {
+            this.authState = authState;
+
+            authState.OnStateChange += () => SetState();
+        }
+
         public override Task<AuthenticationState> GetAuthenticationStateAsync()
+        {
+            return Task.FromResult(SetState());
+        }
+
+        private IEnumerable<Claim> GetClaims()
+        {
+            return [new Claim(ClaimTypes.Name, authState.UserName)];
+        }
+
+        private AuthenticationState SetState()
         {
             var identity = new ClaimsIdentity();
 
@@ -21,12 +40,7 @@ namespace Taskly.Web.Provider
             // If not done, then state isn't aware of its changes
             NotifyAuthenticationStateChanged(Task.FromResult(state));
 
-            return Task.FromResult(state);
-        }
-
-        private IEnumerable<Claim> GetClaims()
-        {
-            return [new Claim(ClaimTypes.Name, authState.UserName)];
+            return state;
         }
     }
 }
