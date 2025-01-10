@@ -9,6 +9,8 @@ namespace Taskly.Web.Pages
     {
         [Inject]
         IAuthenticationService AuthenticationService { get; set; }
+        [Inject]
+        public required NavigationManager NavigationManager { get; set; }
 
         RegisterModel FormModel = new();
         public string? ErrorMessage;
