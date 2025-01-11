@@ -11,6 +11,7 @@ namespace TodoList.Application.Mappers
             CreateMap<UserDto, IUser>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)))
                 .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(opt => opt.BirthDate))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(opt => opt.Pseudo))
                 .ReverseMap();
         }
     }
