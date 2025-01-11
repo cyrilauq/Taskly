@@ -29,6 +29,7 @@ namespace Taskly.Web.Pages
             {
                 await TodoService.CreateAsync(Todo);
                 TodoCount++;
+                Todo = new TodoModel();
             }
             catch (Exception ex)
             {
