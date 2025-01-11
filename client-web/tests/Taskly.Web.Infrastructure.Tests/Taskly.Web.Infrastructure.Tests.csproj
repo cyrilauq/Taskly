@@ -20,4 +20,12 @@
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utils\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Taskly.Web.Infrastructure\Taskly.Web.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
