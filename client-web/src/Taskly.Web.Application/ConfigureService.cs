@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 using Taskly.Web.Application.Http.Handler;
+using Taskly.Web.Application.Mappers;
 using Taskly.Web.Application.Services;
 using Taskly.Web.Application.Services.Interfaces;
 using Taskly.Web.Application.State;
@@ -22,6 +24,8 @@ namespace Taskly.Web.Application
 
             services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("TasklyHttpClient"));
 
+            services.AddMapper();
+
             return services;
         }
 
@@ -35,6 +39,13 @@ namespace Taskly.Web.Application
         private static IServiceCollection AddApplicationStates(this IServiceCollection services)
         {
             services.AddSingleton<IAuthState, AuthState>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }
