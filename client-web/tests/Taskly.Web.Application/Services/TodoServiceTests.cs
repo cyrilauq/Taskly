@@ -38,7 +38,16 @@ namespace Taskly.Web.Application.Tests.Services
                 .ReturnsAsync(new TodoDTO(resultId.ToString(), "", "", Guid.NewGuid(), false, null, null));
 
             // Act
-            TodoModel result = await service.CreateAsync(new TodoModel("", "", "", Guid.NewGuid(), false, null, null));
+            TodoModel result = await service.CreateAsync(new TodoModel
+            {
+                Content = "",
+                CreatedOn = null,
+                DeletedOn = null,
+                Id = resultId.ToString(),
+                IsDone = false,
+                Name = "",
+                UserId = Guid.NewGuid()
+            });
 
             // Assert
             Assert.AreEqual(resultId.ToString(), result.Id);
