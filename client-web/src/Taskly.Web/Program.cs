@@ -4,6 +4,7 @@ using Taskly.Web.Application;
 using Taskly.Web;
 using Microsoft.AspNetCore.Components.Authorization;
 using Taskly.Web.Provider;
+using Taskly.Web.Infrastructure;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -12,7 +13,8 @@ IConfiguration configuration = builder.Configuration;
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.ConfigureApplicationServices(configuration);
+builder.Services.ConfigureApplicationServices(configuration)
+    .AddApplicationInfrastructure();
 
 builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();
