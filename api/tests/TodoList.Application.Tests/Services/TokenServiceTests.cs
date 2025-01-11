@@ -4,8 +4,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using TodoList.Application.Services;
 using TodoList.Application.Models;
-using TodoList.Application.IRepository;
 using Moq;
+using TodoList.Domain.IRepository;
 
 namespace TodoList.Application.Tests.Services
 {

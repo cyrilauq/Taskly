@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using TodoList.Application.Args;
-using TodoList.Application.IRepository;
 using TodoList.Infrastructure.Data;
 using TodoList.Domain.Entities.Interfaces;
 using TodoList.Infrastructure.Entities;
+using TodoList.Domain.IRepository;
+using TodoList.Domain.Args;
 
 namespace TodoList.Infrastructure.Repository
 {

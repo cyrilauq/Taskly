@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
-using TodoList.Application.Args;
 using TodoList.Application.DTOs;
 using TodoList.Application.Extensions;
-using TodoList.Application.IRepository;
+using TodoList.Domain.Args;
+using TodoList.Domain.IRepository;
 
 namespace TodoList.Application.Features.Todo.Queries.List
 {

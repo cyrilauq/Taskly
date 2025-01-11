@@ -1,10 +1,10 @@
-﻿using TodoList.Application.Args;
-using TodoList.Application.DTOs;
-using TodoList.Application.IRepository;
-using TodoList.Application.IService;
+﻿using TodoList.Application.DTOs;
 using TodoList.Application.Models;
 using TodoList.Application.Services.Exceptions;
+using TodoList.Application.Services.Interfaces;
+using TodoList.Domain.Args;
 using TodoList.Domain.Entities.Interfaces;
+using TodoList.Domain.IRepository;
 
 namespace TodoList.Application.Services
 {

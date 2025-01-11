@@ -1,6 +1,6 @@
 ﻿using TodoList.Application.DTOs;
 
-namespace TodoList.Application.IService;
+namespace TodoList.Application.Services.Interfaces;
 
 public interface IAuthenticationService
 {

@@ -1,7 +1,7 @@
-﻿using TodoList.Application.Args;
-using TodoList.Application.IRepository.Common;
+﻿using TodoList.Domain.Args;
+using TodoList.Domain.IRepository.Common;
 
-namespace TodoList.Application.IRepository
+namespace TodoList.Domain.IRepository
 {
     public interface IRoleRepository : ISearchableRepository<string, RoleSearchArgs>
     {

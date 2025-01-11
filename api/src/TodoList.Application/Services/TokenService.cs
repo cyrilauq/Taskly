@@ -3,9 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using TodoList.Application.IRepository;
-using TodoList.Application.IService;
+using TodoList.Application.Services.Interfaces;
 using TodoList.Domain.Entities.Interfaces;
+using TodoList.Domain.IRepository;
 
 namespace TodoList.Application.Services
 {

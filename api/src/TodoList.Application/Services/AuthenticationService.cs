@@ -1,9 +1,9 @@
 ﻿using TodoList.Application.DTOs;
-using TodoList.Application.IRepository;
-using TodoList.Application.IService;
 using TodoList.Application.Services.Exceptions;
 using TodoList.Domain.Entities.Interfaces;
 using TodoList.Application.Models;
+using TodoList.Domain.IRepository;
+using TodoList.Application.Services.Interfaces;
 
 namespace TodoList.Application.Services;
 

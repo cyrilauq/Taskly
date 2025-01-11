@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using TodoList.Application.IService;
 using TodoList.Application.Services;
+using TodoList.Application.Services.Interfaces;
 
 namespace TodoList.Application
 {

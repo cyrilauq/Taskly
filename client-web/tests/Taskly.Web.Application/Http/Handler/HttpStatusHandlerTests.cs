@@ -1,7 +1,7 @@
 ﻿using Taskly.Web.Application.Http.Handler;
 using Taskly.Web.Exceptions;
 
-namespace Taskly.Web.Application.Tests.Http.Client
+namespace Taskly.Web.Application.Tests.Http.Handler
 {
     [TestClass]
     public class HttpStatusHandlerTests

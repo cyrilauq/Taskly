@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using TodoList.Application.Extensions;
-using TodoList.Application.IService;
+using TodoList.Application.Services.Interfaces;
 
 namespace TodoList.Application.Services
 {

@@ -1,7 +1,7 @@
-﻿using TodoList.Application.Args;
+﻿using TodoList.Domain.Args;
 using TodoList.Domain.Entities.Interfaces;
 
-namespace TodoList.Application.IRepository
+namespace TodoList.Domain.IRepository
 {
     public interface IUserRepository
     {

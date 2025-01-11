@@ -1,4 +1,4 @@
-﻿namespace TodoList.Application.Args
+﻿namespace TodoList.Domain.Args
 {
     public record BaseSearchArg(int? Id, bool? SearchExact);
 }

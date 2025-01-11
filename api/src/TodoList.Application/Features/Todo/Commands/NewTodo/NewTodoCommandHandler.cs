@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using TodoList.Application.DTOs;
-using TodoList.Application.IRepository;
-using TodoList.Application.IService;
+using TodoList.Application.Services.Interfaces;
+using TodoList.Domain.IRepository;
 using UnauthorizedAccessException = TodoList.Application.Services.Exceptions.UnauthorizedAccessException;
 
 namespace TodoList.Application.Features.Todo.Commands.NewTodo

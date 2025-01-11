@@ -1,6 +1,6 @@
-﻿using TodoList.Application.Args;
+﻿using TodoList.Domain.Args;
 
-namespace TodoList.Application.IRepository.Common
+namespace TodoList.Domain.IRepository.Common
 {
     public interface ISearchableRepository<T, S> where S : BaseSearchArg
     {

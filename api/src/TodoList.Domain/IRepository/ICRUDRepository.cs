@@ -1,6 +1,6 @@
 ﻿using TodoList.Domain.Entities;
 
-namespace TodoList.Application.IRepository;
+namespace TodoList.Domain.IRepository;
 
 public interface ICRUDRepository<T, S> where T : IBaseEntity<Guid>
 {

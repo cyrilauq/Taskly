@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using TodoList.Application.DTOs;
-using TodoList.Application.IRepository;
-using TodoList.Application.IService;
 using TodoList.Application.Services.Exceptions;
+using TodoList.Application.Services.Interfaces;
+using TodoList.Domain.IRepository;
 
 namespace TodoList.Application.Features.User.Commands.Register
 {

@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TodoList.Application.IService;
 using TodoList.Application.Features.User.Queries.Login;
 using TodoList.Application.Features.User.Commands.Register;
 using TodoList.Application.DTOs;
