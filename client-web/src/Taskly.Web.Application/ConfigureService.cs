@@ -33,7 +33,8 @@ namespace Taskly.Web.Application
 
         private static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>()
+                .AddScoped<ITodoService, TodoService>();
 
             return services;
         }
