@@ -11,9 +11,12 @@ namespace Taskly.Web.Application.Services
         public async Task<bool> LoginWithCredentials(string login, string password)
         {
             using var response = await httpClient.PostAsJsonAsync("api/account/login", new { Login = login, Password = password });
+            AuthenticatedUserModel user = (await response.Content.ReadFromJsonAsync<AuthenticatedUserModel>())!;
 
-            authState.UserName = login;
-            authState.UserId = Guid.NewGuid();
+            authState.Token = user.Token;
+            authState.UserName = user.Pseudo;
+            authState.UserId = user.Id;
+            authState.NotifyStateChanged();
 
             return true;
         }
@@ -21,9 +24,11 @@ namespace Taskly.Web.Application.Services
         public async Task<bool> RegisterUser(RegisterModel registerModel)
         {
             using var response = await httpClient.PostAsJsonAsync("api/account/register", registerModel);
+            AuthenticatedUserModel user = (await response.Content.ReadFromJsonAsync<AuthenticatedUserModel>())!;
 
-            authState.UserName = registerModel.Email;
-            authState.UserId = Guid.NewGuid();
+            authState.Token = user.Token;
+            authState.UserName = user.Pseudo;
+            authState.UserId = user.Id;
             authState.NotifyStateChanged();
 
             return false;
