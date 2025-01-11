@@ -15,6 +15,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.ConfigureApplicationServices(configuration)
     .AddApplicationInfrastructure();
+builder.Services.AddBlazorBootstrap();
 
 builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();
