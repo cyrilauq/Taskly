@@ -1,5 +1,6 @@
 ﻿using Taskly.Web.Application.Http.Handler;
 using Taskly.Web.Exceptions;
+using UnauthorizedAccessException = Taskly.Web.Application.Exceptions.UnauthorizedAccessException;
 
 namespace Taskly.Web.Application.Tests.Http.Handler
 {
@@ -28,6 +29,22 @@ namespace Taskly.Web.Application.Tests.Http.Handler
             var handler = new HttpStatusHandler() { InnerHandler = TestHandlerFactory.CreateTestHandler(503) };
 
             await Assert.ThrowsExceptionAsync<UnExpectedHttpException>(async () => await new HttpClient(handler).GetAsync("https://www.google.com"));
+        }
+
+        [TestMethod]
+        public async Task When_SendAsync_ReceiveRequestWithStatus401_ThenThrowsUnauthorizedAccessException()
+        {
+            var handler = new HttpStatusHandler() { InnerHandler = TestHandlerFactory.CreateTestHandler(401) };
+
+            await Assert.ThrowsExceptionAsync<UnauthorizedAccessException>(async () => await new HttpClient(handler).GetAsync("https://www.google.com"));
+        }
+
+        [TestMethod]
+        public async Task When_SendAsync_ReceiveRequestWithStatus403_ThenThrowsUnauthorizedAccessException()
+        {
+            var handler = new HttpStatusHandler() { InnerHandler = TestHandlerFactory.CreateTestHandler(403) };
+
+            await Assert.ThrowsExceptionAsync<UnauthorizedAccessException>(async () => await new HttpClient(handler).GetAsync("https://www.google.com"));
         }
     }
 

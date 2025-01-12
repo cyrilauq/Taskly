@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Taskly.Web.Exceptions;
+using UnauthorizedAccessException = Taskly.Web.Application.Exceptions.UnauthorizedAccessException;
 
 namespace Taskly.Web.Application.Http.Handler
 {
@@ -20,6 +21,9 @@ namespace Taskly.Web.Application.Http.Handler
                     throw new InternalServerErrorException("An error occured in the server");
                 case HttpStatusCode.Conflict:
                     throw new ResourceAlreadyExists("The given resource already exists");
+                case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.Forbidden:
+                    throw new UnauthorizedAccessException("You don't have access to the resrouce");
                 default:
                     throw new UnExpectedHttpException("");
             }

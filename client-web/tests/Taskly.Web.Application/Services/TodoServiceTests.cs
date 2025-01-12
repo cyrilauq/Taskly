@@ -4,9 +4,11 @@ using Taskly.Web.Application.Exceptions;
 using Taskly.Web.Application.Mappers;
 using Taskly.Web.Application.Model;
 using Taskly.Web.Application.Services;
+using Taskly.Web.Application.State.Interfaces;
 using Taskly.Web.Exceptions;
 using Taskly.Web.Infrastructure.DTO;
 using Taskly.Web.Infrastructure.Repositories.Interfaces;
+using UnauthorizedAccessException = Taskly.Web.Application.Exceptions.UnauthorizedAccessException;
 
 namespace Taskly.Web.Application.Tests.Services
 {
@@ -15,6 +17,7 @@ namespace Taskly.Web.Application.Tests.Services
     {
         TodoService service;
         Mock<ITodoRepository> repositoryMock;
+        Mock<IAuthState> mockAuthState;
 
         [TestInitialize]
         public void Initialize()
@@ -26,7 +29,8 @@ namespace Taskly.Web.Application.Tests.Services
             });
 
             repositoryMock = new Mock<ITodoRepository>();
-            service = new TodoService(repositoryMock.Object, mapper.CreateMapper());
+            mockAuthState = new Mock<IAuthState>();
+            service = new TodoService(repositoryMock.Object, mapper.CreateMapper(), mockAuthState.Object);
         }
 
         [TestMethod]
@@ -63,6 +67,35 @@ namespace Taskly.Web.Application.Tests.Services
 
             // Act
             await service.CreateAsync(It.IsAny<TodoModel>());
+        }
+
+        [TestMethod]
+        public async Task When_GetConnectedUserTodos_IsCalled_ThenRepositoryIsCalledWithConnectedUserID()
+        {
+            // Arrange
+            Guid connectedUserId = Guid.NewGuid();
+            mockAuthState.SetupGet(mas => mas.UserId)
+                .Returns(connectedUserId);
+
+            // Act
+            await service.GetConnectedUserTodos();
+
+            // Assert
+            repositoryMock.Verify(rm => rm.GetAllForUser(connectedUserId), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnauthorizedAccessException))]
+        public async Task When_GetConnectedUserTodos_AndRepositoryThrowUnauthorizedAccessException_ThenLetItPass()
+        {
+            // Arrange
+            mockAuthState.SetupGet(mas => mas.UserId)
+                .Returns(Guid.NewGuid());
+            repositoryMock.Setup(rm => rm.GetAllForUser(It.IsAny<Guid>()))
+                .ThrowsAsync(new UnauthorizedAccessException(""));
+
+            // Act
+            await service.GetConnectedUserTodos();
         }
     }
 }

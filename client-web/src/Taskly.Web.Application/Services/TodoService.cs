@@ -2,13 +2,15 @@
 using Taskly.Web.Application.Exceptions;
 using Taskly.Web.Application.Model;
 using Taskly.Web.Application.Services.Interfaces;
+using Taskly.Web.Application.State.Interfaces;
 using Taskly.Web.Exceptions;
 using Taskly.Web.Infrastructure.DTO;
 using Taskly.Web.Infrastructure.Repositories.Interfaces;
+using UnauthorizedAccessException = Taskly.Web.Application.Exceptions.UnauthorizedAccessException;
 
 namespace Taskly.Web.Application.Services
 {
-    public class TodoService(ITodoRepository todoRepository, IMapper mapper) : ITodoService
+    public class TodoService(ITodoRepository todoRepository, IMapper mapper, IAuthState authState) : ITodoService
     {
         public async Task<TodoModel> CreateAsync(TodoModel entity)
         {
@@ -21,6 +23,12 @@ namespace Taskly.Web.Application.Services
             {
                 throw new ServiceException(ex.Message);
             }
+        }
+
+        public async Task<IEnumerable<TodoModel>> GetConnectedUserTodos()
+        {
+            if (authState.UserId is null) throw new UnauthorizedAccessException("You need to be logged in to access the resource");
+            return mapper.Map<IEnumerable<TodoModel>>(await todoRepository.GetAllForUser(authState.UserId.Value));
         }
     }
 }
