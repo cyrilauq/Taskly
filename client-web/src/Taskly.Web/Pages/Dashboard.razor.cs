@@ -1,7 +1,6 @@
 ﻿using BlazorBootstrap;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using System.Reflection;
 using Taskly.Web.Application.Model;
 using Taskly.Web.Application.Services.Interfaces;
 
@@ -16,14 +15,17 @@ namespace Taskly.Web.Pages
 
         private Modal newTodoModal = default!;
         public TodoModel Todo { get; set; } = new TodoModel();
+        public IEnumerable<TodoModel> Todos { get; set; } = [];
         public int TodoCount { get; set; } = 0;
         public required EditContext EditContext { get; set; }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             EditContext = new EditContext(Todo);
 
-            base.OnInitialized();
+            Todos = await TodoService.GetConnectedUserTodos();
+
+            await base.OnInitializedAsync();
         }
 
         public async Task OnSubmit()

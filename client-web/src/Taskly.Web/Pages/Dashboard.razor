@@ -1,13 +1,8 @@
 ﻿@page "/dashboard"
 @attribute [Authorize]
 
-<h3>Dashboard</h3>
+<h3 class="mb-4">Dashboard</h3>
 
-<p>Number of todos: @(TodoCount)</p>
-
-@code {
-    // TODO : Update style
-}
 <Modal @ref="newTodoModal">
     <HeaderTemplate>
         <div class="w-100 text-center">
@@ -23,9 +18,29 @@
         </EditForm>
     </BodyTemplate>
 </Modal>
-<section>
-    <button type="button" class="btn btn-primary d-flex align-items-center" @onclick="OnShowModalClick">
+
+<section class="d-flex align-items-center col-12 col-lg-6 flex-column">
+    <button type="button" class="btn btn-primary d-flex align-items-center align-self-start" @onclick="OnShowModalClick">
         <Icon Name="IconName.Plus" Size="IconSize.x5" /> New todo
     </button>
-
+    <div class="col-12 mt-3 d-flex align-items-center flex-column">
+        @foreach (var todo in Todos)
+        {
+            <div class="d-flex flex-column col-12 card p-2 mb-2">
+                <div class="d-flex">
+                    <h4 class="col-4">@todo.Name</h4>
+                    <p class="col-4">Started on @todo.CreatedOn?.ToString("dd/MM/yyyy")</p>
+                    <p class="col-2">
+                        @(todo.IsDone ? "Is finished" : "In process")
+                    </p>
+                    <div class="col-2 d-flex justify-content-end">
+                        <Icon Name="IconName.Trash" Size="IconSize.x5" />
+                    </div>
+                </div>
+                <div>
+                    <p>@todo.Content</p>
+                </div>
+            </div>
+        }
+    </div>
 </section>
