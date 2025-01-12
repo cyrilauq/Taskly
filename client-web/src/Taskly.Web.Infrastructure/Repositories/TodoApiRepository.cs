@@ -9,7 +9,7 @@ namespace Taskly.Web.Infrastructure.Repositories
     {
         public async Task<TodoDTO> Create(TodoDTO entity)
         {
-            using var response = await httpClient.PostAsJsonAsync("api/todo", entity);
+            var response = await httpClient.PostAsJsonAsync("api/todo", entity);
             return (await response.Content.ToJson<TodoDTO>())!;
         }
 
@@ -18,9 +18,15 @@ namespace Taskly.Web.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<TodoDTO>> GetAll()
+        public async Task<IEnumerable<TodoDTO>> GetAll()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<TodoDTO>> GetAllForUser(Guid userId)
+        {
+            var response = await httpClient.GetAsync($"api/todo?userId={userId}");
+            return await response.Content.ToJson<IEnumerable<TodoDTO>>() ?? [];
         }
 
         public Task<TodoDTO> Update(Guid key, TodoDTO entity)

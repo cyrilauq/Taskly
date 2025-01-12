@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace Taskly.Web.Infrastructure.Utils
 {
@@ -12,8 +6,8 @@ namespace Taskly.Web.Infrastructure.Utils
     {
         public static async Task<T?> ToJson<T>(this HttpContent content) where T : class
         {
-            using Stream? responseContent = await content.ReadAsStreamAsync();
-            return responseContent == null ? null : (await JsonSerializer.DeserializeAsync<T>(responseContent))!;
+            string? responseContent = await content.ReadAsStringAsync();
+            return responseContent == null ? null : JsonConvert.DeserializeObject<T>(responseContent);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Moq;
+using Moq.Protected;
+using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Json;
 using Taskly.Web.Infrastructure.DTO;
@@ -9,15 +11,16 @@ namespace Taskly.Web.Infrastructure.Tests.Repositories
     [TestClass]
     public class TodoApiRepositoryTests
     {
-        // TODO : Add Tests
         TodoApiRepository repository;
-        FakeHttpClient fakeHttpClient;
+        HttpClient fakeHttpClient;
+        Mock<HttpMessageHandler> mockMessageHandler;
 
         [TestInitialize]
         public void Initialize()
         {
             // Arrange
-            fakeHttpClient = new FakeHttpClient();
+            mockMessageHandler = new Mock<HttpMessageHandler>();
+            fakeHttpClient = new HttpClient(mockMessageHandler.Object) { BaseAddress = new Uri("https://www.google.com") };
             repository = new TodoApiRepository(fakeHttpClient);
         }
 
@@ -26,7 +29,7 @@ namespace Taskly.Web.Infrastructure.Tests.Repositories
         {
             // Arrange
             TodoDTO addedTodoDto = new TodoDTO("", "", "", Guid.NewGuid(), false, DateTime.Now, null);
-            fakeHttpClient.SetResponse(new FakeHttpResponse<TodoDTO>(200, addedTodoDto));
+            SetMessageHandlerResponse(new FakeHttpResponse<TodoDTO>(200, addedTodoDto));
 
             // Act
             TodoDTO addedTodoResultDto = await repository.Create(new TodoDTO("", "", "", Guid.NewGuid(), false, DateTime.Now, null));
@@ -34,28 +37,65 @@ namespace Taskly.Web.Infrastructure.Tests.Repositories
             // Assert
             Assert.AreEqual(addedTodoResultDto.Id, addedTodoDto.Id);
         }
-    }
 
-    public class FakeHttpClient : HttpClient
-    {
-        private HttpResponseMessage ResponseMessage { get; set; }
-
-        public void SetResponse<T>(FakeHttpResponse<T> fakeHttpResponse)
+        [TestMethod]
+        public async Task When_GetAllForUser_RetrieveAnArrayOfTodo_ThenReturnTheTodos()
         {
-            var json = JsonConvert.SerializeObject(fakeHttpResponse.Content);
+            // Arrange
+            IEnumerable<TodoDTO> todos = [new TodoDTO("", "", "", Guid.NewGuid(), false, DateTime.Now, null)];
+            SetMessageHandlerResponse(new FakeHttpResponse<IEnumerable<TodoDTO>>(200, todos));
 
-            ResponseMessage = new HttpResponseMessage
+            // Act
+            IEnumerable<TodoDTO> getTodoResultDto = await repository.GetAllForUser(Guid.NewGuid());
+
+            // Assert
+            Assert.AreEqual(todos.Count(), getTodoResultDto.Count());
+        }
+
+        [TestMethod]
+        public async Task When_GetAllForUser_RetrieveAnEmptyArray_ThenReturnsAnEmptyIEnumerable()
+        {
+            // Arrange
+            IEnumerable<TodoDTO> todos = [];
+            SetMessageHandlerResponse(new FakeHttpResponse<IEnumerable<TodoDTO>>(200, todos));
+
+            // Act
+            IEnumerable<TodoDTO> getTodoResultDto = await repository.GetAllForUser(Guid.NewGuid());
+
+            // Assert
+            Assert.AreEqual(todos.Count(), getTodoResultDto.Count());
+        }
+
+        [TestMethod]
+        public async Task When_GetAllForUser_RetrieveNull_ThenReturnsAnEmptyIEnumerable()
+        {
+            // Arrange
+            IEnumerable<TodoDTO>? todos = null;
+            SetMessageHandlerResponse(new FakeHttpResponse<IEnumerable<TodoDTO>>(200, todos));
+
+            // Act
+            IEnumerable<TodoDTO> getTodoResultDto = await repository.GetAllForUser(Guid.NewGuid());
+
+            // Assert
+            Assert.AreEqual(0, getTodoResultDto.Count());
+        }
+
+        private void SetMessageHandlerResponse<T>(FakeHttpResponse<T> response)
+        {
+            HttpResponseMessage responseMsg = new()
             {
-                Content = new StringContent(json, System.Text.Encoding.UTF8, "application/json"),
-                StatusCode = (HttpStatusCode)fakeHttpResponse.StatusCode
+                StatusCode = (HttpStatusCode)response.StatusCode
             };
-        }
-
-        public override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(ResponseMessage);
+            if(response.Content != null)
+            {
+                responseMsg.Content = JsonContent.Create(response.Content);
+            }
+            mockMessageHandler
+                .Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(responseMsg);
         }
     }
 
-    public record FakeHttpResponse<T>(int StatusCode, T Content);
+    public record FakeHttpResponse<T>(int StatusCode, T? Content);
 }
