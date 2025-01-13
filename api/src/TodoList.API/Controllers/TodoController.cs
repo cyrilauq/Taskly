@@ -24,7 +24,8 @@ namespace TodoList.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteTodo([FromQuery] DeleteTodoCommand command)
         {
-            return Ok(await Mediator.Send(command));
+            await Mediator.Send(command);
+            return NoContent();
         }
     }
 }
