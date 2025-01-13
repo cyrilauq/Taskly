@@ -3,6 +3,7 @@ using TodoList.Infrastructure.Data;
 using TodoList.Domain.Entities.Interfaces;
 using TodoList.Domain.IRepository;
 using TodoList.Domain.Args;
+using TodoList.Domain.Exceptions;
 
 namespace TodoList.Infrastructure.Repository;
 
@@ -15,9 +16,12 @@ public class TodoRepository(TodoListContext context) : ITodoRepository
         return result;
     }
 
-    public Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var toDelete = await context.Todos.FindAsync(id, cancellationToken) ?? throw new EntityNotExistsException($"No entity found for the id {id}");
+        context.Todos.Remove(toDelete);
+        await context.SaveChangesAsync();
+        return true;
     }
 
     public async Task<IEnumerable<ITodo>> GetAllAsync(TodoSearchArg searchArgs)

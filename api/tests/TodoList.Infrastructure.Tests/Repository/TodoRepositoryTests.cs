@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using TodoList.Domain.Exceptions;
 using TodoList.Infrastructure.Data;
 using TodoList.Infrastructure.Entities;
 using TodoList.Infrastructure.Repository;
@@ -159,6 +160,40 @@ namespace TodoList.Infrastructure.Tests.Repository
             Assert.AreEqual("New content", updatedTodo.Content);
             Assert.AreEqual(context.Todos.Count(), 1);
             Assert.AreEqual("New content", (await context.Todos.FindAsync(todo.Id))!.Content);
+        }
+
+        [TestMethod]
+        public async Task When_DeleteAsync_WithExistingId_ThenDbHasOneLessTuple()
+        {
+            // Arrange
+            var repository = new TodoRepository(context);
+            var todo = new Todo
+            {
+                Name = "Test",
+                UpdatedOn = DateTime.UtcNow,
+                Content = "Tzst",
+                CreatedOn = DateTime.UtcNow,
+                IsDone = false,
+                UserId = connectedUserId,
+            };
+            var toDelete = await repository.AddAsync(todo);
+
+            // Act
+            var deleteResult = await repository.DeleteAsync(toDelete.Id);
+
+            // Assert
+            Assert.IsTrue(deleteResult);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EntityNotExistsException))]
+        public async Task When_DeleteAsync_WithNotExistingId_ThenThrowsEntityNotExistsException()
+        {
+            // Arrange
+            var repository = new TodoRepository(context);
+
+            // Act
+            var deleteResult = await repository.DeleteAsync(Guid.NewGuid());
         }
     }
 }
