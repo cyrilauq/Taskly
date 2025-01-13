@@ -20,5 +20,11 @@ namespace TodoList.API.Controllers
         {
             return Ok(await Mediator.Send(command));
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteTodo([FromQuery] DeleteTodoCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
     }
 }
