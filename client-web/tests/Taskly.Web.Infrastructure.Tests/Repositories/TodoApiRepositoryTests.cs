@@ -80,6 +80,20 @@ namespace Taskly.Web.Infrastructure.Tests.Repositories
             Assert.AreEqual(0, getTodoResultDto.Count());
         }
 
+        [TestMethod]
+        public async Task When_Delete_RequestReturnSuccessStatus_ThenReturnTrue()
+        {
+            // Arrange
+            Guid id = Guid.NewGuid();
+            SetMessageHandlerResponse(new FakeHttpResponse<IEnumerable<TodoDTO>>(200, null));
+
+            // Act
+            bool deleteResult = await repository.Delete(id);
+
+            // Assert
+            Assert.IsTrue(deleteResult);
+        }
+
         private void SetMessageHandlerResponse<T>(FakeHttpResponse<T> response)
         {
             HttpResponseMessage responseMsg = new()

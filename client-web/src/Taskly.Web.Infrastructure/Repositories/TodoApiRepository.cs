@@ -13,9 +13,10 @@ namespace Taskly.Web.Infrastructure.Repositories
             return (await response.Content.ToJson<TodoDTO>())!;
         }
 
-        public Task<bool> Delete(Guid key)
+        public async Task<bool> Delete(Guid key)
         {
-            throw new NotImplementedException();
+            var response = await httpClient.GetAsync($"api/todo/{key}");
+            return true;
         }
 
         public async Task<IEnumerable<TodoDTO>> GetAll()
