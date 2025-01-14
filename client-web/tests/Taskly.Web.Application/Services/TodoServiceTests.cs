@@ -97,5 +97,38 @@ namespace Taskly.Web.Application.Tests.Services
             // Act
             await service.GetConnectedUserTodos();
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public async Task When_DeleteAsync_IsCalledwithANonGuidString_ThenThrowsArgumentException()
+        {
+            // Act
+            await service.DeleteAsync("");
+        }
+
+        [TestMethod]
+        public async Task When_DeleteAsync_WithCorrectGuid_ThenCallRepostiroyDeleteMethod()
+        {
+            // Arrange
+            Guid toDeleteGuid = Guid.NewGuid();
+            // Act
+            await service.DeleteAsync(toDeleteGuid.ToString());
+
+            // Assert
+            repositoryMock.Verify(rm => rm.Delete(toDeleteGuid), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ServiceException))]
+        public async Task When_DeleteAsync_RepositoryThrowsNotFoundException_ThenServiceThrowsServiceException()
+        {
+            // Arrange
+            Guid toDeleteGuid = Guid.NewGuid();
+            repositoryMock.Setup(rm => rm.Delete(It.IsAny<Guid>()))
+                .ThrowsAsync(new NotFoundException(""));
+
+            // Act
+            await service.DeleteAsync(toDeleteGuid.ToString());
+        }
     }
 }

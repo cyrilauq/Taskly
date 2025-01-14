@@ -25,16 +25,16 @@ namespace Taskly.Web.Application.Services
             }
         }
 
-        public Task<bool> DeleteAsync(string entityKey, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteAsync(string entityKey, CancellationToken cancellationToken = default)
         {
             try
             {
                 var guid = Guid.Empty;
                 if(Guid.TryParse(entityKey, out guid))
                 {
-                    throw new ArgumentException("The provided id isn't a valid guid");
+                    return await todoRepository.Delete(guid);
                 }
-                return todoRepository.Delete(guid);
+                throw new ArgumentException("The provided id isn't a valid guid");
             }
             catch (NotFoundException ex)
             {
