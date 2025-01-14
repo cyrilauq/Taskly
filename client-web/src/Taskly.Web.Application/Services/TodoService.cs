@@ -25,6 +25,23 @@ namespace Taskly.Web.Application.Services
             }
         }
 
+        public Task<bool> DeleteAsync(string entityKey, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var guid = Guid.Empty;
+                if(Guid.TryParse(entityKey, out guid))
+                {
+                    throw new ArgumentException("The provided id isn't a valid guid");
+                }
+                return todoRepository.Delete(guid);
+            }
+            catch (NotFoundException ex)
+            {
+                throw new ServiceException($"No todo found for the id [{entityKey}]");
+            }
+        }
+
         public async Task<IEnumerable<TodoModel>> GetConnectedUserTodos()
         {
             if (authState.UserId is null) throw new UnauthorizedAccessException("You need to be logged in to access the resource");

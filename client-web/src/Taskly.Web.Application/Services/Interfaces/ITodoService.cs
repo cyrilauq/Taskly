@@ -2,7 +2,7 @@
 
 namespace Taskly.Web.Application.Services.Interfaces
 {
-    public interface ITodoService : ICRUDService<TodoModel>
+    public interface ITodoService : ICRUDService<TodoModel, string>
     {
         Task<IEnumerable<TodoModel>> GetConnectedUserTodos();
     }
