@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Taskly.Web.Application.Model;
 using Taskly.Web.Application.Services.Interfaces;
+using Taskly.Web.Exceptions;
 
 namespace Taskly.Web.Pages
 {
@@ -46,6 +47,23 @@ namespace Taskly.Web.Pages
         private async Task OnShowModalClick()
         {
             await newTodoModal.ShowAsync();
+        }
+
+        private async Task OnDeleteClicked(string todoId)
+        {
+            try
+            {
+                await TodoService.DeleteAsync(todoId);
+                Todos = Todos.Where(todo => todo.Id != todoId);
+            }
+            catch (NotFoundException ex)
+            {
+                Logger.LogError(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.Message);
+            }
         }
     }
 }
