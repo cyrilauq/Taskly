@@ -15,7 +15,7 @@ namespace Taskly.Web.Infrastructure.Repositories
 
         public async Task<bool> Delete(Guid key)
         {
-            var response = await httpClient.GetAsync($"api/todo/{key}");
+            var response = await httpClient.DeleteAsync($"api/todo/{key}");
             return true;
         }
 
