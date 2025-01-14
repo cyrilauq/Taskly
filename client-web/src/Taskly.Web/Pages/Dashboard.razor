@@ -34,7 +34,7 @@
                         @(todo.IsDone ? "Is finished" : "In process")
                     </p>
                     <div class="col-2 d-flex justify-content-end">
-                        <Icon Name="IconName.Trash" Size="IconSize.x5" />
+                        <Icon Name="IconName.Trash" Size="IconSize.x5" @onclick="() => OnDeleteClick(todo.Id)" />
                     </div>
                 </div>
                 <div>

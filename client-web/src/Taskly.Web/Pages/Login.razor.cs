@@ -5,6 +5,7 @@ using Taskly.Web.Application.Services.Interfaces;
 using Taskly.Web.Application.State.Interfaces;
 using Taskly.Web.Exceptions;
 using Taskly.Web.Application.Model;
+using Taskly.Web.Shared;
 
 namespace Taskly.Web.Pages
 {
@@ -18,6 +19,9 @@ namespace Taskly.Web.Pages
         public required NavigationManager NavigationManager { get; set; }
         [Inject]
         private AuthenticationStateProvider AuthStateProvider { get; set; }
+
+        [CascadingParameter]
+        public ProcessError ProcessError { get; set; }
 
         public LoginModel LoginModel { get; set; } = new LoginModel();
         public required EditContext EditContext { get; set; }

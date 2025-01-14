@@ -5,6 +5,7 @@ using Taskly.Web;
 using Microsoft.AspNetCore.Components.Authorization;
 using Taskly.Web.Provider;
 using Taskly.Web.Infrastructure;
+using Blazored.Toast;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -16,6 +17,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.ConfigureApplicationServices(configuration)
     .AddApplicationInfrastructure();
 builder.Services.AddBlazorBootstrap();
+builder.Services.AddBlazoredToast();
 
 builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();
