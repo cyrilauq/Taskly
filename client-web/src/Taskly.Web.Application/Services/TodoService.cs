@@ -34,9 +34,9 @@ namespace Taskly.Web.Application.Services
                 {
                     return await todoRepository.Delete(guid);
                 }
-                throw new ArgumentException("The provided id isn't a valid guid");
+                throw new ServiceException("The provided id isn't a valid guid");
             }
-            catch (NotFoundException ex)
+            catch (NotFoundException)
             {
                 throw new ServiceException($"No todo found for the id [{entityKey}]");
             }

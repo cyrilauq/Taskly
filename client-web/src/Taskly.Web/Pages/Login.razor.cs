@@ -6,6 +6,7 @@ using Taskly.Web.Application.State.Interfaces;
 using Taskly.Web.Exceptions;
 using Taskly.Web.Application.Model;
 using Taskly.Web.Shared;
+using Taskly.Web.Application.Exceptions;
 
 namespace Taskly.Web.Pages
 {
@@ -47,9 +48,9 @@ namespace Taskly.Web.Pages
                     NavigationManager.NavigateTo("/dashboard");
                 }
             }
-            catch(NotFoundException)
+            catch(ServiceException se)
             {
-                SetError("No user found for the given credentials");
+                SetError(se.Message);
             }
         }
 

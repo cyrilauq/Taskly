@@ -27,10 +27,26 @@ namespace Taskly.Web.Pages
         protected override async Task OnInitializedAsync()
         {
             EditContext = new EditContext(Todo);
-
-            Todos = await TodoService.GetConnectedUserTodos();
+            
+            await LoadTodos();
 
             await base.OnInitializedAsync();
+        }
+
+        private async Task LoadTodos()
+        {
+            try
+            {
+                Todos = await TodoService.GetConnectedUserTodos();
+            }
+            catch (ServiceException ex)
+            {
+                ToastService.ShowError(ex.Message);
+            }
+            catch (Exception)
+            {
+                ToastService.ShowError("Un unexpected error occured");
+            }
         }
 
         public async Task OnSubmit()
@@ -64,7 +80,7 @@ namespace Taskly.Web.Pages
                 await TodoService.DeleteAsync(todoId);
                 Todos = Todos.Where(todo => todo.Id != todoId);
             }
-            catch (NotFoundException ex)
+            catch (ServiceException ex)
             {
                 ToastService.ShowError(ex.Message);
             }
