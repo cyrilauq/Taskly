@@ -1,6 +1,16 @@
-﻿@inherits ErrorBoundary
+﻿@using Blazored.Toast
+@using Blazored.Toast.Configuration
+@using Blazored.Toast.Services
+
+@inherits ErrorBoundary
 @inject ILogger<ProcessError> Logger
-@inject IToastService ToastService
+
+<BlazoredToasts Position="ToastPosition.TopRight"
+                Timeout="5"
+                IconType="IconType.FontAwesome"
+                SuccessClass="success-toast-override"
+                SuccessIcon="fa fa-check"
+                ErrorIcon="fa fa-triangle-exclamation" />
 
 @if (ErrorContent is not null)
 {
@@ -10,9 +20,24 @@
 @ChildContent
 
 @code {
-    protected override Task OnErrorAsync(Exception ex)
+    [Inject]
+    IToastService ToastService { get; set; }
+
+    protected override async Task OnErrorAsync(Exception ex)
     {
-        ToastService.ShowError("😈 A rotten gremlin got us. Sorry!");
-        return Task.CompletedTask;
+        try
+        {
+            ToastService.ShowError("😈 A rotten gremlin got us. Sorry!");
+        }
+        catch (Exception toastEx)
+        {
+            // Log or handle exceptions related to the ToastService
+            Console.WriteLine($"Toast error: {toastEx.Message}");
+        }
+        finally
+        {
+            // Re-throw the original exception if needed
+            // throw ex;
+        }
     }
 }

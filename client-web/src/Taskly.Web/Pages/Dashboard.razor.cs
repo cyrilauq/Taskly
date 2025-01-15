@@ -30,7 +30,6 @@ namespace Taskly.Web.Pages
 
         private async Task OnDeleteClick(string todoId)
         {
-            await TodoService.DeleteAsync(todoId);
             Todos = Todos.Where(todo => todo.Id != todoId);
         }
 

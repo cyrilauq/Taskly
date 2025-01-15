@@ -1,11 +1,14 @@
-﻿@using Blazored.Toast.Configuration
+﻿@using Blazored.Toast
+@using Blazored.Toast.Configuration
 @inherits LayoutComponentBase
-<BlazoredToasts Position="ToastPosition.BottomRight"
-                Timeout="10"
+
+<BlazoredToasts Position="ToastPosition.TopRight"
+                Timeout="5"
                 IconType="IconType.FontAwesome"
                 SuccessClass="success-toast-override"
-                SuccessIcon="fa fa-thumbs-up"
-                ErrorIcon="fa fa-bug" />
+                SuccessIcon="fa fa-check"
+                ErrorIcon="fa fa-triangle-exclamation" />
+
 <div class="page d-block">
     <div class="bg-light">
         <NavMenu />

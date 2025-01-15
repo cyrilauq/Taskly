@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using Blazored.Toast.Services
 @using Taskly.Web.Shared
 
 <PageTitle>Home</PageTitle>
@@ -20,13 +21,21 @@
 
 <Button @onclick="Throw">Throw an exception</Button>
 
-@code 
+@code
 {
-    [CascadingParameter]
-    public ProcessError ProcessError { get; set; }
+    [Inject]
+    IToastService ToastService { get; set; }
 
     public void Throw()
     {
-        throw new ArgumentNullException("Coucou bitch");
+        try 
+        {
+            ToastService.ShowSuccess("Some test");
+            throw new ArgumentNullException("Coucou bitch");
+        }
+        catch(Exception)
+        {
+            ToastService.ShowError("😈 A rotten gremlin got us. Sorry!");
+        }
     }
 }
