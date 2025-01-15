@@ -99,7 +99,7 @@ namespace Taskly.Web.Application.Tests.Services
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(ServiceException))]
         public async Task When_DeleteAsync_IsCalledwithANonGuidString_ThenThrowsArgumentException()
         {
             // Act
