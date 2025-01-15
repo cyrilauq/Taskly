@@ -18,24 +18,3 @@
         Register
     </NavLink>
 </div>
-
-<Button @onclick="Throw">Throw an exception</Button>
-
-@code
-{
-    [Inject]
-    IToastService ToastService { get; set; }
-
-    public void Throw()
-    {
-        try 
-        {
-            ToastService.ShowSuccess("Some test");
-            throw new ArgumentNullException("Coucou bitch");
-        }
-        catch(Exception)
-        {
-            ToastService.ShowError("😈 A rotten gremlin got us. Sorry!");
-        }
-    }
-}

@@ -1,6 +1,8 @@
 ﻿using BlazorBootstrap;
+using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Taskly.Web.Application.Exceptions;
 using Taskly.Web.Application.Model;
 using Taskly.Web.Application.Services.Interfaces;
 using Taskly.Web.Exceptions;
@@ -13,6 +15,8 @@ namespace Taskly.Web.Pages
         private ITodoService TodoService { get; set; }
         [Inject]
         private ILogger<Dashboard> Logger { get; set; }
+        [Inject]
+        private IToastService ToastService { get; set; }
 
         private Modal newTodoModal = default!;
         public TodoModel Todo { get; set; } = new TodoModel();
@@ -29,11 +33,6 @@ namespace Taskly.Web.Pages
             await base.OnInitializedAsync();
         }
 
-        private async Task OnDeleteClick(string todoId)
-        {
-            Todos = Todos.Where(todo => todo.Id != todoId);
-        }
-
         public async Task OnSubmit()
         {
             try
@@ -43,9 +42,13 @@ namespace Taskly.Web.Pages
                 Todo = new TodoModel();
                 await newTodoModal.HideAsync();
             }
-            catch (Exception ex)
+            catch (ServiceException ex)
             {
-                Logger.LogError(ex.Message);
+                ToastService.ShowError(ex.Message);
+            }
+            catch (Exception)
+            {
+                ToastService.ShowError("Un unexpected error occured");
             }
         }
 
@@ -63,11 +66,11 @@ namespace Taskly.Web.Pages
             }
             catch (NotFoundException ex)
             {
-                Logger.LogError(ex.Message);
+                ToastService.ShowError(ex.Message);
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex.Message);
+                ToastService.ShowError("Un unexpected error occured");
             }
         }
     }
