@@ -36,6 +36,11 @@ public class TodoRepository(TodoListContext context) : ITodoRepository
         return await query.ToListAsync();
     }
 
+    public async Task<ITodo?> GetByIdAsync(Guid key)
+    {
+        return await context.Todos.FindAsync(key);
+    }
+
     public async Task<ITodo> UpdateAsync(string id, ITodo entity)
     {
         if (!await UserExists(entity.UserId)) throw new InvalidOperationException("The entity isn't related to an existing user");

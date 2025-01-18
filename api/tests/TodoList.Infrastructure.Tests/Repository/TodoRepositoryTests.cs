@@ -195,5 +195,40 @@ namespace TodoList.Infrastructure.Tests.Repository
             // Act
             var deleteResult = await repository.DeleteAsync(Guid.NewGuid());
         }
+
+        [TestMethod]
+        public async Task When_GetByIdAsync_TodoWithGivenIdExist_ThenReturnsIt()
+        {
+            // Arrange
+            var repository = new TodoRepository(context);
+            var todo = await repository.AddAsync(new Todo
+            {
+                Name = "Test",
+                UpdatedOn = DateTime.UtcNow,
+                Content = "Tzst",
+                CreatedOn = DateTime.UtcNow,
+                IsDone = false,
+                UserId = connectedUserId,
+            });
+
+            // Act
+            var result = await repository.GetByIdAsync(todo.Id);
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public async Task When_GetByIdAsync_TodoWithGivenIdThatNotExist_ThenReturnsNull()
+        {
+            // Arrange
+            var repository = new TodoRepository(context);
+
+            // Act
+            var result = await repository.GetByIdAsync(Guid.NewGuid());
+
+            // Assert
+            Assert.IsNull(result);
+        }
     }
 }
