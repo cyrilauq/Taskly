@@ -94,6 +94,20 @@ namespace Taskly.Web.Infrastructure.Tests.Repositories
             Assert.IsTrue(deleteResult);
         }
 
+        [TestMethod]
+        public async Task When_Update_RequestReturnSuccessStatus_ThenReturnNonNullResult()
+        {
+            // Arrange
+            Guid id = Guid.NewGuid();
+            SetMessageHandlerResponse(new FakeHttpResponse<TodoDTO>(200, new TodoDTO("", "", "", Guid.NewGuid(), false, null, null)));
+
+            // Act
+            TodoDTO updateResult = await repository.Update(id, new TodoDTO("", "", "", Guid.NewGuid(), false, null, null)); 
+
+            // Assert
+            Assert.IsNotNull(updateResult);
+        }
+
         private void SetMessageHandlerResponse<T>(FakeHttpResponse<T> response)
         {
             HttpResponseMessage responseMsg = new()

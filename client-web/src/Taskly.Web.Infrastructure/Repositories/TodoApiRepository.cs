@@ -30,9 +30,10 @@ namespace Taskly.Web.Infrastructure.Repositories
             return await response.Content.ToJson<IEnumerable<TodoDTO>>() ?? [];
         }
 
-        public Task<TodoDTO> Update(Guid key, TodoDTO entity)
+        public async Task<TodoDTO> Update(Guid key, TodoDTO entity)
         {
-            throw new NotImplementedException();
+            var response = await httpClient.PutAsJsonAsync($"api/todo/{key}", entity);
+            return (await response.Content.ToJson<TodoDTO>())!;
         }
     }
 }
