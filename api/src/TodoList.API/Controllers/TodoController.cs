@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TodoList.Application.Features.Todo.Commands.Delete;
 using TodoList.Application.Features.Todo.Commands.NewTodo;
+using TodoList.Application.Features.Todo.Commands.Update;
 using TodoList.Application.Features.Todo.Queries.List;
 
 namespace TodoList.API.Controllers
@@ -27,6 +28,13 @@ namespace TodoList.API.Controllers
         {
             await Mediator.Send(new DeleteTodoCommand() { Id = todoId });
             return NoContent();
+        }
+
+        [HttpPut("{todoId}")]
+        public async Task<IActionResult> UpdateTodo(Guid todoId, UpdateTodoCommand command)
+        {
+            command.Id = todoId;
+            return Ok(await Mediator.Send(command));
         }
     }
 }
