@@ -2,14 +2,13 @@
 using FluentValidation;
 using MediatR;
 using TodoList.Application.DTOs;
-using TodoList.Application.Features.Todo.Commands.Update;
 using TodoList.Application.Services.Exceptions;
 using TodoList.Application.Services.Interfaces;
 using TodoList.Domain.IRepository;
 using UnauthorizedAccessException = TodoList.Application.Services.Exceptions.UnauthorizedAccessException;
 using ValidationException = TodoList.Application.Services.Exceptions.ValidationException;
 
-namespace TodoList.Application.Features.Update.Commands.Update
+namespace TodoList.Application.Features.Todo.Commands.Update
 {
     public class UpdateTodoCommandHandler(ITodoRepository todoRepository, IUserContext userContext, IMapper mapper, IValidator<UpdateTodoCommand> validator) : IRequestHandler<UpdateTodoCommand, TodoDTO>
     {
