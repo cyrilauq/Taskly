@@ -3,7 +3,7 @@ using TodoList.Domain.Entities.Interfaces;
 
 namespace TodoList.Domain.IRepository
 {
-    public interface ITodoRepository : ICRUDRepository<ITodo, TodoSearchArg>
+    public interface ITodoRepository : ICRUDRepository<ITodo, TodoSearchArg, Guid>
     {
     }
 }
