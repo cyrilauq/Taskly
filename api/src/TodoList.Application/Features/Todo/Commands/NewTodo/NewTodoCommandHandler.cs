@@ -19,7 +19,7 @@ namespace TodoList.Application.Features.Todo.Commands.NewTodo
                 UserId = userContext.UserId
             };
             var addedTodo = await todoRepository.AddAsync(todo);
-            return mapper.Map<TodoDTO>(todo);
+            return mapper.Map<TodoDTO>(addedTodo);
         }
     }
 }
