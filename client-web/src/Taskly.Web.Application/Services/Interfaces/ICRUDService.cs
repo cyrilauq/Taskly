@@ -1,4 +1,6 @@
-﻿namespace Taskly.Web.Application.Services.Interfaces
+﻿using Taskly.Web.Application.Model;
+
+namespace Taskly.Web.Application.Services.Interfaces
 {
     /// <summary>
     /// 
@@ -9,5 +11,6 @@
     {
         Task<T> CreateAsync(T entity);
         Task<bool> DeleteAsync(K entityKey, CancellationToken cancellationToken = default);
+        Task<T> UpdateAsync(K key, T updatedEntity);
     }
 }

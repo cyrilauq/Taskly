@@ -47,5 +47,31 @@ namespace Taskly.Web.Application.Services
             if (authState.UserId is null) throw new UnauthorizedAccessException("You need to be logged in to access the resource");
             return mapper.Map<IEnumerable<TodoModel>>(await todoRepository.GetAllForUser(authState.UserId.Value));
         }
+
+        public async Task<TodoModel> UpdateAsync(string key, TodoModel updatedEntity)
+        {
+            try
+            {
+                var guid = Guid.Empty;
+                if (Guid.TryParse(key, out guid))
+                {
+                    var dto = mapper.Map<TodoDTO>(updatedEntity);
+                    return mapper.Map<TodoModel>(await todoRepository.Update(guid, dto));
+                }
+                throw new ServiceException("The provided id isn't a valid guid");
+            }
+            catch (ValidationException ex)
+            {
+                throw new ServiceException(ex.Message);
+            }
+            catch (NotFoundException)
+            {
+                throw new ServiceException($"No todo found for the id [{key}]");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw new ServiceException($"You don't have the rights to update the todo.");
+            }
+        }
     }
 }

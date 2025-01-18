@@ -130,5 +130,25 @@ namespace Taskly.Web.Application.Tests.Services
             // Act
             await service.DeleteAsync(toDeleteGuid.ToString());
         }
+
+        [TestMethod]
+        public async Task When_UpdateAsync_RepositoryThrowsExpectedException_ThenServiceThrowsServiceException()
+        {
+            // Arrange
+            Guid unauthorizedId = Guid.NewGuid();
+            Guid notFoundId = Guid.NewGuid();
+            Guid notValidatId = Guid.NewGuid();
+            repositoryMock.Setup(rm => rm.Update(unauthorizedId, It.IsAny<TodoDTO>()))
+                .ThrowsAsync(new UnauthorizedAccessException(""));
+            repositoryMock.Setup(rm => rm.Update(notFoundId, It.IsAny<TodoDTO>()))
+                .ThrowsAsync(new NotFoundException(""));
+            repositoryMock.Setup(rm => rm.Update(notValidatId, It.IsAny<TodoDTO>()))
+                .ThrowsAsync(new ValidationException(""));
+
+            // Act & Assert
+            await Assert.ThrowsExceptionAsync<ServiceException>(async () => await service.UpdateAsync(unauthorizedId.ToString(), (TodoModel)null));
+            await Assert.ThrowsExceptionAsync<ServiceException>(async () => await service.UpdateAsync(notFoundId.ToString(), (TodoModel)null));
+            await Assert.ThrowsExceptionAsync<ServiceException>(async () => await service.UpdateAsync(notValidatId.ToString(), (TodoModel)null));
+        }
     }
 }
