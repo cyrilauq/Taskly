@@ -4,5 +4,6 @@
     {
         bool IsAuthenticated { get; }
         Guid UserId { get; }
+        IEnumerable<string> GetRoles();
     }
 }
