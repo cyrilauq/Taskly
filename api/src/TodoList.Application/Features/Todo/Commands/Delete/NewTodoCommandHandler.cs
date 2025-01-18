@@ -3,7 +3,7 @@ using TodoList.Application.Services.Exceptions;
 using TodoList.Domain.Exceptions;
 using TodoList.Domain.IRepository;
 
-namespace TodoList.Application.Features.Todo.Commands.NewTodo
+namespace TodoList.Application.Features.Todo.Commands.Delete
 {
     public class DeleteTodoCommandHandler(ITodoRepository todoRepository) : IRequestHandler<DeleteTodoCommand, bool>
     {
@@ -13,7 +13,7 @@ namespace TodoList.Application.Features.Todo.Commands.NewTodo
             {
                 return await todoRepository.DeleteAsync(request.Id, cancellationToken);
             }
-            catch(EntityNotExistsException)
+            catch (EntityNotExistsException)
             {
                 throw new ResourceNotFoundException("");
             }
