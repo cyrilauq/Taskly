@@ -23,7 +23,7 @@ namespace Taskly.Web.Application.Tests.Services
         public void Initialize()
         {
             // Arrange
-            var mapper = new MapperConfiguration(mc => 
+            var mapper = new MapperConfiguration(mc =>
             {
                 mc.AddProfile<TodoMapperProfile>();
             });
@@ -149,6 +149,49 @@ namespace Taskly.Web.Application.Tests.Services
             await Assert.ThrowsExceptionAsync<ServiceException>(async () => await service.UpdateAsync(unauthorizedId.ToString(), (TodoModel)null));
             await Assert.ThrowsExceptionAsync<ServiceException>(async () => await service.UpdateAsync(notFoundId.ToString(), (TodoModel)null));
             await Assert.ThrowsExceptionAsync<ServiceException>(async () => await service.UpdateAsync(notValidatId.ToString(), (TodoModel)null));
+        }
+
+        [TestMethod]
+        public async Task When_SaveAsync_WhitAnEmptyGuid_ThenCallCreateMethodOfRepository()
+        {
+            // Arrange
+            string guid = Guid.Empty.ToString();
+            TodoModel model = new TodoModel() { Id = guid };
+
+            // Act
+            await service.SaveAsync(model);
+
+            // Assert
+            repositoryMock.Verify(rm => rm.Create(It.IsAny<TodoDTO>()), Times.Once());
+        }
+
+        [TestMethod]
+        [DataRow("")]
+        [DataRow("fdlkhbfdlksjhgdfhg")]
+        public async Task When_SaveAsync_WhitNonValidGuid_ThenCallCreateMethodOfRepository(string guid)
+        {
+            // Arrange
+            TodoModel model = new TodoModel() { Id = guid };
+
+            // Act
+            await service.SaveAsync(model);
+
+            // Assert
+            repositoryMock.Verify(rm => rm.Create(It.IsAny<TodoDTO>()), Times.Once());
+        }
+
+        [TestMethod]
+        public async Task When_SaveAsync_WhitNonEmptyGuid_ThenCallUpdateteAsyncMethodOfRepository()
+        {
+            // Arrange
+            string guid = Guid.NewGuid().ToString();
+            TodoModel model = new TodoModel() { Id = guid };
+
+            // Act
+            await service.SaveAsync(model);
+
+            // Assert
+            repositoryMock.Verify(rm => rm.Update(It.IsAny<Guid>(), It.IsAny<TodoDTO>()), Times.Once());
         }
     }
 }

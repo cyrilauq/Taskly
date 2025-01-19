@@ -48,6 +48,12 @@ namespace Taskly.Web.Application.Services
             return mapper.Map<IEnumerable<TodoModel>>(await todoRepository.GetAllForUser(authState.UserId.Value));
         }
 
+        public async Task<TodoModel> SaveAsync(TodoModel model)
+        {
+            Guid parseResult;
+            return model.Id == Guid.Empty.ToString() || !Guid.TryParse(model.Id, out parseResult) ? await CreateAsync(model) : await UpdateAsync(model.Id, model);
+        }
+
         public async Task<TodoModel> UpdateAsync(string key, TodoModel updatedEntity)
         {
             try
