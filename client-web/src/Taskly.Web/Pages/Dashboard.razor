@@ -14,7 +14,7 @@
             <DataAnnotationsValidator />
             <InputText @bind-Value="Todo.Name" class="form-control mb-2" placeholder="Todo's name" id="name" aria-label="Todo's name" />
             <InputTextArea @bind-Value="Todo.Content" class="form-control mb-2" placeholder="Short description" id="content" aria-label="Short description" />
-            <button class="btn btn-outline-primary py-1 rounded-3" type="submit">Create</button>
+            <button class="btn btn-outline-primary py-1 rounded-3" type="submit">Save</button>
         </EditForm>
     </BodyTemplate>
 </Modal>
@@ -34,6 +34,7 @@
                         @(todo.IsDone ? "Is finished" : "In process")
                     </p>
                     <div class="col-2 d-flex justify-content-end">
+                        <Icon Name="IconName.Gear" Size="IconSize.x5" @onclick="() => OnUpdateTodoClicked(todo.Id)" />
                         <Icon Name="IconName.Trash" Size="IconSize.x5" @onclick="() => OnDeleteClicked(todo.Id)" />
                     </div>
                 </div>

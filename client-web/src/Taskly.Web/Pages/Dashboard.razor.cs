@@ -20,7 +20,7 @@ namespace Taskly.Web.Pages
 
         private Modal newTodoModal = default!;
         public TodoModel Todo { get; set; } = new TodoModel();
-        public IEnumerable<TodoModel> Todos { get; set; } = [];
+        public IList<TodoModel> Todos { get; set; } = [];
         public int TodoCount { get; set; } = 0;
         public required EditContext EditContext { get; set; }
 
@@ -37,7 +37,7 @@ namespace Taskly.Web.Pages
         {
             try
             {
-                Todos = await TodoService.GetConnectedUserTodos();
+                Todos = (await TodoService.GetConnectedUserTodos()).ToList();
             }
             catch (ServiceException ex)
             {
@@ -53,8 +53,16 @@ namespace Taskly.Web.Pages
         {
             try
             {
-                await TodoService.CreateAsync(Todo);
-                TodoCount++;
+                TodoModel SavedTodo = await TodoService.SaveAsync(Todo);
+                if (Todo.Id == null)
+                {
+                    Todos.Add(SavedTodo);
+                }
+                else
+                {
+                    int indexOfPrevious = Todos.IndexOf(Todo);
+                    Todos[indexOfPrevious] = SavedTodo;
+                }
                 Todo = new TodoModel();
                 await newTodoModal.HideAsync();
             }
@@ -78,7 +86,7 @@ namespace Taskly.Web.Pages
             try
             {
                 await TodoService.DeleteAsync(todoId);
-                Todos = Todos.Where(todo => todo.Id != todoId);
+                Todos.Remove(Todos.First(t => t.Id == todoId));
             }
             catch (ServiceException ex)
             {
@@ -88,6 +96,13 @@ namespace Taskly.Web.Pages
             {
                 ToastService.ShowError("Un unexpected error occured");
             }
+        }
+
+        private async Task OnUpdateTodoClicked(string todoId)
+        {
+            Todo = Todos.First(t => t.Id == todoId);
+            EditContext = new EditContext(Todo);
+            await newTodoModal.ShowAsync();
         }
     }
 }
