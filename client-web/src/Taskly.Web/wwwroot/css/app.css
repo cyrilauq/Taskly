@@ -101,3 +101,11 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
+
+a {
+    color: rgb(92, 177, 218) !important;
+}
+
+h1 {
+    color: #83c6a5 !important;
+}
