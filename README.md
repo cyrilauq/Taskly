@@ -14,3 +14,10 @@ In this project, I will explore many things like:
 ## API
 
 The api will be build using two main design patterns: Clean Architecture and CQRS.
+
+## Start with the project
+On your compture you should
+- create a directory "LocalNuget" in the disk "C:\"
+- create a new nuget source "LocalNuget" that use the previously created directory as its path
+- create a package of the project "Taskly.Client.Domain"
+- push the create package on the "LocalNuget" source

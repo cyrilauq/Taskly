@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Taskly.Client.Domain" Version="1.0.0" />
-  </ItemGroup>
-
 </Project>
