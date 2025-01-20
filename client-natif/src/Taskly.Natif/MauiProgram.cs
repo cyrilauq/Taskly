@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Taskly.Natif.Extensions;
 
 namespace Taskly.Natif
 {
@@ -7,6 +8,9 @@ namespace Taskly.Natif
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
+            builder.Configuration.AddSettingsConfiguration();
+            var configuration = builder.Configuration;
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -15,8 +19,10 @@ namespace Taskly.Natif
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddServices(configuration);
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
