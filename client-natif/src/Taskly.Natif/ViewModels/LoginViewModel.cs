@@ -32,11 +32,17 @@ namespace Taskly.Natif.ViewModels
             OnLoginCommand = new AsyncRelayCommand(OnLogin);
         }
 
+        [RelayCommand]
         public async Task<bool> OnLogin()
         {
             FormCanBeEdited = false;
             var result = await _authenticationService.LoginWithCredentials(Login, Password);
+            // TODO : save authenticated user information
             FormCanBeEdited = true;
+            if(result)
+            {
+                await Shell.Current.GoToAsync("dashboard");
+            }
             return result;
         }
     }
