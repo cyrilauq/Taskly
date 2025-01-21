@@ -39,4 +39,4 @@ ENV ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
 ENV ASPNETCORE_ENVIRONMENT="Production"
 EXPOSE 80
 
-ENTRYPOINT ["dotnet", "api/src/TodoList.API.dll"]
+ENTRYPOINT ["dotnet", "./TodoList.API.dll"]
