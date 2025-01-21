@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /api/src/TodoList.API/appsettings.Development.json
 /client-web/src/Taskly.Web/wwwroot/appsettings.json
+/client-natif/src/Taskly.Natif/appsettings.json
