@@ -25,6 +25,6 @@
             Text="{Binding Password}" />
         <Button
             Text="Login"
-            Command="{Binding OnLoginCommand}" />
+            Command="{Binding LoginCommand}" />
     </VerticalStackLayout>
 </ContentPage>

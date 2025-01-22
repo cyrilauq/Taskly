@@ -4,10 +4,10 @@ namespace Taskly.Natif.Pages;
 
 public partial class LoginPage : ContentPage
 {
-	public LoginPage(LoginViewModel viewModel)
+	public LoginPage(LoginViewModel vm)
     {
-        BindingContext = viewModel;
-
         InitializeComponent();
+
+        BindingContext = vm;
 	}
 }
