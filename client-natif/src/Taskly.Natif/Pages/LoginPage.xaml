@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Taskly.Natif.Pages.LoginPage"
              xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
-             Title="Login"
-             x:DataType="vm:LoginViewModel">
+             x:DataType="vm:LoginViewModel"     
+             Shell.FlyoutBehavior="Disabled"
+             Title="Login">
     <VerticalStackLayout>
         <Label 
             Text="Login"
