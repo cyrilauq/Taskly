@@ -12,7 +12,7 @@ namespace Taskly.Natif.ViewModels
         {
             authState.OnStateChange += () =>
             {
-                ConnectedUser = authState.UserId.ToString();
+                ConnectedUser = authState.UserName;
             };
         }
     }
