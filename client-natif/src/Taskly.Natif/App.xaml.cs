@@ -1,12 +1,14 @@
-﻿namespace Taskly.Natif
+﻿using Taskly.Natif.ViewModels;
+
+namespace Taskly.Natif
 {
-    public partial class App : Application
+    public partial class App : Microsoft.Maui.Controls.Application
     {
-        public App()
+        public App(MenuViewModel menuViewModel)
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new AppShell(menuViewModel);
         }
     }
 }

@@ -4,11 +4,26 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Taskly.Natif"
-    Shell.FlyoutBehavior="Disabled"
-    Title="Taskly.Natif">
-
-    <ShellContent
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    xmlns:pages="clr-namespace:Taskly.Natif.Pages"
+    xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
+    Title="Taskly.Natif"
+    x:DataType="vm:MenuViewModel">
+    <Shell.FlyoutHeader>
+        <Label Text="{Binding ConnectedUser}" />
+    </Shell.FlyoutHeader>
+    <FlyoutItem Title="Home" FlyoutItemIsVisible="False">
+        <Tab>
+            <ShellContent
+                ContentTemplate="{DataTemplate local:MainPage}"
+                Route="MainPage" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Dashboard">
+        <Tab>
+            <ShellContent
+                ContentTemplate="{DataTemplate pages:DashboardPage}"
+                Route="dashboard" />
+        </Tab>
+    </FlyoutItem>
 
 </Shell>
