@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace Taskly.Natif
+namespace Taskly.Natif.Platforms.MacCatalyst
 {
     public class Program
     {

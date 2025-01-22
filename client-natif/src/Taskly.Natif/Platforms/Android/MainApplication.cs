@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace Taskly.Natif
+namespace Taskly.Natif.Platforms.Android
 {
 #if DEBUG
     [Application(UsesCleartextTraffic = true)]
@@ -10,7 +10,7 @@ namespace Taskly.Natif
 #endif
     public class MainApplication : MauiApplication
     {
-        public MainApplication(IntPtr handle, JniHandleOwnership ownership)
+        public MainApplication(nint handle, JniHandleOwnership ownership)
             : base(handle, ownership)
         {
         }

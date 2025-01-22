@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Taskly.Natif
+namespace Taskly.Natif.Platforms.MacCatalyst
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate
