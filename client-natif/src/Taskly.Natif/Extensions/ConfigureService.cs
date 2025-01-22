@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using Taskly.Client.Application;
+using Taskly.Natif.Application.Services.Interface;
 using Taskly.Natif.Infrastructure;
 using Taskly.Natif.Pages;
+using Taskly.Natif.Services;
 using Taskly.Natif.ViewModels;
-using Taskly.Natif.ViewModels.Interfaces;
 
 namespace Taskly.Natif.Extensions
 {
@@ -15,7 +16,8 @@ namespace Taskly.Natif.Extensions
             services.AddApplicationInfrastructure()
                 .ConfigureApplicationServices(configuration)
                 .AddViewModels()
-                .AddViews();
+                .AddViews()
+                .AddNatifServices();
 
             return services;
         }
@@ -23,6 +25,8 @@ namespace Taskly.Natif.Extensions
         private static IServiceCollection AddViewModels(this IServiceCollection services)
         {
             services.AddTransient<LoginViewModel>();
+            services.AddTransient<HomeViewModel>();
+            services.AddTransient<MenuViewModel>();
 
             return services;
         }
@@ -30,6 +34,15 @@ namespace Taskly.Natif.Extensions
         private static IServiceCollection AddViews(this IServiceCollection services)
         {
             services.AddTransient<LoginPage>();
+            services.AddTransient<MainPage>();
+            services.AddTransient<AppShell>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddNatifServices(this IServiceCollection services)
+        {
+            services.AddTransient<IStorageService, NatifStorageService>();
 
             return services;
         }

@@ -109,6 +109,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Taskly.Application\Taskly.Natif.Application.csproj" />
 	  <ProjectReference Include="..\Taskly.Natif.Infrastructure\Taskly.Natif.Infrastructure.csproj" />
 	</ItemGroup>
 
