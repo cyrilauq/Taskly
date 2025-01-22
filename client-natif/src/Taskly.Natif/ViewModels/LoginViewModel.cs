@@ -1,49 +1,46 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Windows.Input;
 using Taskly.Client.Application.Services.Interfaces;
+using Taskly.Client.Application.State.Interfaces;
+using Taskly.Natif.Application.Services.Interface;
 
 namespace Taskly.Natif.ViewModels
 {
     public partial class LoginViewModel : ObservableObject
     {
         private IAuthenticationService _authenticationService;
-        private string _login;
-        private string _password;
+        private IStorageService _storageService;
+        private IAuthState _authState;
 
-        public string Login
-        {
-            get => _login;
-            set => SetProperty(ref _login, value);
-        }
-        public string Password
-        {
-            get => _password;
-            set => SetProperty(ref _password, value);
-        }
+        [ObservableProperty]
+        private string? login;
+        [ObservableProperty]
+        private string? password;
+
         public bool FormCanBeEdited { get; private set; } = true;
 
-        public ICommand OnLoginCommand { private set; get; }
-
-        public LoginViewModel(IAuthenticationService authenticationService)
+        public LoginViewModel(IAuthenticationService authenticationService, IAuthState authState, IStorageService storageService)
         {
             _authenticationService = authenticationService;
-
-            OnLoginCommand = new AsyncRelayCommand(OnLogin);
+            _authState = authState;
+            _storageService = storageService;
         }
 
+        // Notice:
+        // This will create a new property of type "IRelayCommand" and of name "LoginCommand"
+        // The "RelayCommand" attribute will remove the "On" and "Async" from the base code and add the "Command" at the end of the property name when the property is generated.
         [RelayCommand]
-        public async Task<bool> OnLogin()
+        private async Task OnLoginAsync()
         {
             FormCanBeEdited = false;
-            var result = await _authenticationService.LoginWithCredentials(Login, Password);
+            var result = await _authenticationService.LoginWithCredentials(login, password);
             // TODO : save authenticated user information
             FormCanBeEdited = true;
             if(result)
             {
+                await _storageService.SaveAsync(_authState, nameof(IAuthState));
                 await Shell.Current.GoToAsync("dashboard");
             }
-            return result;
         }
     }
 }
