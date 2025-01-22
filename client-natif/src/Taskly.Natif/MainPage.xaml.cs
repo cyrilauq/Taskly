@@ -1,10 +1,23 @@
-﻿namespace Taskly.Natif
+﻿using Taskly.Natif.ViewModels;
+
+namespace Taskly.Natif
 {
     public partial class MainPage : ContentPage
     {
-        public MainPage()
+        private HomeViewModel _homeViewModel;
+
+        public MainPage(HomeViewModel vm)
         {
             InitializeComponent();
+
+            BindingContext = _homeViewModel = vm;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            await _homeViewModel.LoadState();
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
