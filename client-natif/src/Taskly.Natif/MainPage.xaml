@@ -30,25 +30,28 @@
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
-            <Button
-                x:Name="LoginBtn"
-                Style="{StaticResource TasklyButton}"
-                Text="Login" 
-                SemanticProperties.Hint="Go to login page"
-                Clicked="OnLoginClicked" />
+            <StackLayout
+                Orientation="Vertical">
+                <Button
+                    x:Name="LoginBtn"
+                    Style="{StaticResource TasklyButton}"
+                    Text="Login" 
+                    SemanticProperties.Hint="Go to login page"
+                    Clicked="OnLoginClicked" />
 
-            <Label
-                Text="or"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                <Label
+                    Text="or"
+                    Style="{StaticResource SubHeadline}"
+                    SemanticProperties.HeadingLevel="Level2"
+                    SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
-            <Button
-                x:Name="RegisterBtn"  
-                Text="Register" 
-                SemanticProperties.Hint="Go to register page (not implemented yet)"
-                Clicked="OnCounterClicked"
-                Style="{StaticResource TasklyButton}" />
+                <Button
+                    x:Name="RegisterBtn"  
+                    Text="Register" 
+                    SemanticProperties.Hint="Go to register page (not implemented yet)"
+                    Clicked="OnCounterClicked"
+                    Style="{StaticResource TasklyButton}" />
+            </StackLayout>
         </VerticalStackLayout>
     </ScrollView>
 
