@@ -34,12 +34,11 @@ namespace Taskly.Natif.ViewModels
         {
             FormCanBeEdited = false;
             var result = await _authenticationService.LoginWithCredentials(login, password);
-            // TODO : save authenticated user information
             FormCanBeEdited = true;
             if(result)
             {
                 await _storageService.SaveAsync(_authState, nameof(IAuthState));
-                await Shell.Current.GoToAsync("dashboard");
+                await Shell.Current.GoToAsync("//Dashboard");
             }
         }
     }
