@@ -9,5 +9,11 @@ namespace Taskly.Natif.ViewModels
     {
         [ObservableProperty]
         private IList<TodoModel> _todos;
+
+        [RelayCommand]
+        private async Task OnPageLoadedAsync()
+        {
+            Todos = new List<TodoModel>(await todoService.GetConnectedUserTodos());
+        }
     }
 }
