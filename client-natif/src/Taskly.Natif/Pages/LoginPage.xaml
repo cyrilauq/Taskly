@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Taskly.Natif.Pages.LoginPage"
              xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
-             x:DataType="vm:LoginViewModel"     
+             x:DataType="vm:LoginViewModel"   
+             Shell.BackgroundColor="{StaticResource TasklyBlue}"
              Shell.FlyoutBehavior="Disabled">
     <Shell.TitleView>
         <Grid 
