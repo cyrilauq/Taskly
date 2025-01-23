@@ -6,10 +6,32 @@
     xmlns:local="clr-namespace:Taskly.Natif"
     xmlns:pages="clr-namespace:Taskly.Natif.Pages"
     xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
-    Title="Taskly.Natif"
-    x:DataType="vm:MenuViewModel">
+    Title="Taskly.Natif">
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions="0.075*,0.8*">
+                <Label Grid.Column="1"
+                       Text="{Binding Title}"
+                       VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
     <Shell.FlyoutHeader>
-        <Label Text="{Binding ConnectedUser}" />
+        <ContentView
+            Padding="10,10,0,10"
+            HeightRequest="55"
+            BackgroundColor="BlueViolet">
+            <HorizontalStackLayout>
+                <Label 
+                    Text="Hello "
+                    VerticalTextAlignment="Center"/>
+                <Label           
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    Text="{Binding ConnectedUser}"
+                    VerticalTextAlignment="Center"/>
+            </HorizontalStackLayout>
+        </ContentView>
     </Shell.FlyoutHeader>
     <FlyoutItem Title="Home" FlyoutItemIsVisible="False">
         <Tab>
@@ -22,7 +44,7 @@
         <Tab>
             <ShellContent
                 ContentTemplate="{DataTemplate pages:DashboardPage}"
-                Route="dashboard" />
+                Route="Dashboard" />
         </Tab>
     </FlyoutItem>
 
