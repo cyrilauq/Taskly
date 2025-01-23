@@ -33,7 +33,7 @@ namespace Taskly.Natif.ViewModels
         private async Task OnLoginAsync()
         {
             FormCanBeEdited = false;
-            var result = await _authenticationService.LoginWithCredentials(login, password);
+            var result = await _authenticationService.LoginWithCredentials(Login, Password);
             FormCanBeEdited = true;
             if(result)
             {
