@@ -23,7 +23,8 @@ namespace Taskly.Natif.ViewModels
                 _authState.UserId = saveState.UserId;
                 _authState.UserName = saveState.UserName;
                 _authState.NotifyStateChanged();
-                await Shell.Current.GoToAsync("//Dashboard");
+                // Thread safe navigation
+                Microsoft.Maui.Controls.Application.Current?.Dispatcher.Dispatch(async () => await Shell.Current.GoToAsync("//Dashboard", false));
             }
         }
 
