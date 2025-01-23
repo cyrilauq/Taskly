@@ -4,28 +4,45 @@
              x:Class="Taskly.Natif.Pages.LoginPage"
              xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
              x:DataType="vm:LoginViewModel"     
-             Shell.FlyoutBehavior="Disabled"
-             Title="Login">
-    <VerticalStackLayout>
-        <Label 
-            Text="Login"
-            VerticalOptions="Center" 
-            HorizontalOptions="Start" />
-        <Entry    
-            x:Name="LoginInput"
-            Placeholder="Login"
-            Text="{Binding Login}" />
-        <Label 
-            Text="Password"
-            VerticalOptions="Center" 
-            HorizontalOptions="Start" />
-        <Entry    
-            x:Name="PasswordInput"
-            Placeholder="Password"
-            IsPassword="True"
-            Text="{Binding Password}" />
+             Shell.FlyoutBehavior="Disabled">
+    <Shell.TitleView>
+        <Grid 
+            BackgroundColor="{StaticResource TasklyBlue}">
+            <Label               
+                Text="Login"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center" 
+                Style="{StaticResource Headline}"
+                TextColor="AliceBlue" />
+        </Grid>
+    </Shell.TitleView>
+    <VerticalStackLayout
+        WidthRequest="300"
+        HorizontalOptions="Center">
+        <VerticalStackLayout
+            Margin="0,50">
+            <Label 
+                Text="Login"
+                VerticalOptions="Center" 
+                HorizontalOptions="Start" />
+            <Entry    
+                x:Name="LoginInput"
+                Placeholder="Login"
+                Text="{Binding Login}"
+                HorizontalOptions="Start"  />
+            <Label 
+                Text="Password"
+                VerticalOptions="Center" 
+                HorizontalOptions="Start" />
+            <Entry    
+                x:Name="PasswordInput"
+                Placeholder="Password" 
+                IsPassword="True"
+                Text="{Binding Password}" />
+        </VerticalStackLayout>
         <Button
             Text="Login"
-            Command="{Binding LoginCommand}" />
+            Command="{Binding LoginCommand}"
+            Style="{StaticResource TasklyButton}"/>
     </VerticalStackLayout>
 </ContentPage>
