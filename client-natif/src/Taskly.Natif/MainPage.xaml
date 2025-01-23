@@ -5,14 +5,19 @@
              Shell.FlyoutBehavior="Disabled">
 
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Image
-                Source="taskly_icon.png"
-                HeightRequest="50"
-                Aspect="AspectFit"
-                SemanticProperties.Description="Taskly logo" />
+        <VerticalStackLayout>
+            <HorizontalStackLayout Padding="20">
+                <Image
+                    Source="taskly_icon.png"
+                    HeightRequest="50"
+                    Aspect="AspectFit"
+                    SemanticProperties.Description="Taskly logo" />
+                <Label
+                    Padding="15,0,0,0"
+                    Text="Taskly!"
+                    Style="{StaticResource Headline}"
+                    SemanticProperties.HeadingLevel="Level1" />
+            </HorizontalStackLayout>
 
             <Label
                 Text="Welcome on Taskly!"
@@ -27,10 +32,10 @@
 
             <Button
                 x:Name="LoginBtn"
+                Style="{StaticResource TasklyButton}"
                 Text="Login" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnLoginClicked"
-                HorizontalOptions="Fill" />
+                SemanticProperties.Hint="Go to login page"
+                Clicked="OnLoginClicked" />
 
             <Label
                 Text="or"
@@ -39,11 +44,11 @@
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
             <Button
-                x:Name="RegisterBtn"
+                x:Name="RegisterBtn"  
                 Text="Register" 
-                SemanticProperties.Hint="Counts the number of times you click"
+                SemanticProperties.Hint="Go to register page (not implemented yet)"
                 Clicked="OnCounterClicked"
-                HorizontalOptions="Fill" />
+                Style="{StaticResource TasklyButton}" />
         </VerticalStackLayout>
     </ScrollView>
 

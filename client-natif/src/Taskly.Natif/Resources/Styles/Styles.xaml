@@ -424,4 +424,10 @@
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
+    <Style x:Key="TasklyButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource TasklyBlue}" />
+        <Setter Property="WidthRequest" Value="150" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+    </Style>
+
 </ResourceDictionary>

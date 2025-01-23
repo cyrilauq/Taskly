@@ -42,4 +42,12 @@
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+
+    <Color x:Key="TasklyBlue" x:FactoryMethod="FromRgb">
+        <x:Arguments>
+            <x:Int32>92</x:Int32>
+            <x:Int32>177</x:Int32>
+            <x:Int32>218</x:Int32>
+        </x:Arguments>
+    </Color>
 </ResourceDictionary>
