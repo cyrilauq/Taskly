@@ -5,10 +5,17 @@ namespace Taskly.Natif.Services
 {
     internal class NatifStorageService : IStorageService
     {
-        public Task<bool> SaveAsync<T>(T value, string? key = null)
+        public Task<bool> SaveAsync<T>(T? value, string? key = null)
         {
             string keyValue = key is null ? nameof(T) : key;
-            Preferences.Default.Set(key, JsonConvert.SerializeObject(value));
+            if(value is null)
+            {
+                Preferences.Default.Remove(keyValue);
+            }
+            else
+            {
+                Preferences.Default.Set(key, JsonConvert.SerializeObject(value));
+            }
             return Task.FromResult(true);
         }
 
