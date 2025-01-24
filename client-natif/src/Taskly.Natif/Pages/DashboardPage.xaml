@@ -12,22 +12,27 @@
         <toolkit:EventToCommandBehavior Command="{Binding PageLoadedCommand}" EventName="Loaded" />
     </ContentPage.Behaviors>
     <VerticalStackLayout>
-        <ListView ItemsSource="{Binding Todos}">
+        <ListView ItemsSource="{Binding Todos}" HasUnevenRows="True" SeparatorVisibility="None" SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:TodoModel">
                     <ViewCell>
-                        <Grid Padding="10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+                        <Grid
+                            ColumnDefinitions="1*,8*,1*"
+                            RowDefinitions="*,*"
+                            RowSpacing="1"
+                            Padding="10">
                             <Label Grid.Row="0"
+                                Grid.Column="1"
                                 Text="{Binding Name}"
-                                FontAttributes="Bold" />
-                            <Label Grid.Row="1"
+                                FontSize="14"
+                                TextDecorations="Underline"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Fill" />
+                            <Label Grid.Row="1"     
+                                Grid.Column="1"
                                 Text="{Binding Content}"
                                 FontAttributes="Italic"
-                                VerticalOptions="End" />
+                                HorizontalOptions="Fill"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
