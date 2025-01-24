@@ -35,6 +35,21 @@
             </HorizontalStackLayout>
         </ContentView>
     </Shell.FlyoutHeader>
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout>
+            <BoxView   
+                Color="Gray"  
+                Margin="0,0,0,0"                   
+                HeightRequest="2"  
+                VerticalOptions="Fill" />
+            <Button
+                Text="Logout"
+                Command="{Binding LogoutCommand}"
+                BackgroundColor="Transparent"
+                TextColor="Black"
+                CornerRadius="0" />
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
     <FlyoutItem Title="Home" FlyoutItemIsVisible="False">
         <Tab>
             <ShellContent
