@@ -20,15 +20,17 @@
         <ContentView
             Padding="10,10,0,10"
             HeightRequest="55"
-            BackgroundColor="BlueViolet">
+            BackgroundColor="{StaticResource TasklyBlue}">
             <HorizontalStackLayout>
                 <Label 
-                    Text="Hello "
+                    Text="Hello "          
+                    TextColor="{StaticResource White}"
                     VerticalTextAlignment="Center"/>
                 <Label           
                     FontAttributes="Bold"
                     FontSize="Medium"
-                    Text="{Binding ConnectedUser}"
+                    Text="{Binding ConnectedUser}" 
+                    TextColor="{StaticResource White}"
                     VerticalTextAlignment="Center"/>
             </HorizontalStackLayout>
         </ContentView>
