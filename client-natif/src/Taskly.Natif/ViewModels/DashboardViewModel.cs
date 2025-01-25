@@ -45,6 +45,9 @@ namespace Taskly.Natif.ViewModels
             try
             {
                 var addResult = await todoService.CreateAsync(new() { Content = TodoContent, Name = TodoName });
+                TodoName = "";
+                TodoContent = "";
+                CreateFormVisible = false;
                 Todos.Add(addResult);
             }
             catch (ServiceException se)
