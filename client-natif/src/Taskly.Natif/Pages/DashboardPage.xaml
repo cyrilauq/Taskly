@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"                 
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:model="clr-namespace:Taskly.Client.Application.Model;assembly=Taskly.Client.Application"
+             xmlns:pages="clr-namespace:Taskly.Natif.Pages"
              x:Class="Taskly.Natif.Pages.DashboardPage"
              xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
              Title="Dashboard"
@@ -11,8 +12,27 @@
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding PageLoadedCommand}" EventName="Loaded" />
     </ContentPage.Behaviors>
-    <VerticalStackLayout>
-        <ListView ItemsSource="{Binding Todos}" HasUnevenRows="True" SeparatorVisibility="None" SelectionMode="None">
+    <Grid RowDefinitions="Auto, *">
+        <VerticalStackLayout Grid.Row="0">
+            <Button 
+                Text="New"
+                Command="{Binding CreateClickedCommand}"/>
+            <VerticalStackLayout               
+                IsVisible="{Binding CreateFormVisible}">
+                <Label Text="Name" />
+                <Entry 
+                    Placeholder="Todo name"  
+                    Text="{Binding TodoName}"/>
+                <Label Text="Content" />
+                <Entry 
+                    Placeholder="Todo's content" 
+                    Text="{Binding TodoContent}"/>
+                <Button 
+                    Text="Create"
+                    Command="{Binding CreateCommand}"/>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+        <ListView Grid.Row="1" ItemsSource="{Binding Todos}" HasUnevenRows="True" SeparatorVisibility="None" SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:TodoModel">
                     <ViewCell>
@@ -34,30 +54,30 @@
                                 RowSpacing="1"
                                 Padding="10">
                                 <Label Grid.Row="0"
-                                        Grid.Column="1"
-                                        Text="{Binding Name}"
-                                        FontSize="14"
-                                        TextDecorations="Underline"
-                                        FontAttributes="Bold"
-                                        HorizontalOptions="Fill" />
+                                    Grid.Column="1"
+                                    Text="{Binding Name}"
+                                    FontSize="14"
+                                    TextDecorations="Underline"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Fill" />
                                 <Label Grid.Row="0"
-                                        Grid.Column="2"
-                                        HorizontalTextAlignment="End"
-                                        Text="{Binding CreatedOn, StringFormat='{0:d}'}"
-                                        FontSize="12"
-                                        FontAttributes="Italic"
-                                        HorizontalOptions="Fill" />
+                                    Grid.Column="2"
+                                    HorizontalTextAlignment="End"
+                                    Text="{Binding CreatedOn, StringFormat='{0:d}'}"
+                                    FontSize="12"
+                                    FontAttributes="Italic"
+                                    HorizontalOptions="Fill" />
                                 <Label Grid.Row="1"     
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="2"
-                                        Text="{Binding Content}"
-                                        FontAttributes="Italic"
-                                        HorizontalOptions="Fill"/>
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Text="{Binding Content}"
+                                    FontAttributes="Italic"
+                                    HorizontalOptions="Fill"/>
                             </Grid>
                         </SwipeView>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

@@ -5,22 +5,27 @@ using Taskly.Client.Application.Model;
 using Taskly.Client.Application.Services.Interfaces;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using System.Collections.ObjectModel;
 
 namespace Taskly.Natif.ViewModels
 {
     public partial class DashboardViewModel(ITodoService todoService) : ObservableObject
     {
         [ObservableProperty]
-        private IList<TodoModel> _todos;
+        private string? _todoName;
+        [ObservableProperty]
+        private string? _todoContent;
+        [ObservableProperty]
+        private bool _createFormVisible;
+        [ObservableProperty]
+        private ObservableCollection<TodoModel> _todos;
 
         [RelayCommand]
         private async Task OnPageLoadedAsync()
         {
             try
             {
-                // TODO : Display delete button when todo is swiped from left to right
-                // TODO : Display edit button when todo is swiped from rigth to left
-                Todos = new List<TodoModel>(await todoService.GetConnectedUserTodos());
+                Todos = new ObservableCollection<TodoModel>(await todoService.GetConnectedUserTodos());
             }
             catch (ServiceException se)
             {
@@ -32,6 +37,32 @@ namespace Taskly.Natif.ViewModels
                 var toast = Toast.Make("Unexpected error", ToastDuration.Long, 14);
                 await toast.Show();
             }
+        }
+
+        [RelayCommand]
+        private async Task OnCreateAsync()
+        {
+            try
+            {
+                var addResult = await todoService.CreateAsync(new() { Content = TodoContent, Name = TodoName });
+                Todos.Add(addResult);
+            }
+            catch (ServiceException se)
+            {
+                var toast = Toast.Make(se.Message, ToastDuration.Long, 14);
+                await toast.Show();
+            }
+            catch (Exception se)
+            {
+                var toast = Toast.Make("Unexpected error", ToastDuration.Long, 14);
+                await toast.Show();
+            }
+        }
+
+        [RelayCommand]
+        private void OnCreateClicked()
+        {
+            CreateFormVisible = !CreateFormVisible;
         }
     }
 }
