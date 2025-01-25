@@ -64,5 +64,28 @@ namespace Taskly.Natif.ViewModels
         {
             CreateFormVisible = !CreateFormVisible;
         }
+
+        [RelayCommand]
+        private async Task OnDeleteAsync(string todoId)
+        {
+            try
+            {
+                var deleteResult = await todoService.DeleteAsync(todoId);
+                if(deleteResult)
+                {
+                    Todos.Remove(Todos.First(t => t.Id == todoId));
+                }
+            }
+            catch (ServiceException se)
+            {
+                var toast = Toast.Make(se.Message, ToastDuration.Long, 14);
+                await toast.Show();
+            }
+            catch (Exception se)
+            {
+                var toast = Toast.Make("Unexpected error", ToastDuration.Long, 14);
+                await toast.Show();
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@
              xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
              Title="Dashboard"
              Shell.FlyoutBehavior="Flyout"
+             x:Name="Dashboard"
              x:DataType="vm:DashboardViewModel">
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding PageLoadedCommand}" EventName="Loaded" />
@@ -15,10 +16,10 @@
     <Grid RowDefinitions="Auto, *">
         <VerticalStackLayout Grid.Row="0">
             <Button 
-                Text="New"
+                Text="New"             
                 Style="{StaticResource TasklyButton}"
                 Clicked="CreateBtn_Clicked"/>
-            <VerticalStackLayout               
+            <VerticalStackLayout 
                 IsVisible="False"
                 x:Name="CreateForm">
                 <Label Text="Name" />
@@ -30,7 +31,7 @@
                     Placeholder="Todo's content" 
                     Text="{Binding TodoContent}"/>
                 <Button 
-                    Text="Create"
+                    Text="Create"                                                      
                     Style="{StaticResource TasklyButton}"
                     Command="{Binding CreateCommand}"/>
             </VerticalStackLayout>
@@ -48,7 +49,9 @@
                             <SwipeView.RightItems>
                                 <SwipeItem
                                     BackgroundColor="Red"
-                                    Text="Delete" />
+                                    Text="Delete"    
+                                    Command="{Binding Source={x:Reference Dashboard}, Path=BindingContext.DeleteCommand}"
+                                    CommandParameter="{Binding Id}"/>
                             </SwipeView.RightItems>
 
                             <Grid
