@@ -30,11 +30,11 @@
                 x:Name="LoginInput"
                 Placeholder="Login"
                 Text="{Binding Login}"
-                HorizontalOptions="Start"  />
+                HorizontalOptions="FillAndExpand"  />
             <Label 
                 Text="Password"
                 VerticalOptions="Center" 
-                HorizontalOptions="Start" />
+                HorizontalOptions="FillAndExpand" />
             <Entry    
                 x:Name="PasswordInput"
                 Placeholder="Password" 
