@@ -16,9 +16,11 @@
         <VerticalStackLayout Grid.Row="0">
             <Button 
                 Text="New"
-                Command="{Binding CreateClickedCommand}"/>
+                Style="{StaticResource TasklyButton}"
+                Clicked="CreateBtn_Clicked"/>
             <VerticalStackLayout               
-                IsVisible="{Binding CreateFormVisible}">
+                IsVisible="False"
+                x:Name="CreateForm">
                 <Label Text="Name" />
                 <Entry 
                     Placeholder="Todo name"  
@@ -29,6 +31,7 @@
                     Text="{Binding TodoContent}"/>
                 <Button 
                     Text="Create"
+                    Style="{StaticResource TasklyButton}"
                     Command="{Binding CreateCommand}"/>
             </VerticalStackLayout>
         </VerticalStackLayout>
