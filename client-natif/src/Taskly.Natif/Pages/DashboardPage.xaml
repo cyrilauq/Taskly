@@ -25,11 +25,11 @@
                 <Label Text="Name" />
                 <Entry 
                     Placeholder="Todo name"  
-                    Text="{Binding TodoName}"/>
+                    Text="{Binding Todo.Name}"/>
                 <Label Text="Content" />
                 <Entry 
                     Placeholder="Todo's content" 
-                    Text="{Binding TodoContent}"/>
+                    Text="{Binding Todo.Content}"/>
                 <Button 
                     Text="Create"                                                      
                     Style="{StaticResource TasklyButton}"
@@ -44,7 +44,9 @@
                             <SwipeView.LeftItems>
                                 <SwipeItem
                                     BackgroundColor="Yellow"
-                                    Text="Edit" />
+                                    Text="Edit"
+                                    Command="{Binding Source={x:Reference Dashboard}, Path=BindingContext.UpdateCommand}"
+                                    CommandParameter="{Binding Id}" />
                             </SwipeView.LeftItems>
                             <SwipeView.RightItems>
                                 <SwipeItem
