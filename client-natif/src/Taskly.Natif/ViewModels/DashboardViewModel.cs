@@ -19,6 +19,8 @@ namespace Taskly.Natif.ViewModels
         private bool _createFormVisible;
         [ObservableProperty]
         private ObservableCollection<TodoModel> _todos;
+        [ObservableProperty]
+        private TodoModel? _todo;
 
         [RelayCommand]
         private async Task OnPageLoadedAsync()
@@ -44,7 +46,7 @@ namespace Taskly.Natif.ViewModels
         {
             try
             {
-                var addResult = await todoService.CreateAsync(new() { Content = TodoContent, Name = TodoName });
+                var addResult = await todoService.SaveAsync(new() { Content = TodoContent, Name = TodoName });
                 TodoName = "";
                 TodoContent = "";
                 CreateFormVisible = false;
@@ -65,7 +67,16 @@ namespace Taskly.Natif.ViewModels
         [RelayCommand]
         private void OnCreateClicked()
         {
+            Todo = new();
             CreateFormVisible = !CreateFormVisible;
+        }
+
+        [RelayCommand]
+        private void OnUpdateClicked(string todoId)
+        {
+            CreateFormVisible = true;
+            var todo = Todos.First(t => t.Id == todoId);
+            Todo = todo;
         }
 
         [RelayCommand]
