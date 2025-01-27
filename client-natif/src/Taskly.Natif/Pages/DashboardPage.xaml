@@ -25,11 +25,11 @@
                 <Label Text="Name" />
                 <Entry 
                     Placeholder="Todo name"  
-                    Text="{Binding Todo.Name}"/>
+                    Text="{Binding TodoName}"/>
                 <Label Text="Content" />
                 <Entry 
                     Placeholder="Todo's content" 
-                    Text="{Binding Todo.Content}"/>
+                    Text="{Binding TodoContent}"/>
                 <Button 
                     Text="Create"                                                      
                     Style="{StaticResource TasklyButton}"
