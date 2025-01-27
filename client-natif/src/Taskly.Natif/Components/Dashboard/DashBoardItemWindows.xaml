@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Taskly.Client.Application.Model;assembly=Taskly.Client.Application"
+             xmlns:local="clr-namespace:Taskly.Natif.Components.Dashboard"
+             x:Class="Taskly.Natif.Components.Dashboard.DashBoardItemWindows"
+             x:Name="DashBoardListItemWindows">
+    <ContentView.Content>
+        <VerticalStackLayout>
+            <Grid
+                ColumnDefinitions="1*,6*,2*,1*"
+                RowDefinitions="*,*"
+                RowSpacing="1"
+                Padding="10">
+                <Label Grid.Row="0"
+                    Grid.Column="1"
+                    Text="{Binding Name}"
+                    FontSize="14"
+                    TextDecorations="Underline"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Fill" />
+                <Label Grid.Row="0"
+                    Grid.Column="2"
+                    HorizontalTextAlignment="End"
+                    Text="{Binding CreatedOn, StringFormat='{0:d}'}"
+                    FontSize="12"
+                    FontAttributes="Italic"
+                    HorizontalOptions="Fill" />
+                <Label Grid.Row="1"     
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Text="{Binding Content}"
+                    FontAttributes="Italic"
+                    HorizontalOptions="Fill"/>
+            </Grid>
+            <Button Text="Edit"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemWindows}}, Path=OnUpdate}"
+                CommandParameter="{Binding Id}" />
+            <Button Text="Delete"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemWindows}}, Path=OnDelete}"
+                CommandParameter="{Binding Id}" />
+        </VerticalStackLayout>
+    </ContentView.Content>
+</ContentView>
