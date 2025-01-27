@@ -18,9 +18,9 @@
             <Button 
                 Text="New"             
                 Style="{StaticResource TasklyButton}"
-                Clicked="CreateBtn_Clicked"/>
+                Command="{Binding CreateClickedCommand}"/>
             <VerticalStackLayout 
-                IsVisible="False"
+                IsVisible="{Binding CreateFormVisible}"
                 x:Name="CreateForm">
                 <Label Text="Name" />
                 <Entry 
