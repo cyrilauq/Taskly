@@ -14,10 +14,7 @@ namespace Taskly.Natif
             var configuration = builder.Configuration;
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit(options =>
-                {
-                    options.SetShouldEnableSnackbarOnWindows(true);
-                })
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
