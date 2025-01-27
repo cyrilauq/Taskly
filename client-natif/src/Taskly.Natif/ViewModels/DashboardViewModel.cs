@@ -46,11 +46,28 @@ namespace Taskly.Natif.ViewModels
         {
             try
             {
-                var addResult = await todoService.SaveAsync(new() { Content = TodoContent, Name = TodoName });
+
+                if (Todo != null)
+                {
+                    Todo.Content = TodoContent;
+                    Todo.Name = TodoName;
+                    var saveResult = await todoService.SaveAsync(Todo);
+                    var oldTodoPos = Todos.IndexOf(Todo);
+                    Todos[oldTodoPos] = saveResult;
+                }
+                else
+                {
+                    var saveResult = await todoService.SaveAsync(new() { Content = TodoContent, Name = TodoName });
+                    TodoName = "";
+                    TodoContent = "";
+                    Todo = null;
+                    CreateFormVisible = false;
+                    Todos.Add(saveResult);
+                }
                 TodoName = "";
                 TodoContent = "";
+                Todo = null;
                 CreateFormVisible = false;
-                Todos.Add(addResult);
             }
             catch (ServiceException se)
             {
@@ -67,8 +84,10 @@ namespace Taskly.Natif.ViewModels
         [RelayCommand]
         private void OnCreateClicked()
         {
-            Todo = new();
-            CreateFormVisible = !CreateFormVisible;
+            CreateFormVisible = true;
+            Todo = null;
+            TodoName = "";
+            TodoContent = "";
         }
 
         [RelayCommand]
@@ -77,6 +96,8 @@ namespace Taskly.Natif.ViewModels
             CreateFormVisible = true;
             var todo = Todos.First(t => t.Id == todoId);
             Todo = todo;
+            TodoName = Todo.Name;
+            TodoContent = Todo.Content;
         }
 
         [RelayCommand]
