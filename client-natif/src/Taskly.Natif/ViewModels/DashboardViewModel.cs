@@ -42,7 +42,7 @@ namespace Taskly.Natif.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnCreateAsync()
+        private async Task OnSaveAsync()
         {
             try
             {

@@ -31,9 +31,9 @@
                     Placeholder="Todo's content" 
                     Text="{Binding TodoContent}"/>
                 <Button 
-                    Text="Create"                                                      
+                    Text="Save"                                                      
                     Style="{StaticResource TasklyButton}"
-                    Command="{Binding CreateCommand}"/>
+                    Command="{Binding SaveCommand}"/>
             </VerticalStackLayout>
         </VerticalStackLayout>
         <ListView Grid.Row="1" ItemsSource="{Binding Todos}" HasUnevenRows="True" SeparatorVisibility="None" SelectionMode="None">
