@@ -4,6 +4,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:model="clr-namespace:Taskly.Client.Application.Model;assembly=Taskly.Client.Application"
              xmlns:pages="clr-namespace:Taskly.Natif.Pages"
+             xmlns:components="clr-namespace:Taskly.Natif.Components.Dashboard"
              x:Class="Taskly.Natif.Pages.DashboardPage"
              xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
              Title="Dashboard"
@@ -47,7 +48,7 @@
                                         <SwipeItem
                                             BackgroundColor="Yellow"
                                             Text="Edit"
-                                            Command="{Binding Source={x:Reference Dashboard}, Path=BindingContext.UpdateCommand}"
+                                            Command="{Binding Source={x:Reference Dashboard}, Path=BindingContext.UpdateClickedCommand}"
                                             CommandParameter="{Binding Id}" />
                                     </SwipeView.LeftItems>
                                     <SwipeView.RightItems>
@@ -87,40 +88,9 @@
                                 </SwipeView>
                             </On>
                             <On Platform="WinUI,UWP">
-                                <VerticalStackLayout x:Name="Windows__TodoItem">
-                                    <Grid
-                                        ColumnDefinitions="1*,6*,2*,1*"
-                                        RowDefinitions="*,*"
-                                        RowSpacing="1"
-                                        Padding="10">
-                                        <Label Grid.Row="0"
-                                            Grid.Column="1"
-                                            Text="{Binding Name}"
-                                            FontSize="14"
-                                            TextDecorations="Underline"
-                                            FontAttributes="Bold"
-                                            HorizontalOptions="Fill" />
-                                        <Label Grid.Row="0"
-                                            Grid.Column="2"
-                                            HorizontalTextAlignment="End"
-                                            Text="{Binding CreatedOn, StringFormat='{0:d}'}"
-                                            FontSize="12"
-                                            FontAttributes="Italic"
-                                            HorizontalOptions="Fill" />
-                                        <Label Grid.Row="1"     
-                                            Grid.Column="1"
-                                            Grid.ColumnSpan="2"
-                                            Text="{Binding Content}"
-                                            FontAttributes="Italic"
-                                            HorizontalOptions="Fill"/>
-                                    </Grid>
-                                    <Button Text="Edit"
-                                        Command="{Binding Source={x:Reference Dashboard}, Path=BindingContext.UpdateClickedCommand}"
-                                        CommandParameter="{Binding Id}" />
-                                    <Button Text="Delete"
-                                        Command="{Binding Source={x:Reference Dashboard}, Path=BindingContext.DeleteCommand}"
-                                        CommandParameter="{Binding Id}" />
-                                </VerticalStackLayout>
+                                <components:DashBoardItemWindows   
+                                    OnDelete="{Binding Source={x:Reference Dashboard}, Path=BindingContext.DeleteCommand}"
+                                    OnUpdate="{Binding Source={x:Reference Dashboard}, Path=BindingContext.UpdateClickedCommand}" />
                             </On>
                         </OnPlatform>
                     </ViewCell>
