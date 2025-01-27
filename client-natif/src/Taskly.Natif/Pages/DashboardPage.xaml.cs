@@ -10,9 +10,4 @@ public partial class DashboardPage : ContentPage
 
 		BindingContext = vm;
     }
-
-    private void CreateBtn_Clicked(object sender, EventArgs e)
-    {
-        CreateForm.IsVisible = !CreateForm.IsVisible;
-    }
 }
