@@ -4,41 +4,51 @@
              xmlns:models="clr-namespace:Taskly.Client.Application.Model;assembly=Taskly.Client.Application"
              xmlns:local="clr-namespace:Taskly.Natif.Components.Dashboard"
              x:Class="Taskly.Natif.Components.Dashboard.DashBoardItemWindows"
-             x:Name="DashBoardListItemWindows">
+             x:Name="DashBoardListItemWindows"
+             Margin="50,0"
+             Padding="0"
+             WidthRequest="600">
     <ContentView.Content>
         <VerticalStackLayout>
             <Grid
-                ColumnDefinitions="1*,6*,2*,1*"
+                ColumnDefinitions="1*,7*,2*"
                 RowDefinitions="*,*"
                 RowSpacing="1"
-                Padding="10">
+                Padding="10"
+                HorizontalOptions="Fill">
                 <Label Grid.Row="0"
-                    Grid.Column="1"
+                    Grid.Column="0"
+                       Grid.ColumnSpan="2"
                     Text="{Binding Name}"
                     FontSize="14"
                     TextDecorations="Underline"
-                    FontAttributes="Bold"
-                    HorizontalOptions="Fill" />
+                    FontAttributes="Bold" />
                 <Label Grid.Row="0"
                     Grid.Column="2"
                     HorizontalTextAlignment="End"
                     Text="{Binding CreatedOn, StringFormat='{0:d}'}"
                     FontSize="12"
-                    FontAttributes="Italic"
-                    HorizontalOptions="Fill" />
+                    FontAttributes="Italic" />
                 <Label Grid.Row="1"     
-                    Grid.Column="1"
+                    Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Text="{Binding Content}"
-                    FontAttributes="Italic"
-                    HorizontalOptions="Fill"/>
+                    FontAttributes="Italic"/>
             </Grid>
-            <Button Text="Edit"
-                Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemWindows}}, Path=OnUpdate}"
-                CommandParameter="{Binding Id}" />
-            <Button Text="Delete"
-                Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemWindows}}, Path=OnDelete}"
-                CommandParameter="{Binding Id}" />
+            <Grid ColumnDefinitions="1*,1*" HorizontalOptions="Center" WidthRequest="600">
+                <Button Text="Edit"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemWindows}}, Path=OnUpdate}"
+                    CommandParameter="{Binding Id}"
+                    Grid.Column="0" 
+                    WidthRequest="100"
+                    HorizontalOptions="Start"/>
+                <Button Text="Delete"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemWindows}}, Path=OnDelete}"
+                    CommandParameter="{Binding Id}"
+                    Grid.Column="1"
+                    WidthRequest="100"
+                    HorizontalOptions="End"/>
+            </Grid>
         </VerticalStackLayout>
     </ContentView.Content>
 </ContentView>
