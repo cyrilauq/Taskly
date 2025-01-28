@@ -43,49 +43,9 @@
                     <ViewCell>
                         <OnPlatform x:TypeArguments="View">
                             <On Platform="Android">
-                                <SwipeView>
-                                    <SwipeView.LeftItems>
-                                        <SwipeItem
-                                            BackgroundColor="Yellow"
-                                            Text="Edit"
-                                            Command="{Binding Source={x:Reference Dashboard}, Path=BindingContext.UpdateClickedCommand}"
-                                            CommandParameter="{Binding Id}" />
-                                    </SwipeView.LeftItems>
-                                    <SwipeView.RightItems>
-                                        <SwipeItem
-                                        BackgroundColor="Red"
-                                        Text="Delete"    
-                                        Command="{Binding Source={x:Reference Dashboard}, Path=BindingContext.DeleteCommand}"
-                                        CommandParameter="{Binding Id}"/>
-                                    </SwipeView.RightItems>
-
-                                    <Grid
-                                        ColumnDefinitions="1*,6*,2*,1*"
-                                        RowDefinitions="*,*"
-                                        RowSpacing="1"
-                                        Padding="10">
-                                        <Label Grid.Row="0"
-                                            Grid.Column="1"
-                                            Text="{Binding Name}"
-                                            FontSize="14"
-                                            TextDecorations="Underline"
-                                            FontAttributes="Bold"
-                                            HorizontalOptions="Fill" />
-                                        <Label Grid.Row="0"
-                                            Grid.Column="2"
-                                            HorizontalTextAlignment="End"
-                                            Text="{Binding CreatedOn, StringFormat='{0:d}'}"
-                                            FontSize="12"
-                                            FontAttributes="Italic"
-                                            HorizontalOptions="Fill" />
-                                        <Label Grid.Row="1"     
-                                            Grid.Column="1"
-                                            Grid.ColumnSpan="2"
-                                            Text="{Binding Content}"
-                                            FontAttributes="Italic"
-                                            HorizontalOptions="Fill"/>
-                                    </Grid>
-                                </SwipeView>
+                                <components:DashBoardItemAndroid 
+                                    OnDelete="{Binding Source={x:Reference Dashboard}, Path=BindingContext.DeleteCommand}"
+                                    OnUpdate="{Binding Source={x:Reference Dashboard}, Path=BindingContext.UpdateClickedCommand}" />
                             </On>
                             <On Platform="WinUI,UWP">
                                 <components:DashBoardItemWindows   
