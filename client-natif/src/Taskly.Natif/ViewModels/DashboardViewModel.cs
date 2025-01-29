@@ -131,5 +131,15 @@ namespace Taskly.Natif.ViewModels
                 await toast.Show();
             }
         }
+
+        [RelayCommand]
+        private async Task OnNewClickedAsync()
+        {
+            var todo = (TodoModel?)await this._popupService.ShowPopupAsync<SaveTodoViewModel>();
+            if(todo != null)
+            {
+                Todos.Add(todo);
+            }
+        }
     }
 }
