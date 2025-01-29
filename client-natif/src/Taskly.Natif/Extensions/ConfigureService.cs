@@ -28,6 +28,7 @@ namespace Taskly.Natif.Extensions
             services.AddTransient<HomeViewModel>();
             services.AddTransient<MenuViewModel>();
             services.AddTransient<DashboardViewModel>();
+            services.AddTransient<SaveTodoViewModel>();
 
             return services;
         }
@@ -38,6 +39,7 @@ namespace Taskly.Natif.Extensions
             services.AddTransient<MainPage>();
             services.AddTransient<AppShell>();
             services.AddTransient<DashboardPage>();
+            services.AddTransient<SaveTodoPage>();
 
             return services;
         }

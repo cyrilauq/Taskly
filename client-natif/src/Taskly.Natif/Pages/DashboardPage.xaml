@@ -19,23 +19,7 @@
             <Button 
                 Text="New"             
                 Style="{StaticResource TasklyButton}"  
-                Command="{Binding CreateClickedCommand}"/>
-            <VerticalStackLayout 
-                IsVisible="{Binding CreateFormVisible}"
-                x:Name="CreateForm">
-                <Label Text="Name" />
-                <Entry 
-                    Placeholder="Todo name"  
-                    Text="{Binding TodoName}"/>
-                <Label Text="Content" />
-                <Entry 
-                    Placeholder="Todo's content" 
-                    Text="{Binding TodoContent}"/>
-                <Button 
-                    Text="Save"                                                      
-                    Style="{StaticResource TasklyButton}"
-                    Command="{Binding SaveCommand}"/>
-            </VerticalStackLayout>
+                Clicked="OnCreate_Clicked"/>
         </VerticalStackLayout>
         <ListView Grid.Row="1" ItemsSource="{Binding Todos}" HasUnevenRows="True" SeparatorVisibility="None" SelectionMode="None">
             <ListView.ItemTemplate>

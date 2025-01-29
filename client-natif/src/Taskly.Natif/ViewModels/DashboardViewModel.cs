@@ -9,25 +9,31 @@ using System.Collections.ObjectModel;
 
 namespace Taskly.Natif.ViewModels
 {
-    public partial class DashboardViewModel(ITodoService todoService) : ObservableObject
+    public partial class DashboardViewModel : ObservableObject
     {
+        private ITodoService _todoService;
+
         [ObservableProperty]
         private string? _todoName;
         [ObservableProperty]
         private string? _todoContent;
         [ObservableProperty]
-        private bool _createFormVisible;
-        [ObservableProperty]
         private ObservableCollection<TodoModel> _todos;
         [ObservableProperty]
         private TodoModel? _todo;
+
+        public DashboardViewModel(ITodoService todoService)
+        {
+            _todoService = todoService;
+            Todo = new();
+        }
 
         [RelayCommand]
         private async Task OnPageLoadedAsync()
         {
             try
             {
-                Todos = new ObservableCollection<TodoModel>(await todoService.GetConnectedUserTodos());
+                Todos = new ObservableCollection<TodoModel>(await _todoService.GetConnectedUserTodos());
             }
             catch (ServiceException se)
             {
@@ -38,6 +44,19 @@ namespace Taskly.Natif.ViewModels
             {
                 var toast = Toast.Make("Unexpected error", ToastDuration.Long, 14);
                 await toast.Show();
+            }
+        }
+
+        public void OnTodoAdded(TodoModel todo)
+        {
+            var oldTodoPos = Todos.IndexOf(todo);
+            if (oldTodoPos == -1)
+            {
+                Todos.Add(todo);
+            }
+            else
+            {
+                Todos[oldTodoPos] = todo;
             }
         }
 
@@ -51,23 +70,21 @@ namespace Taskly.Natif.ViewModels
                 {
                     Todo.Content = TodoContent;
                     Todo.Name = TodoName;
-                    var saveResult = await todoService.SaveAsync(Todo);
+                    var saveResult = await _todoService.SaveAsync(Todo);
                     var oldTodoPos = Todos.IndexOf(Todo);
                     Todos[oldTodoPos] = saveResult;
                 }
                 else
                 {
-                    var saveResult = await todoService.SaveAsync(new() { Content = TodoContent, Name = TodoName });
+                    var saveResult = await _todoService.SaveAsync(new() { Content = TodoContent, Name = TodoName });
                     TodoName = "";
                     TodoContent = "";
                     Todo = null;
-                    CreateFormVisible = false;
                     Todos.Add(saveResult);
                 }
                 TodoName = "";
                 TodoContent = "";
                 Todo = null;
-                CreateFormVisible = false;
             }
             catch (ServiceException se)
             {
@@ -82,18 +99,8 @@ namespace Taskly.Natif.ViewModels
         }
 
         [RelayCommand]
-        private void OnCreateClicked()
-        {
-            CreateFormVisible = true;
-            Todo = null;
-            TodoName = "";
-            TodoContent = "";
-        }
-
-        [RelayCommand]
         private void OnUpdateClicked(string todoId)
         {
-            CreateFormVisible = true;
             var todo = Todos.First(t => t.Id == todoId);
             Todo = todo;
             TodoName = Todo.Name;
@@ -105,7 +112,7 @@ namespace Taskly.Natif.ViewModels
         {
             try
             {
-                var deleteResult = await todoService.DeleteAsync(todoId);
+                var deleteResult = await _todoService.DeleteAsync(todoId);
                 if(deleteResult)
                 {
                     Todos.Remove(Todos.First(t => t.Id == todoId));
