@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using Taskly.Client.Application;
 using Taskly.Natif.Application.Services.Interface;
@@ -28,7 +29,6 @@ namespace Taskly.Natif.Extensions
             services.AddTransient<HomeViewModel>();
             services.AddTransient<MenuViewModel>();
             services.AddTransient<DashboardViewModel>();
-            services.AddTransient<SaveTodoViewModel>();
 
             return services;
         }
@@ -39,7 +39,7 @@ namespace Taskly.Natif.Extensions
             services.AddTransient<MainPage>();
             services.AddTransient<AppShell>();
             services.AddTransient<DashboardPage>();
-            services.AddTransient<SaveTodoPage>();
+            services.AddTransientPopup<SaveTodoPage, SaveTodoViewModel>();
 
             return services;
         }
