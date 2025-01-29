@@ -9,84 +9,17 @@ using System.Collections.ObjectModel;
 
 namespace Taskly.Natif.ViewModels
 {
-    public partial class DashboardViewModel : ObservableObject
+    public partial class DashboardViewModel(ITodoService todoService, IPopupService popupService) : ObservableObject
     {
-        private ITodoService _todoService;
-        private IPopupService _popupService;
-
-        [ObservableProperty]
-        private string? _todoName;
-        [ObservableProperty]
-        private string? _todoContent;
         [ObservableProperty]
         private ObservableCollection<TodoModel> _todos;
-        [ObservableProperty]
-        private TodoModel? _todo;
-
-        public DashboardViewModel(ITodoService todoService, IPopupService popupService)
-        {
-            _todoService = todoService;
-            _popupService = popupService;
-            Todo = new();
-        }
 
         [RelayCommand]
         private async Task OnPageLoadedAsync()
         {
             try
             {
-                Todos = new ObservableCollection<TodoModel>(await _todoService.GetConnectedUserTodos());
-            }
-            catch (ServiceException se)
-            {
-                var toast = Toast.Make(se.Message, ToastDuration.Long, 14);
-                await toast.Show();
-            }
-            catch (Exception se)
-            {
-                var toast = Toast.Make("Unexpected error", ToastDuration.Long, 14);
-                await toast.Show();
-            }
-        }
-
-        public void OnTodoAdded(TodoModel todo)
-        {
-            var oldTodoPos = Todos.IndexOf(todo);
-            if (oldTodoPos == -1)
-            {
-                Todos.Add(todo);
-            }
-            else
-            {
-                Todos[oldTodoPos] = todo;
-            }
-        }
-
-        [RelayCommand]
-        private async Task OnSaveAsync()
-        {
-            try
-            {
-
-                if (Todo != null)
-                {
-                    Todo.Content = TodoContent;
-                    Todo.Name = TodoName;
-                    var saveResult = await _todoService.SaveAsync(Todo);
-                    var oldTodoPos = Todos.IndexOf(Todo);
-                    Todos[oldTodoPos] = saveResult;
-                }
-                else
-                {
-                    var saveResult = await _todoService.SaveAsync(new() { Content = TodoContent, Name = TodoName });
-                    TodoName = "";
-                    TodoContent = "";
-                    Todo = null;
-                    Todos.Add(saveResult);
-                }
-                TodoName = "";
-                TodoContent = "";
-                Todo = null;
+                Todos = new ObservableCollection<TodoModel>(await todoService.GetConnectedUserTodos());
             }
             catch (ServiceException se)
             {
@@ -105,7 +38,7 @@ namespace Taskly.Natif.ViewModels
         {
             var foundTodo = Todos.First(t => t.Id == todoId);
             var lastIndex = Todos.IndexOf(foundTodo);
-            var todo = (TodoModel?)await this._popupService.ShowPopupAsync<SaveTodoViewModel>(onPresenting: viewModel => viewModel.Todo = foundTodo);
+            var todo = (TodoModel?)await popupService.ShowPopupAsync<SaveTodoViewModel>(onPresenting: viewModel => viewModel.Todo = foundTodo);
             if(todo != null)
             {
                 Todos[lastIndex] = todo;
@@ -117,7 +50,7 @@ namespace Taskly.Natif.ViewModels
         {
             try
             {
-                var deleteResult = await _todoService.DeleteAsync(todoId);
+                var deleteResult = await todoService.DeleteAsync(todoId);
                 if(deleteResult)
                 {
                     Todos.Remove(Todos.First(t => t.Id == todoId));
@@ -138,7 +71,7 @@ namespace Taskly.Natif.ViewModels
         [RelayCommand]
         private async Task OnNewClickedAsync()
         {
-            var todo = (TodoModel?)await this._popupService.ShowPopupAsync<SaveTodoViewModel>();
+            var todo = (TodoModel?)await popupService.ShowPopupAsync<SaveTodoViewModel>();
             if(todo != null)
             {
                 Todos.Add(todo);
