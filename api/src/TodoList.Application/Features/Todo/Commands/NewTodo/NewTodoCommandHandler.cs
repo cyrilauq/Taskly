@@ -15,7 +15,7 @@ namespace TodoList.Application.Features.Todo.Commands.NewTodo
             var todo = new Models.Todo
             {
                 Name = request.Name,
-                Content = request.Description,
+                Content = request.Content,
                 UserId = userContext.UserId
             };
             var addedTodo = await todoRepository.AddAsync(todo);

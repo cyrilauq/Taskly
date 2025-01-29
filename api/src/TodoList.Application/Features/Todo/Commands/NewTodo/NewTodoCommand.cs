@@ -6,6 +6,6 @@ namespace TodoList.Application.Features.Todo.Commands.NewTodo
     public class NewTodoCommand : IRequest<TodoDTO>
     {
         public string? Name { get; set; }
-        public string? Description { get; set; }
+        public string? Content { get; set; }
     }
 }

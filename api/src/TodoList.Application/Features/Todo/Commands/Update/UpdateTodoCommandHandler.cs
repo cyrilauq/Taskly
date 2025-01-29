@@ -25,7 +25,7 @@ namespace TodoList.Application.Features.Todo.Commands.Update
             if (userContext.UserId != originalTodo.UserId && !userContext.GetRoles().Contains("Admin")) throw new UnauthorizedAccessException("You can't update the todo of another user");
 
             originalTodo.Name = request.Name;
-            originalTodo.Content = request.Description;
+            originalTodo.Content = request.Content;
 
             var updatedTodo = await todoRepository.UpdateAsync(request.Id.ToString(), originalTodo);
 
