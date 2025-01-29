@@ -19,7 +19,7 @@
             <Button 
                 Text="New"             
                 Style="{StaticResource TasklyButton}"  
-                Clicked="OnCreate_Clicked"/>
+                Command="{Binding NewClickedCommand}"/>
         </VerticalStackLayout>
         <ListView Grid.Row="1" ItemsSource="{Binding Todos}" HasUnevenRows="True" SeparatorVisibility="None" SelectionMode="None">
             <ListView.ItemTemplate>
