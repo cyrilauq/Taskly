@@ -12,6 +12,7 @@ namespace Taskly.Natif.ViewModels
     public partial class DashboardViewModel : ObservableObject
     {
         private ITodoService _todoService;
+        private IPopupService _popupService;
 
         [ObservableProperty]
         private string? _todoName;
@@ -22,9 +23,10 @@ namespace Taskly.Natif.ViewModels
         [ObservableProperty]
         private TodoModel? _todo;
 
-        public DashboardViewModel(ITodoService todoService)
+        public DashboardViewModel(ITodoService todoService, IPopupService popupService)
         {
             _todoService = todoService;
+            _popupService = popupService;
             Todo = new();
         }
 
