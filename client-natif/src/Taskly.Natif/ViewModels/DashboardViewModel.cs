@@ -101,12 +101,15 @@ namespace Taskly.Natif.ViewModels
         }
 
         [RelayCommand]
-        private void OnUpdateClicked(string todoId)
+        private async Task OnUpdateClicked(string todoId)
         {
-            var todo = Todos.First(t => t.Id == todoId);
-            Todo = todo;
-            TodoName = Todo.Name;
-            TodoContent = Todo.Content;
+            var foundTodo = Todos.First(t => t.Id == todoId);
+            var lastIndex = Todos.IndexOf(foundTodo);
+            var todo = (TodoModel?)await this._popupService.ShowPopupAsync<SaveTodoViewModel>(onPresenting: viewModel => viewModel.Todo = foundTodo);
+            if(todo != null)
+            {
+                Todos[lastIndex] = todo;
+            }
         }
 
         [RelayCommand]
