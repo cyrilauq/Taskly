@@ -10,10 +10,23 @@ namespace Taskly.Natif.ViewModels
 {
     public partial class SaveTodoViewModel(ITodoService todoService) : ObservableObject
     {
+        private TodoModel? _todo;
+
         public Action<TodoModel?> ClosePopup { get; set; }
 
-        [ObservableProperty]
-        private TodoModel? _todo;
+        public TodoModel? Todo 
+        { 
+            get => _todo; 
+            set
+            {
+                if(value != null)
+                {
+                    _todo = value;
+                    TodoName = value.Name;
+                    TodoContent = value.Content;
+                }
+            }
+        }
         [ObservableProperty]
         private string? _todoName;
         [ObservableProperty]
