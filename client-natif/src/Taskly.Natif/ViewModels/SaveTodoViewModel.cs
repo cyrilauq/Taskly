@@ -31,6 +31,8 @@ namespace Taskly.Natif.ViewModels
         private string? _todoName;
         [ObservableProperty]
         private string? _todoContent;
+        public string BtnText => Todo is null ? "Create" : "Save";
+        public string TitleText => Todo is null ? "New todo" : "Todo editing";
 
         [RelayCommand]
         private async Task OnSaveAsync()
