@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Taskly.Natif.Components.Form.TextInput"
+             x:Name="Self">
+    <StackLayout>
+        <StackLayout.Orientation>
+            <OnPlatform x:TypeArguments="StackOrientation">
+                <On Platform="Android" Value="Vertical" />
+                <On Platform="WinUI" Value="Horizontal" />
+            </OnPlatform>
+        </StackLayout.Orientation>
+        <Label 
+            Text="{Binding Source={x:Reference Self},Path=LabelText}"
+            WidthRequest="100"
+            HorizontalOptions="Start"      
+            Margin="10"
+            HorizontalTextAlignment="Start"/>
+        <VerticalStackLayout>
+            <Entry 
+                Placeholder="{Binding Source={x:Reference Self},Path=PlaceholderText}"  
+                Text="{Binding Source={x:Reference Self},Path=Validator.Value}"
+                HorizontalOptions="FillAndExpand" 
+                PlaceholderColor="DarkGray"
+                VerticalOptions="Start" 
+                TextChanged="Input_Changed"/>
+            <Label 
+                HorizontalOptions="Start"
+                x:Name="ErrorMessage"
+                TextColor="{StaticResource InvalidText}"                             
+                IsVisible="{Binding Source={x:Reference Self},Path=Validator.HasError}"
+                Text="{Binding Source={x:Reference Self},Path=Validator.Error}">
+                <Label.Style>
+                    <OnIdiom x:TypeArguments="Style">
+                        <OnIdiom.Desktop>
+                            <Style TargetType="Label">
+                                <Setter Property="AnchorX" Value="100" />
+                                <Setter Property="HorizontalOptions" Value="End" />
+                            </Style>
+                        </OnIdiom.Desktop>
+                    </OnIdiom>
+                </Label.Style>
+            </Label>
+        </VerticalStackLayout>
+    </StackLayout>
+</ContentView>
