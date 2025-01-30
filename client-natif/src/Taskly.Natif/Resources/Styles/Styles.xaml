@@ -430,4 +430,12 @@
         <Setter Property="HorizontalOptions" Value="Fill" />
     </Style>
 
+    <Style x:Key="InputInvalidStyle" TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource InvalidText}" />
+    </Style>
+
+    <Style x:Key="InputValidStyle" TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource ValidText}" />
+    </Style>
+
 </ResourceDictionary>

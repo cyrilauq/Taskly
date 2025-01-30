@@ -50,4 +50,7 @@
             <x:Int32>218</x:Int32>
         </x:Arguments>
     </Color>
+
+    <Color x:Key="InvalidText">Red</Color>
+    <Color x:Key="ValidText">Green</Color>
 </ResourceDictionary>
