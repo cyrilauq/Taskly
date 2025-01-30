@@ -2,7 +2,8 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                x:Class="Taskly.Natif.Pages.SaveTodoPage"  
-               xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"         
+               xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"      
+               xmlns:inputs="clr-namespace:Taskly.Natif.Components.Form"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:DataType="vm:SaveTodoViewModel"
                Color="AliceBlue">
@@ -14,46 +15,18 @@
             HorizontalOptions="CenterAndExpand"/>
         <StackLayout
             Margin="0,20">
-            <StackLayout>
-                <StackLayout.Orientation>
-                    <OnPlatform x:TypeArguments="StackOrientation">
-                        <On Platform="Android" Value="Vertical" />
-                        <On Platform="WinUI" Value="Horizontal" />
-                    </OnPlatform>
-                </StackLayout.Orientation>
-                <Label 
-                    Text="Name"
-                    WidthRequest="100"
-                    HorizontalOptions="Start"      
-                    Margin="10"
-                    HorizontalTextAlignment="Start"/>
-                <Entry 
-                    Placeholder="Todo name"  
-                    Text="{Binding TodoName}"
-                    HorizontalOptions="FillAndExpand" 
-                    PlaceholderColor="DarkGray"
-                    VerticalOptions="Start"/>
-            </StackLayout>
-            <StackLayout>
-                <StackLayout.Orientation>
-                    <OnPlatform x:TypeArguments="StackOrientation">
-                        <On Platform="Android" Value="Vertical" />
-                        <On Platform="WinUI" Value="Horizontal" />
-                    </OnPlatform>
-                </StackLayout.Orientation>
-                <Label 
-                    Margin="10"
-                    Text="Content"
-                    WidthRequest="100"
-                    HorizontalOptions="Start"
-                    HorizontalTextAlignment="Start"/>
-                <Entry 
-                    Placeholder="Todo's content" 
-                    Text="{Binding TodoContent}"
-                    VerticalOptions="Start"
-                    HorizontalOptions="FillAndExpand"      
-                    PlaceholderColor="DarkGray"/>
-            </StackLayout>
+            <inputs:TextInput    
+                x:Name="NameInput"
+                Validator="{Binding TodoNameValidator}"
+                PlaceholderText="Todo's name"
+                LabelName="todo name"
+                LabelText="Todo's name"/>
+            <inputs:TextInput
+                x:Name="ContentInput"      
+                Validator="{Binding TodoContentValidator}"
+                PlaceholderText="Todo's content"
+                LabelName="todo content"
+                LabelText="Todo's content"/>
         </StackLayout>
         <Button
             Text="{Binding BtnText}"                                                      
