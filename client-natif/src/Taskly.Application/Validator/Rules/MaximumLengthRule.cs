@@ -2,7 +2,7 @@
 {
     public class MaximumLengthRule(int maximumLength) : IValidationRule<string>
     {
-        public string ValidationMessage { get; set; }
+        public string ValidationMessage { get; init; }
 
         public bool Check(string value)
         {
