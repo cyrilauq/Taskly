@@ -17,10 +17,6 @@ namespace Taskly.Natif.ViewModels
         private IStorageService _storageService;
         private IAuthState _authState;
 
-        [ObservableProperty]
-        private string? login;
-        [ObservableProperty]
-        private string? password;
         public ValidatableObject<string> UsernameValidator { get; init; }
         public ValidatableObject<string> PasswordValidator { get; init; }
 
