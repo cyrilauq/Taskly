@@ -6,7 +6,7 @@
 
         public bool Check(string value)
         {
-            return string.IsNullOrEmpty(value);
+            return string.IsNullOrEmpty(value?.Trim());
         }
     }
 }
