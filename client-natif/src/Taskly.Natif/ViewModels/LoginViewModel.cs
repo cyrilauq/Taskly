@@ -1,8 +1,13 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Taskly.Client.Application.Exceptions;
 using Taskly.Client.Application.Services.Interfaces;
 using Taskly.Client.Application.State.Interfaces;
 using Taskly.Natif.Application.Services.Interface;
+using Taskly.Natif.Application.Validator;
+using Taskly.Natif.Application.Validator.Rules;
 
 namespace Taskly.Natif.ViewModels
 {
@@ -16,6 +21,8 @@ namespace Taskly.Natif.ViewModels
         private string? login;
         [ObservableProperty]
         private string? password;
+        public ValidatableObject<string> UsernameValidator { get; init; }
+        public ValidatableObject<string> PasswordValidator { get; init; }
 
         public bool FormCanBeEdited { get; private set; } = true;
 
@@ -24,6 +31,15 @@ namespace Taskly.Natif.ViewModels
             _authenticationService = authenticationService;
             _authState = authState;
             _storageService = storageService;
+
+            UsernameValidator = new()
+            {
+                Rules = new() { new StringRequiredRule { ValidationMessage = "The pseudo is required" } }
+            };
+            PasswordValidator = new()
+            {
+                Rules = new() { new StringRequiredRule { ValidationMessage = "The password is required" } }
+            };
         }
 
         // Notice:
@@ -32,14 +48,46 @@ namespace Taskly.Natif.ViewModels
         [RelayCommand]
         private async Task OnLoginAsync()
         {
-            FormCanBeEdited = false;
-            var result = await _authenticationService.LoginWithCredentials(Login, Password);
-            FormCanBeEdited = true;
-            if(result)
+            if(FormIsValid())
             {
-                await _storageService.SaveAsync(_authState, nameof(IAuthState));
-                await Shell.Current.GoToAsync("//Dashboard");
+                try
+                {
+                    FormCanBeEdited = false;
+                    var result = await _authenticationService.LoginWithCredentials(UsernameValidator.Value as string, PasswordValidator.Value as string);
+                    FormCanBeEdited = true;
+                    if (result)
+                    {
+                        await _storageService.SaveAsync(_authState, nameof(IAuthState));
+                        await Shell.Current.GoToAsync("//Dashboard");
+                    }
+                }
+                catch(ServiceException se)
+                {
+                    var toast = Toast.Make(se.Message, ToastDuration.Long, 14);
+                    await toast.Show();
+                }
+                catch(Exception ex)
+                {
+                    if(ex is NotFoundException || ex is ValidationException)
+                    {
+                        var toast = Toast.Make(ex.Message, ToastDuration.Long, 14);
+                        await toast.Show();
+                    }
+                    else
+                    {
+                        var toast = Toast.Make("An unexpected error occured", ToastDuration.Long, 14);
+                        await toast.Show();
+                    }
+                }
             }
+        }
+
+        private bool FormIsValid()
+        {
+            var result = false;
+            result |= UsernameValidator.Validate();
+            result |= PasswordValidator.Validate();
+            return !result;
         }
     }
 }
