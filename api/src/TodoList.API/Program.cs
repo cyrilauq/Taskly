@@ -51,7 +51,7 @@ app.MapWhen(ctx => !ctx.Request.Path.Value.Contains("/swagger/")  && !ctx.Reques
     subApp.UseRouting();
     subApp.UseEndpoints(endpoints =>
     {
-        app.MapFallbackToController("Index", "Fallback");
+        app.MapFallbackToFile("index.html");
     });
 });
 
