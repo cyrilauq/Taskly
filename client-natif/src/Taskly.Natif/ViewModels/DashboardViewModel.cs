@@ -48,6 +48,9 @@ namespace Taskly.Natif.ViewModels
         [RelayCommand]
         private async Task OnDeleteAsync(string todoId)
         {
+
+            var confirmationResult = await Shell.Current.DisplayAlert("Are you sure you to delete the item?", "There is no going back after confirming the action", "Yes", "No");
+            if (!confirmationResult) return;
             try
             {
                 var deleteResult = await todoService.DeleteAsync(todoId);
