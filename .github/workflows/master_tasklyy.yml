@@ -22,7 +22,9 @@ jobs:
           dotnet-version: '8.x'
 
       - name: build spa
-        run: dotnet build -c Release -o ../../../api/src/TodoList.API/wwwroot
+        run:  |
+          cd web/src/Taskly.Web
+          dotnet build -c Release -o ../../../api/src/TodoList.API/wwwroot
 
       - name: Build api with dotnet
         run: |
