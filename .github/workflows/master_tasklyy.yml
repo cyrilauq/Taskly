@@ -23,7 +23,7 @@ jobs:
 
       - name: Build with dotnet
         run: |
-          cd api
+          cd api/src/TodoList.API
           dotnet build --configuration Release
 
       - name: dotnet publish
