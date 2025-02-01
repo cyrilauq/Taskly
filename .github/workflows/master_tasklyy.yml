@@ -24,7 +24,7 @@ jobs:
       - name: build spa
         run:  |
           cd client-web/src/Taskly.Web
-          dotnet build -c Release -o ../../../api/src/TodoList.API
+          dotnet publish -c Release -o ../../../api/src/TodoList.API
 
       - name: Build api with dotnet
         run: |
