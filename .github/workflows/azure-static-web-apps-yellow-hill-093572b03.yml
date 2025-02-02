@@ -20,12 +20,9 @@ jobs:
           submodules: true
           lfs: false
                 
-      - name: Fetch ApiUrl from Azure Static Web Apps Environment
+      - name: Inject appsettings.json from GitHub Secrets
         run: |
-          echo "Fetching ApiUrl from Azure"
-          ApiUrl=$(az webapp config appsettings list --name cyrilauq-taskly --resource-group taskly-resources --query "[?name=='ApiUrl'].value" --output tsv)
-          echo "Using API_URL: $ApiUrl"
-          sed -i 's|__API_URL__|'"$ApiUrl"'|g' ./client-web/src/Taskly.Web/wwwroot/config.json
+          echo '${{ secrets.APPSETTINGS_JSON }}' > ./client-web/src/Taskly.Web/wwwroot/appsettings.json
         env:
           AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
 
