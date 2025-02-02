@@ -23,7 +23,7 @@ jobs:
       - name: Fetch ApiUrl from Azure Static Web Apps Environment
         run: |
           echo "Fetching ApiUrl from Azure"
-          ApiUrl=$(az webapp config appsettings list --name YOUR_STATIC_WEB_APP_NAME --resource-group YOUR_RESOURCE_GROUP --query "[?name=='ApiUrl'].value" --output tsv)
+          ApiUrl=$(az webapp config appsettings list --name cyrilauq-taskly --resource-group taskly-resources --query "[?name=='ApiUrl'].value" --output tsv)
           echo "Using API_URL: $ApiUrl"
           sed -i 's|__API_URL__|'"$ApiUrl"'|g' ./client-web/src/Taskly.Web/wwwroot/config.json
         env:
