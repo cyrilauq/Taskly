@@ -20,7 +20,7 @@ namespace Taskly.Web.Application
             services.AddScoped<HttpAuthorizationHandler>();
             services.AddScoped<HttpStatusHandler>();
 
-            services.AddHttpClient("TasklyHttpClient", cf => cf.BaseAddress = new Uri(configuration["ApiUrl"] ?? throw new Exception("No url given for the api")))
+            services.AddHttpClient("TasklyHttpClient", cf => cf.BaseAddress = new Uri((configuration["ApiUrl"] ?? Environment.GetEnvironmentVariable("ApiUrl")) ?? throw new Exception("No url given for the api")))
                 .AddHttpMessageHandler<HttpAuthorizationHandler>()
                 .AddHttpMessageHandler<HttpStatusHandler>();
 
