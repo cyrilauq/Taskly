@@ -38,22 +38,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ExceptionsMiddleware>();
 
-app.UseBlazorFrameworkFiles();
-app.UseStaticFiles();
-
 app.UseCors("CORS");
 
 app.UseHttpsRedirection();
-
-
-app.MapWhen(ctx => !ctx.Request.Path.Value.Contains("/swagger/")  && !ctx.Request.Path.Value.Contains("/api/"), subApp =>
-{
-    subApp.UseRouting();
-    subApp.UseEndpoints(endpoints =>
-    {
-        app.MapFallbackToFile("index.html");
-    });
-});
 
 app.UseAuthentication();
 app.UseAuthorization();
