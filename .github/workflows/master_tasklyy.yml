@@ -19,12 +19,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.x'
-
-      - name: build spa
-        run:  |
-          cd client-web/src/Taskly.Web
-          dotnet publish -c Release -o ../../../api/src/TodoList.API
+          dotnet-version: '8.0.x'
 
       - name: Build api with dotnet
         run: |
