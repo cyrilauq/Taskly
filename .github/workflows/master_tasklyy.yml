@@ -22,12 +22,10 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Build api with dotnet
-        run: |
-          cd api/src/TodoList.API
-          dotnet build --configuration Release
+        run: dotnet build  ./api/src/TodoList.API --configuration Release
 
       - name: publish api
-        run: publish ./api/src/TodoList.API -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: dotnet publish ./api/src/TodoList.API -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
