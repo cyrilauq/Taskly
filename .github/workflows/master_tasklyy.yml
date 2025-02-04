@@ -27,9 +27,7 @@ jobs:
           dotnet build --configuration Release
 
       - name: publish api
-        run:  |
-          cd api/src/TodoList.API
-          dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        run: publish ./api/src/TodoList.API -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
