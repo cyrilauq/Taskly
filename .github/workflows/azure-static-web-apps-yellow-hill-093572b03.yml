@@ -19,7 +19,10 @@ jobs:
         with:
           submodules: true
           lfs: false
-                
+      
+      - name: build spa
+        run:  dotnet publish ./client-web/src/Taskly.Web -c Release -o ../../../api/src/TodoList.API
+
       - name: Inject appsettings.json from GitHub Secrets
         run: |
           echo '${{ secrets.APPSETTINGS_JSON }}' > ./client-web/src/Taskly.Web/wwwroot/appsettings.json

@@ -45,6 +45,18 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+app.MapWhen(ctx => !ctx.Request.Path.Value.Contains("/swagger/") && !ctx.Request.Path.Value.Contains("/api/"), subApp =>
+{
+    subApp.UseRouting();
+    subApp.UseEndpoints(endpoints =>
+    {
+        app.MapFallbackToFile("index.html");
+    });
+});
+
 app.MapControllers();
 
 using var scope = app.Services.CreateScope();
