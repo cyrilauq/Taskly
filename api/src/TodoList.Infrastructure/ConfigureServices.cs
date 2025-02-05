@@ -12,7 +12,7 @@ namespace TodoList.Infrastructure
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services)
         {
-            services.AddDbContext<TodoListContext>(options => options.UseSqlite("Data Source=C:\\Users\\cyril\\AppData\\Local\\todolist.db"));
+            services.AddDbContext<TodoListContext>(options => options.UseSqlite("Data Source=./todolist.db"));
 
             services.AddIdentityCore<User>()
                 .AddRoles<Role>()

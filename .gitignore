@@ -369,3 +369,5 @@ FodyWeavers.xsd
 /api/src/TodoList.API/emcc-props.json
 /api/src/TodoList.API/Taskly.Web.staticwebassets.endpoints.json
 /api/src/TodoList.API/web.config
+/api/src/TodoList.API/todolist.db-shm
+/api/src/TodoList.API/todolist.db-wal
