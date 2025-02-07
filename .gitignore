@@ -369,3 +369,5 @@ FodyWeavers.xsd
 /api/src/TodoList.API/emcc-props.json
 /api/src/TodoList.API/Taskly.Web.staticwebassets.endpoints.json
 /api/src/TodoList.API/web.config
+/client-natif/src/Taskly.Natif/appsettings.Development.json
+/client-natif/src/Taskly.Natif/appsettings.Production.json

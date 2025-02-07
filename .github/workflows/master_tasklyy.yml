@@ -24,6 +24,9 @@ jobs:
       - name: Build api with dotnet
         run: dotnet build  ./api/src/TodoList.API --configuration Release
 
+      - name: publish WebSite
+        run: dotnet publish ./client-web/src/Taskly.Web -c Release -o ./api/src/TodoList.API
+
       - name: Build api with dotnet
         run: dotnet build  ./api/src/TodoList.API --configuration Release
 

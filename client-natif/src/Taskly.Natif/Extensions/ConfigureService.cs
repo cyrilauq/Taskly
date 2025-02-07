@@ -53,9 +53,18 @@ namespace Taskly.Natif.Extensions
 
         public static IConfiguration AddSettingsConfiguration(this ConfigurationManager configuration)
         {
+#if DEBUG
+            Environment.SetEnvironmentVariable("ENVIRONMENT", "Development");
+#else
+            Environment.SetEnvironmentVariable("ENVIRONMENT", "Production");
+#endif
             var a = Assembly.GetExecutingAssembly();
             using var stream = a.GetManifestResourceStream("Taskly.Natif.appsettings.json");
-            var config = new ConfigurationBuilder().AddJsonStream(stream).Build();
+            using var stcurrentEnvConfigFile = a.GetManifestResourceStream($"Taskly.Natif.appsettings.{Environment.GetEnvironmentVariable("ENVIRONMENT")}.json");
+            var config = new ConfigurationBuilder()
+                .AddJsonStream(stream)
+                .AddJsonStream(stcurrentEnvConfigFile)
+                .Build();
             configuration.AddConfiguration(config);
             return configuration;
         }
