@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Taskly.Client.Domain" Version="1.0.0" />
+    <PackageReference Include="Taskly.Client.Application" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
