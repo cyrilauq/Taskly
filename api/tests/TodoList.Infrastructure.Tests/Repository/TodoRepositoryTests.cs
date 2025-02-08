@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TodoList.Domain.Exceptions;
@@ -229,6 +230,33 @@ namespace TodoList.Infrastructure.Tests.Repository
 
             // Assert
             Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public async Task When_UpdateTodo_ThenUpdatedDateTimeChange()
+        {
+            // Arrange
+            var repository = new TodoRepository(context);
+            var todo = await repository.AddAsync(new Todo
+            {
+                Name = "Test",
+                UpdatedOn = DateTime.UtcNow,
+                Content = "Tzst",
+                CreatedOn = DateTime.UtcNow,
+                IsDone = false,
+                UserId = connectedUserId
+            });
+            var oldUpdateOn = todo.UpdatedOn;
+
+            // Act
+            todo.IsDone = true;
+            var updatedTodo = await repository.UpdateAsync(todo.Id.ToString(), todo);
+
+            // Assert
+            Assert.AreEqual(context.Todos.Count(), 1);
+            Assert.AreNotEqual(oldUpdateOn, updatedTodo.UpdatedOn);
+            updatedTodo.UpdatedOn.Should()
+                .BeAfter(oldUpdateOn);
         }
     }
 }
