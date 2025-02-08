@@ -4,7 +4,7 @@ using TodoList.Domain.Entities.Interfaces;
 
 namespace TodoList.Application.Mappers
 {
-    internal class TodoMapper: Profile
+    public class TodoMapper: Profile
     {
         public TodoMapper()
         {
