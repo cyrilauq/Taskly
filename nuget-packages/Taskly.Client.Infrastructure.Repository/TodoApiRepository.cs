@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 using Taskly.Client.Domain.DTO;
 using Taskly.Client.Domain.Repositories.Interfaces;
+using Taskly.Client.Infrastructure.Repository.DTOs;
 using Taskly.Client.Infrastructure.Repository.Utils;
 
 namespace Taskly.Client.Infrastructure.Repository
@@ -34,6 +35,16 @@ namespace Taskly.Client.Infrastructure.Repository
         {
             var response = await httpClient.PutAsJsonAsync($"api/todo/{key}", entity);
             return (await response.Content.ToJson<TodoDTO>())!;
+        }
+
+        public async Task<bool> MarkTodos(IEnumerable<Guid> todoIds, bool isDone)
+        {
+            var response = await httpClient.PutAsJsonAsync($"api/todo/mark", new MarkTodosDTO()
+            {
+                TodoIds = todoIds,
+                IsDone = isDone
+            });
+            return response.IsSuccessStatusCode;
         }
     }
 }

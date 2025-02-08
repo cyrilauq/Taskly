@@ -106,7 +106,35 @@ namespace Taskly.Client.Infrastructure.Repository.Tests
             Assert.IsNotNull(updateResult);
         }
 
-        private void SetMessageHandlerResponse<T>(FakeHttpResponse<T> response)
+        [TestMethod]
+        public async Task When_MarkTodos_HttpRequestReturnsStatusCode_ThenReturnsTrue()
+        {
+            // Arrange
+            Guid id = Guid.NewGuid();
+            SetMessageHandlerResponse(new FakeHttpResponse<object?>(204));
+
+            // Act
+            bool markResult = await repository.MarkTodos([Guid.NewGuid()], true);
+
+            // Assert
+            Assert.IsTrue(markResult);
+        }
+
+        [TestMethod]
+        public async Task When_MarkTodos_HttpRequestReturnsStatusCode_ThenReturnsFalse()
+        {
+            // Arrange
+            Guid id = Guid.NewGuid();
+            SetMessageHandlerResponse(new FakeHttpResponse<object?>(400));
+
+            // Act
+            bool markResult = await repository.MarkTodos([Guid.NewGuid()], true);
+
+            // Assert
+            Assert.IsFalse(markResult);
+        }
+
+        private void SetMessageHandlerResponse<T>(FakeHttpResponse<T?> response)
         {
             HttpResponseMessage responseMsg = new()
             {
@@ -123,5 +151,5 @@ namespace Taskly.Client.Infrastructure.Repository.Tests
         }
     }
 
-    public record FakeHttpResponse<T>(int StatusCode, T? Content);
+    public record FakeHttpResponse<T>(int StatusCode, T? Content = default);
 }
