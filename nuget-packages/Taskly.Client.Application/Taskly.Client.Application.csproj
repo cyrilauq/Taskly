@@ -10,7 +10,8 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
-    <PackageReference Include="Taskly.Client.Domain" Version="1.0.0" />
+    <PackageReference Include="Taskly.Client.Domain" Version="1.0.1" />
+    <PackageReference Include="Taskly.Client.Infrastructure.Repository" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Moq;
+using System.Collections.Generic;
 using Taskly.Client.Application.Exceptions;
 using Taskly.Client.Application.Mappers;
 using Taskly.Client.Application.Model;
@@ -191,6 +192,20 @@ namespace Taskly.Client.Application.Tests.Services
 
             // Assert
             repositoryMock.Verify(rm => rm.Update(It.IsAny<Guid>(), It.IsAny<TodoDTO>()), Times.Once());
+        }
+
+        [TestMethod]
+        public async Task When_MarkTodoCalled_ThenCallRepositoryMarkTodoWithSameArgs()
+        {
+            // Arrange
+            Guid guid = Guid.NewGuid();
+            IEnumerable<Guid> ids = [ guid ];
+
+            // Act
+            await service.MarkTodoAsync(guid, true);
+
+            // Assert
+            repositoryMock.Verify(rm => rm.MarkTodos(ids, true), Times.Once());
         }
     }
 }

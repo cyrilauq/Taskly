@@ -79,5 +79,25 @@ namespace Taskly.Client.Application.Services
                 throw new ServiceException($"You don't have the rights to update the todo.");
             }
         }
+
+        public async Task<bool> MarkTodoAsync(Guid todoId, bool isDone)
+        {
+            try
+            {
+                return await todoRepository.MarkTodos([ todoId ], isDone);
+            }
+            catch (ValidationException ex)
+            {
+                throw new ServiceException(ex.Message);
+            }
+            catch (NotFoundException)
+            {
+                throw new ServiceException($"No todo found for the id [{todoId}]");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                throw new ServiceException($"You don't have the rights to update the todo.");
+            }
+        }
     }
 }
