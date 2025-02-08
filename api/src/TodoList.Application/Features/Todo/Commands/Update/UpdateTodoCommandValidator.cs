@@ -2,7 +2,7 @@
 
 namespace TodoList.Application.Features.Todo.Commands.Update
 {
-    public class UpdateTodoCommandValidator: AbstractValidator<UpdateTodoCommand>
+    public class UpdateTodoCommandValidator : AbstractValidator<UpdateTodoCommand>
     {
         public UpdateTodoCommandValidator() 
         {
