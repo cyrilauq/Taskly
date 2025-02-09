@@ -1,5 +1,4 @@
 using System.Windows.Input;
-using Taskly.Client.Application.Model;
 
 namespace Taskly.Natif.Components.Dashboard;
 
@@ -11,6 +10,9 @@ public partial class DashBoardItemWindows : ContentView
     public static readonly BindableProperty OnDeleteProperty =
              BindableProperty.Create(nameof(OnDelete), typeof(ICommand), typeof(DashBoardItemWindows));
 
+    public static readonly BindableProperty OnMarkTodoProperty =
+             BindableProperty.Create(nameof(OnMarkTodo), typeof(ICommand), typeof(DashBoardItemWindows));
+
     public ICommand OnUpdate
     {
         get => (ICommand)GetValue(OnUpdateProperty);
@@ -21,6 +23,12 @@ public partial class DashBoardItemWindows : ContentView
     {
         get => (ICommand)GetValue(OnDeleteProperty);
         set => SetValue(OnDeleteProperty, value);
+    }
+
+    public ICommand OnMarkTodo
+    {
+        get => (ICommand)GetValue(OnMarkTodoProperty);
+        set => SetValue(OnMarkTodoProperty, value);
     }
 
     public DashBoardItemWindows()

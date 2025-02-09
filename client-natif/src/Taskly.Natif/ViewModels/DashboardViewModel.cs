@@ -6,10 +6,12 @@ using Taskly.Client.Application.Services.Interfaces;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using System.Collections.ObjectModel;
+using Microsoft.Extensions.Logging;
+using Taskly.Natif.Application.Services.Interface;
 
 namespace Taskly.Natif.ViewModels
 {
-    public partial class DashboardViewModel(ITodoService todoService, IPopupService popupService) : ObservableObject
+    public partial class DashboardViewModel(ITodoService todoService, IPopupService popupService, ILogger<DashboardViewModel> logger, IToastService toastService) : ObservableObject
     {
         [ObservableProperty]
         private ObservableCollection<TodoModel> _todos;
@@ -78,6 +80,33 @@ namespace Taskly.Natif.ViewModels
             if(todo != null)
             {
                 Todos.Add(todo);
+            }
+        }
+
+        [RelayCommand]
+        private async Task OnMarkTodoAsync(string todoId)
+        {
+            try
+            {
+                TodoModel todo = Todos.First(t => t.Id == todoId);
+                int todoIndex = Todos.IndexOf(todo);
+                // TODO : Use icon for the buttons in the "androiddashboardview"
+                bool markResult = await todoService.MarkTodoAsync(Guid.Parse(todo.Id), !todo.IsDone);
+                if (markResult)
+                {
+                    todo.IsDone = !todo.IsDone;
+                    Todos[todoIndex] = todo;
+                }
+            }
+            catch(ServiceException se)
+            {
+                logger.LogInformation(se, se.Message);
+                await toastService.ShowErrorAsync("An unexpected error occured");
+            }
+            catch(Exception ex)
+            {
+                logger.LogError(ex, "An unexpected error occured");
+                await toastService.ShowErrorAsync("An unexpected error occured");
             }
         }
     }

@@ -10,6 +10,9 @@ public partial class DashBoardItemAndroid : ContentView
     public static readonly BindableProperty OnDeleteProperty =
              BindableProperty.Create(nameof(OnDelete), typeof(ICommand), typeof(DashBoardItemAndroid));
 
+    public static readonly BindableProperty OnMarkTodoProperty =
+             BindableProperty.Create(nameof(OnMarkTodo), typeof(ICommand), typeof(DashBoardItemAndroid));
+
     public ICommand OnUpdate
     {
         get => (ICommand)GetValue(OnUpdateProperty);
@@ -20,6 +23,12 @@ public partial class DashBoardItemAndroid : ContentView
     {
         get => (ICommand)GetValue(OnDeleteProperty);
         set => SetValue(OnDeleteProperty, value);
+    }
+
+    public ICommand OnMarkTodo
+    {
+        get => (ICommand)GetValue(OnMarkTodoProperty);
+        set => SetValue(OnMarkTodoProperty, value);
     }
 
     public DashBoardItemAndroid()

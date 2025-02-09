@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Taskly.Client.Application.Model;assembly=Taskly.Client.Application"
              xmlns:local="clr-namespace:Taskly.Natif.Components.Dashboard"
+             xmlns:cnv="clr-namespace:Taskly.Natif.Converters"
              x:Class="Taskly.Natif.Components.Dashboard.DashBoardItemWindows"
              x:Name="DashBoardListItemWindows"
              Margin="50,0"
@@ -35,17 +36,32 @@
                     Text="{Binding Content}"
                     FontAttributes="Italic"/>
             </Grid>
-            <Grid ColumnDefinitions="1*,1*" HorizontalOptions="Center" WidthRequest="600">
+            <Grid ColumnDefinitions="1*,1*,1*" HorizontalOptions="Center" WidthRequest="600">
                 <Button Text="Edit"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemWindows}}, Path=OnUpdate}"
                     CommandParameter="{Binding Id}"
                     Grid.Column="0" 
                     WidthRequest="100"
                     HorizontalOptions="Start"/>
+                <Button
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemWindows}}, Path=OnMarkTodo}"
+                    CommandParameter="{Binding Id}"
+                    Grid.Column="1"
+                    HorizontalOptions="Center">
+                    <Button.Text>
+                        <Binding Path="IsDone">
+                            <Binding.Converter>
+                                <cnv:BoolToTextConverter    
+                                    FalseText="Mark as done"
+                                    TrueText="Mark as undone"/>
+                            </Binding.Converter>
+                        </Binding>
+                    </Button.Text>
+                </Button>
                 <Button Text="Delete"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemWindows}}, Path=OnDelete}"
                     CommandParameter="{Binding Id}"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     WidthRequest="100"
                     HorizontalOptions="End"/>
             </Grid>

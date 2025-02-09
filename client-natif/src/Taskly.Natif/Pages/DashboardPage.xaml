@@ -27,13 +27,15 @@
                     <ViewCell>
                         <OnPlatform x:TypeArguments="View">
                             <On Platform="Android">
-                                <components:DashBoardItemAndroid 
+                                <components:DashBoardItemAndroid                                                                
                                     OnDelete="{Binding Source={x:Reference Dashboard}, Path=BindingContext.DeleteCommand}"
+                                    OnMarkTodo="{Binding Source={x:Reference Dashboard}, Path=BindingContext.MarkTodoCommand}"
                                     OnUpdate="{Binding Source={x:Reference Dashboard}, Path=BindingContext.UpdateClickedCommand}" />
                             </On>
                             <On Platform="WinUI,UWP">
                                 <components:DashBoardItemWindows   
-                                    OnDelete="{Binding Source={x:Reference Dashboard}, Path=BindingContext.DeleteCommand}"
+                                    OnDelete="{Binding Source={x:Reference Dashboard}, Path=BindingContext.DeleteCommand}" 
+                                    OnMarkTodo="{Binding Source={x:Reference Dashboard}, Path=BindingContext.MarkTodoCommand}"
                                     OnUpdate="{Binding Source={x:Reference Dashboard}, Path=BindingContext.UpdateClickedCommand}" />
                             </On>
                         </OnPlatform>
