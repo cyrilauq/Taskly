@@ -46,7 +46,8 @@ namespace Taskly.Natif.Extensions
 
         private static IServiceCollection AddNatifServices(this IServiceCollection services)
         {
-            services.AddTransient<IStorageService, NatifStorageService>();
+            services.AddTransient<IStorageService, NatifStorageService>()
+                .AddSingleton<IToastService, ToastService>();
 
             return services;
         }
