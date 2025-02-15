@@ -8,20 +8,46 @@
              x:Name="DashBoardListItemWindows"
              Margin="50,0"
              Padding="0"
-             WidthRequest="600">
+             WidthRequest="600"
+             x:DataType="{x:Type models:TodoModel}">
     <ContentView.Content>
         <VerticalStackLayout>
             <Grid
-                ColumnDefinitions="1*,7*,2*"
+                ColumnDefinitions="auto,7*,2*"
                 RowDefinitions="*,*"
                 RowSpacing="1"
                 Padding="10"
                 HorizontalOptions="Fill">
-                <Label Grid.Row="0"
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="TextColor">
+                            <Setter.Value>
+                                <Binding Path="IsDone">
+                                    <Binding.Converter>
+                                        <cnv:BoolToTextConverter    
+                                            FalseText="Black"
+                                            TrueText="Grey"/>
+                                    </Binding.Converter>
+                                </Binding>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Grid.Resources>
+                <Image
+                    Grid.Row="0"       
                     Grid.Column="0"
-                       Grid.ColumnSpan="2"
+                    Grid.RowSpan="2"
+                    WidthRequest="32"
+                    HeightRequest="32"
+                    Margin="0,0,10,0"
+                    Source="check_icon.png"
+                    IsVisible="{Binding IsDone}" />
+                <Label  
+                    Grid.Row="0"
+                    Grid.Column="1"
                     Text="{Binding Name}"
                     FontSize="14"
+                    VerticalTextAlignment="Center"
                     TextDecorations="Underline"
                     FontAttributes="Bold" />
                 <Label Grid.Row="0"
@@ -30,8 +56,9 @@
                     Text="{Binding CreatedOn, StringFormat='{0:d}'}"
                     FontSize="12"
                     FontAttributes="Italic" />
-                <Label Grid.Row="1"     
-                    Grid.Column="0"
+                <Label 
+                    Grid.Row="1"     
+                    Grid.Column="1"
                     Grid.ColumnSpan="2"
                     Text="{Binding Content}"
                     FontAttributes="Italic"/>

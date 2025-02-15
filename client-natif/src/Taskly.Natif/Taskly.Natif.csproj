@@ -92,6 +92,7 @@
 
 	<ItemGroup>
 	  <None Remove="appsettings.json" />
+	  <None Remove="Resources\Images\Actions\check_icon.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
