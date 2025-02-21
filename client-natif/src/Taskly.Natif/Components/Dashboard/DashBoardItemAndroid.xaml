@@ -3,32 +3,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:Taskly.Client.Application.Model;assembly=Taskly.Client.Application"
              xmlns:local="clr-namespace:Taskly.Natif.Components.Dashboard"       
-             xmlns:cnv="clr-namespace:Taskly.Natif.Converters"
+             xmlns:cnv="clr-namespace:Taskly.Natif.Converters"           
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="Taskly.Natif.Components.Dashboard.DashBoardItemAndroid"
              x:Name="DashBoardListItemAndroid">
     <ContentView.Content>
         <SwipeView>
             <SwipeView.LeftItems>
-                <SwipeItem
-                    BackgroundColor="Yellow"
-                    Text="Edit"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemAndroid}}, Path=OnUpdate}"
-                    CommandParameter="{Binding Id}" />
-                <SwipeItem
-                    BackgroundColor="Gray"              
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemWindows}}, Path=OnMarkTodo}"
-                    CommandParameter="{Binding Id}"
-                    Grid.Column="1">
-                    <SwipeItem.Text>
-                        <Binding Path="IsDone">
-                            <Binding.Converter>
-                                <cnv:BoolToTextConverter    
-                                    FalseText="Mark as done"
-                                    TrueText="Mark as undone"/>
-                            </Binding.Converter>
-                        </Binding>
-                    </SwipeItem.Text>
-                </SwipeItem>
+                <SwipeItems>
+                    <SwipeItemView>
+                        <HorizontalStackLayout BackgroundColor="AliceBlue">
+                            <ImageButton
+                                ToolTipProperties.Text="Edit"
+                                Source="edit_icon.png"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemAndroid}}, Path=OnUpdate}"
+                                CommandParameter="{Binding Id}"    
+                                WidthRequest="48"
+                                HeightRequest="48" />
+                            <ImageButton
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:DashBoardItemAndroid}}, Path=OnMarkTodo}"
+                                CommandParameter="{Binding Id}"
+                                Margin="4"
+                                WidthRequest="48"
+                                HeightRequest="48">
+                                <ImageButton.Source>
+                                    <Binding Path="IsDone">
+                                        <Binding.Converter>
+                                            <cnv:BoolToTextConverter    
+                                                    FalseText="check_icon.png"
+                                                    TrueText="uncheck_icon.png"/>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </ImageButton.Source>
+                            </ImageButton>
+                        </HorizontalStackLayout>
+                    </SwipeItemView>
+                </SwipeItems>
             </SwipeView.LeftItems>
             <SwipeView.RightItems>
                 <SwipeItem
@@ -39,10 +49,24 @@
             </SwipeView.RightItems>
 
             <Grid
-                ColumnDefinitions="1*,6*,2*,1*"
+                ColumnDefinitions="auto,1*,*,2*,auto"
                 RowDefinitions="*,*"
                 RowSpacing="1"
-                Padding="10">
+                Padding="10"
+                BackgroundColor="AliceBlue">
+                <Image 
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Margin="0,0,10,0"
+                    Source="check_icon.png"
+                    HeightRequest="32"
+                    WidthRequest="32"
+                    IsVisible="{Binding IsDone}">
+                    <Image.Behaviors>
+                        <mct:IconTintColorBehavior TintColor="Green" />
+                    </Image.Behaviors>
+                </Image>
                 <Label Grid.Row="0"
                     Grid.Column="1"
                     Text="{Binding Name}"
@@ -51,7 +75,7 @@
                     FontAttributes="Bold"
                     HorizontalOptions="Fill" />
                 <Label Grid.Row="0"
-                    Grid.Column="2"
+                    Grid.Column="3"
                     HorizontalTextAlignment="End"
                     Text="{Binding CreatedOn, StringFormat='{0:d}'}"
                     FontSize="12"

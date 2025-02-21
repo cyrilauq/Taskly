@@ -90,6 +90,7 @@ namespace Taskly.Natif.ViewModels
             {
                 TodoModel todo = Todos.First(t => t.Id == todoId);
                 int todoIndex = Todos.IndexOf(todo);
+                // Todo : yext in grey for done todo
                 // TODO : Use icon for the buttons in the "androiddashboardview"
                 bool markResult = await todoService.MarkTodoAsync(Guid.Parse(todo.Id), !todo.IsDone);
                 if (markResult)

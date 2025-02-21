@@ -4,7 +4,8 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:model="clr-namespace:Taskly.Client.Application.Model;assembly=Taskly.Client.Application"
              xmlns:pages="clr-namespace:Taskly.Natif.Pages"
-             xmlns:components="clr-namespace:Taskly.Natif.Components.Dashboard"
+             xmlns:components="clr-namespace:Taskly.Natif.Components.Dashboard"       
+             xmlns:cnv="clr-namespace:Taskly.Natif.Converters"
              x:Class="Taskly.Natif.Pages.DashboardPage"
              xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
              Title="Dashboard"
@@ -21,7 +22,28 @@
                 Style="{StaticResource TasklyButton}"  
                 Command="{Binding NewClickedCommand}"/>
         </VerticalStackLayout>
-        <ListView Grid.Row="1" ItemsSource="{Binding Todos}" HasUnevenRows="True" SeparatorVisibility="None" SelectionMode="None">
+        <ListView 
+            Grid.Row="1"
+            ItemsSource="{Binding Todos}"
+            HasUnevenRows="True" 
+            SeparatorVisibility="None" 
+            SelectionMode="None"
+            Margin="10,25,10,0">
+            <ListView.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="TextColor">
+                        <Setter.Value>
+                            <Binding Path="IsDone">
+                                <Binding.Converter>
+                                    <cnv:BoolToTextConverter    
+                                            FalseText="Black"
+                                            TrueText="Grey"/>
+                                </Binding.Converter>
+                            </Binding>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.Resources>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:TodoModel">
                     <ViewCell>

@@ -1,4 +1,7 @@
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using Microsoft.Maui.Handlers;
 using System.Windows.Input;
+using Microsoft.Maui.Controls;
 
 namespace Taskly.Natif.Components.Dashboard;
 
@@ -32,7 +35,7 @@ public partial class DashBoardItemWindows : ContentView
     }
 
     public DashBoardItemWindows()
-	{
-		InitializeComponent();
-	}
+    {
+        InitializeComponent();
+    }
 }
