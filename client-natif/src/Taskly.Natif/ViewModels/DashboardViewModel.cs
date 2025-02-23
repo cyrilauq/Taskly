@@ -23,6 +23,7 @@ namespace Taskly.Natif.ViewModels
         {
             try
             {
+                // TODO : Make android todo item checkable
                 Todos = new ObservableCollection<TodoModel>(await todoService.GetConnectedUserTodos());
             }
             catch (ServiceException se)
@@ -92,8 +93,6 @@ namespace Taskly.Natif.ViewModels
             {
                 TodoModel todo = Todos.First(t => t.Id == todoId);
                 int todoIndex = Todos.IndexOf(todo);
-                // Todo : yext in grey for done todo
-                // TODO : Use icon for the buttons in the "androiddashboardview"
                 bool markResult = await todoService.MarkTodoAsync(Guid.Parse(todo.Id), !todo.IsDone);
                 if (markResult)
                 {
