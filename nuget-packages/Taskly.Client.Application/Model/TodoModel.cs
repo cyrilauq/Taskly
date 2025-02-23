@@ -15,6 +15,7 @@ namespace Taskly.Client.Application.Model
         public bool IsDone { get; set; }
         public DateTime? CreatedOn { get; set; }
         public DateTime? DeletedOn { get; set; }
+        public bool IsChecked { get; set; }
     }
 }
 
