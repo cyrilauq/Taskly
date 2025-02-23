@@ -199,10 +199,24 @@ namespace Taskly.Client.Application.Tests.Services
         {
             // Arrange
             Guid guid = Guid.NewGuid();
-            IEnumerable<Guid> ids = [ guid ];
+            IEnumerable<Guid> ids = [guid];
 
             // Act
             await service.MarkTodoAsync(guid, true);
+
+            // Assert
+            repositoryMock.Verify(rm => rm.MarkTodos(ids, true), Times.Once());
+        }
+
+        [TestMethod]
+        public async Task When_MarkMutipleTodoAsyncCalled_ThenCallRepositoryMarkTodoWithSameArgs()
+        {
+            // Arrange
+            Guid guid = Guid.NewGuid(), guid1 = Guid.NewGuid(), guid2 = Guid.NewGuid();
+            IEnumerable<Guid> ids = [guid, guid1, guid2];
+
+            // Act
+            await service.MarkMutipleTodoAsync(ids, true);
 
             // Assert
             repositoryMock.Verify(rm => rm.MarkTodos(ids, true), Times.Once());
