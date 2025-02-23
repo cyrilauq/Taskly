@@ -15,6 +15,8 @@ namespace Taskly.Natif.ViewModels
     {
         [ObservableProperty]
         private ObservableCollection<TodoModel> _todos;
+        [ObservableProperty]
+        private bool _makMultipleTodosChecked = false;
 
         [RelayCommand]
         private async Task OnPageLoadedAsync()
@@ -105,6 +107,42 @@ namespace Taskly.Natif.ViewModels
                 await toastService.ShowErrorAsync("An unexpected error occured");
             }
             catch(Exception ex)
+            {
+                logger.LogError(ex, "An unexpected error occured");
+                await toastService.ShowErrorAsync("An unexpected error occured");
+            }
+        }
+
+        [RelayCommand]
+        private void SelectMultipleTodoClicked()
+        {
+            MakMultipleTodosChecked = true;
+        }
+
+        [RelayCommand]
+        private async Task MarkSelectedTodosAsync(bool asDone)
+        {
+            try
+            {
+                IEnumerable<Guid> todosToMark = Todos.ToList().Where(t => t.IsChecked).Select(t => Guid.Parse(t.Id));
+                bool markResult = await todoService.MarkMutipleTodoAsync(todosToMark, asDone);
+                if (markResult)
+                {
+                    foreach (Guid id in todosToMark)
+                    {
+                        TodoModel originalTodo = Todos.First(t => t.Id == id.ToString());
+                        int todoIndex = Todos.IndexOf(originalTodo);
+                        originalTodo.IsDone = asDone;
+                        Todos[todoIndex] = originalTodo;
+                    }
+                }
+            }
+            catch(ServiceException se)
+            {
+                logger.LogInformation(se, se.Message);
+                await toastService.ShowErrorAsync("An unexpected error occured");
+            }
+            catch (Exception ex)
             {
                 logger.LogError(ex, "An unexpected error occured");
                 await toastService.ShowErrorAsync("An unexpected error occured");

@@ -16,11 +16,43 @@
         <toolkit:EventToCommandBehavior Command="{Binding PageLoadedCommand}" EventName="Loaded" />
     </ContentPage.Behaviors>
     <Grid RowDefinitions="Auto, *">
+        <!-- Main Content -->
+        <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
         <VerticalStackLayout Grid.Row="0">
             <Button 
                 Text="New"             
                 Style="{StaticResource TasklyButton}"  
                 Command="{Binding NewClickedCommand}"/>
+                <HorizontalStackLayout 
+                    x:Name="ButtonContainer"
+                    HorizontalOptions="Center"
+                    MaximumWidthRequest="450"
+                    Margin="25,10">
+                    <Button 
+                    <Button
+                        Text="Select multiple todos"
+                        Command="{Binding SelectMultipleTodoClickedCommand}"/>
+                    <Button 
+                        IsVisible="{Binding MakMultipleTodosChecked}"
+                        Text="Mark all as done"
+                        Command="{Binding MarkSelectedTodosCommand}">
+                        <Button.CommandParameter>
+                            <x:Boolean>True</x:Boolean>
+                        </Button.CommandParameter>
+                    </Button>
+                    <Button  
+                        IsVisible="{Binding MakMultipleTodosChecked}"
+                        Text="Mark all as not done"
+                        Command="{Binding MarkSelectedTodosCommand}">
+                        <Button.CommandParameter>
+                            <x:Boolean>False</x:Boolean>
+                        </Button.CommandParameter>
+                    </Button>
+                </HorizontalStackLayout>
         </VerticalStackLayout>
         <ListView 
             Grid.Row="1"
@@ -56,6 +88,7 @@
                             </On>
                             <On Platform="WinUI,UWP">
                                 <components:DashBoardItemWindows   
+                                        IsCheckable="{Binding Source={x:Reference Dashboard}, Path=BindingContext.MakMultipleTodosChecked}"   
                                     OnDelete="{Binding Source={x:Reference Dashboard}, Path=BindingContext.DeleteCommand}" 
                                     OnMarkTodo="{Binding Source={x:Reference Dashboard}, Path=BindingContext.MarkTodoCommand}"
                                     OnUpdate="{Binding Source={x:Reference Dashboard}, Path=BindingContext.UpdateClickedCommand}" />
