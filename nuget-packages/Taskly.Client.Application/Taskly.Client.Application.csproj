@@ -5,6 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Configurations>Debug;Release;Self_Hsost_Debug</Configurations>
+    <Version>1.1.2</Version>
+    <Authors>Cyril Auquier</Authors>
   </PropertyGroup>
 
   <ItemGroup>
