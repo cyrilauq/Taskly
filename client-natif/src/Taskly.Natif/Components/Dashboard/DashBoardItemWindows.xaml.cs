@@ -16,6 +16,9 @@ public partial class DashBoardItemWindows : ContentView
     public static readonly BindableProperty OnMarkTodoProperty =
              BindableProperty.Create(nameof(OnMarkTodo), typeof(ICommand), typeof(DashBoardItemWindows));
 
+    public static readonly BindableProperty IsCheckableProperty =
+             BindableProperty.Create(nameof(IsCheckable), typeof(bool), typeof(DashBoardItemWindows));
+
     public ICommand OnUpdate
     {
         get => (ICommand)GetValue(OnUpdateProperty);
@@ -32,6 +35,12 @@ public partial class DashBoardItemWindows : ContentView
     {
         get => (ICommand)GetValue(OnMarkTodoProperty);
         set => SetValue(OnMarkTodoProperty, value);
+    }
+
+    public bool IsCheckable
+    {
+        get => (bool)GetValue(IsCheckableProperty);
+        set => SetValue(IsCheckableProperty, value);
     }
 
     public DashBoardItemWindows()
