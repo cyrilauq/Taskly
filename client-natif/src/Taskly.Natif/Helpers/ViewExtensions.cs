@@ -1,4 +1,6 @@
-﻿namespace Taskly.Natif.Helpers
+﻿using System.Runtime.CompilerServices;
+
+namespace Taskly.Natif.Helpers
 {
     public static class ViewExtensions
     {

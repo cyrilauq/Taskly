@@ -32,29 +32,49 @@
                     HorizontalOptions="Center"
                     MaximumWidthRequest="450"
                     Margin="25,10">
-                    <Button 
-                        x:Name="MarkBtn"
-                        Text="Context"
-                        Clicked="MarkBtn_Clicked"/>
                     <Button
                         Text="Select multiple todos"
                         Command="{Binding SelectMultipleTodoClickedCommand}"/>
-                    <Button 
-                        IsVisible="{Binding MakMultipleTodosChecked}"
-                        Text="Mark all as done"
-                        Command="{Binding MarkSelectedTodosCommand}">
-                        <Button.CommandParameter>
-                            <x:Boolean>True</x:Boolean>
-                        </Button.CommandParameter>
-                    </Button>
-                    <Button  
-                        IsVisible="{Binding MakMultipleTodosChecked}"
-                        Text="Mark all as not done"
-                        Command="{Binding MarkSelectedTodosCommand}">
-                        <Button.CommandParameter>
-                            <x:Boolean>False</x:Boolean>
-                        </Button.CommandParameter>
-                    </Button>
+                    <OnPlatform x:TypeArguments="View">
+                        <On Platform="Android">
+                            <Border StrokeShape="RoundRectangle 10,10,10,10">
+                                <HorizontalStackLayout>
+                                    <Button
+                                        x:Name="MarkBtn"
+                                        WidthRequest="80"
+                                        Text="Mark as"
+                                        CornerRadius="0"
+                                        Clicked="MarkBtn_Clicked"/>
+                                    <ImageButton
+                                        x:Name="MarkImgBtn"
+                                        BackgroundColor="#512BD4"
+                                        WidthRequest="24"
+                                        Source="arrow_dropdow_icon.png"
+                                        Clicked="MarkBtn_Clicked"/>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </On>
+                        <On Platform="WinUI,UWP">
+                            <HorizontalStackLayout>
+                                <Button 
+                                    IsVisible="{Binding MakMultipleTodosChecked}"
+                                    Text="Mark all as done"
+                                    Command="{Binding MarkSelectedTodosCommand}">
+                                    <Button.CommandParameter>
+                                        <x:String>done</x:String>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Button  
+                                    IsVisible="{Binding MakMultipleTodosChecked}"
+                                    Text="Mark all as not done"
+                                    Command="{Binding MarkSelectedTodosCommand}">
+                                    <Button.CommandParameter>
+                                        <x:String>undone</x:String>
+                                    </Button.CommandParameter>
+                                </Button>
+                            </HorizontalStackLayout>
+                        </On>
+                    </OnPlatform>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
             <ListView 
@@ -85,6 +105,7 @@
                             <OnPlatform x:TypeArguments="View">
                                 <On Platform="Android">
                                     <components:DashBoardItemAndroid                                                                
+                                        IsCheckable="{Binding Source={x:Reference Dashboard}, Path=BindingContext.MakMultipleTodosChecked}"   
                                         OnDelete="{Binding Source={x:Reference Dashboard}, Path=BindingContext.DeleteCommand}"
                                         OnMarkTodo="{Binding Source={x:Reference Dashboard}, Path=BindingContext.MarkTodoCommand}"
                                         OnUpdate="{Binding Source={x:Reference Dashboard}, Path=BindingContext.UpdateClickedCommand}" />
@@ -106,22 +127,25 @@
         <!-- Context Menu -->
         <Frame 
             x:Name="MenuFrame"
-            BackgroundColor="White"
             Padding="0"
             Margin="0"
-            CornerRadius="5"
             IsVisible="False"
+            BackgroundColor="Transparent"
+            BorderColor="Transparent"
             AbsoluteLayout.LayoutFlags="None">
-            <CollectionView SelectionMode="None">
-                <CollectionView.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Coucou1</x:String>
-                        <x:String>Coucou2</x:String>
-                    </x:Array>
-                </CollectionView.ItemsSource>
+            <CollectionView SelectionMode="None" ItemsSource="{Binding MarkOptions}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Label Text="{Binding}" Padding="10" BackgroundColor="LightGray"/>
+                    <DataTemplate x:DataType="{x:Type vm:MarkOption}">
+                        <Button
+                            Text="{Binding Label}"
+                            Padding="10">
+                            <Button.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="CloseBtnMenu" />
+                                <TapGestureRecognizer  
+                                    Command="{Binding Source={x:Reference Dashboard}, Path=BindingContext.MarkSelectedTodosCommand}"
+                                    CommandParameter="{Binding Key}"/>
+                            </Button.GestureRecognizers>
+                        </Button>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

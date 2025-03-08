@@ -17,6 +17,8 @@ namespace Taskly.Natif.ViewModels
         private ObservableCollection<TodoModel> _todos;
         [ObservableProperty]
         private bool _makMultipleTodosChecked = false;
+        [ObservableProperty]
+        private ObservableCollection<MarkOption> _markOptions;
 
         [RelayCommand]
         private async Task OnPageLoadedAsync()
@@ -24,6 +26,11 @@ namespace Taskly.Natif.ViewModels
             try
             {
                 // TODO : Make android todo item checkable
+                MarkOptions =
+                [
+                    new("done", "done"),
+                    new("not done", "undone")
+                ];
                 Todos = new ObservableCollection<TodoModel>(await todoService.GetConnectedUserTodos());
             }
             catch (ServiceException se)
@@ -119,10 +126,11 @@ namespace Taskly.Natif.ViewModels
         }
 
         [RelayCommand]
-        private async Task MarkSelectedTodosAsync(bool asDone)
+        private async Task MarkSelectedTodosAsync(string option)
         {
             try
             {
+                bool asDone = option == "done";
                 IEnumerable<Guid> todosToMark = Todos.ToList().Where(t => t.IsChecked).Select(t => Guid.Parse(t.Id));
                 bool markResult = await todoService.MarkMutipleTodoAsync(todosToMark, asDone);
                 if (markResult)
@@ -148,4 +156,6 @@ namespace Taskly.Natif.ViewModels
             }
         }
     }
+
+    public record MarkOption(string Label, string Key);
 }

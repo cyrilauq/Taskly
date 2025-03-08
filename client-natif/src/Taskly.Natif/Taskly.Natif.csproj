@@ -74,6 +74,9 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
+		<MauiImage Include="Resources\Images\Actions\arrow_dropdow_icon.svg">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</MauiImage>
 		<MauiImage Include="Resources\Images\Actions\check_icon.svg">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</MauiImage>
@@ -116,6 +119,7 @@
 
 	<ItemGroup>
 	  <None Remove="appsettings.json" />
+	  <None Remove="Resources\Images\Actions\arrow_dropdow_icon.svg" />
 	  <None Remove="Resources\Images\Actions\check_icon.svg" />
 	  <None Remove="Resources\Images\Actions\edit_icon.svg" />
 	  <None Remove="Resources\Images\Actions\uncheck_icon.svg" />
