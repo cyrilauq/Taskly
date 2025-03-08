@@ -10,6 +10,7 @@ namespace Taskly.Natif
             InitializeComponent();
 
             Routing.RegisterRoute("auth/login", typeof(LoginPage));
+            Routing.RegisterRoute("auth/register", typeof(RegisterPage));
 
             BindingContext = menuViewModel;
         }

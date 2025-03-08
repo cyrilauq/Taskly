@@ -1,9 +1,10 @@
-﻿using Taskly.Client.Application.State.Interfaces;
+﻿using CommunityToolkit.Mvvm.Input;
+using Taskly.Client.Application.State.Interfaces;
 using Taskly.Natif.Application.Services.Interface;
 
 namespace Taskly.Natif.ViewModels
 {
-    public class HomeViewModel : BindableObject
+    public partial class HomeViewModel : BindableObject
     {
         private IAuthState _authState;
         private IStorageService _storageService;
@@ -26,6 +27,12 @@ namespace Taskly.Natif.ViewModels
                 // Thread safe navigation
                 Microsoft.Maui.Controls.Application.Current?.Dispatcher.Dispatch(async () => await Shell.Current.GoToAsync("//Dashboard", false));
             }
+        }
+
+        [RelayCommand]
+        private void GoToRegister()
+        {
+            Microsoft.Maui.Controls.Application.Current?.Dispatcher.Dispatch(async () => await Shell.Current.GoToAsync("auth/register", false));
         }
 
         private class LocalAuthState : IAuthState
