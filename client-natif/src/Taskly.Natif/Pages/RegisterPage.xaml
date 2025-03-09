@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Taskly.Natif.Pages.RegisterPage"
              xmlns:fc="clr-namespace:Taskly.Natif.Components.Form"
+             xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
+             x:DataType="vm:RegisterViewModel"
              Title="RegisterPage">
     <Shell.TitleView>
         <Grid 
@@ -15,40 +17,41 @@
                 TextColor="AliceBlue" />
         </Grid>
     </Shell.TitleView>
-    <VerticalStackLayout Margin="0,20,0,0">
-        <VerticalStackLayout WidthRequest="320">
-            <Border>
-                <VerticalStackLayout>
-                    <fc:TextInput 
-                        LabelText="Lastname"
-                        PlaceholderText="Lastname "/>
-                    <fc:TextInput 
-                        LabelText="Firstname"
-                        PlaceholderText="Firstname" />
-                    <fc:TextInput 
-                        LabelText="Pseudo"
-                        PlaceholderText="Pseudo" />
-                    <fc:TextInput 
-                        LabelText="Email"
-                        PlaceholderText="Email" />
-                    <fc:TextInput 
-                        LabelText="Birthdate"
-                        PlaceholderText="Birthdate" />
-                </VerticalStackLayout>
-            </Border>
-            <Border Margin="0,15">
-                <VerticalStackLayout>
-                    <fc:PasswordInput 
-                        LabelText="Password"
-                        PlaceholderText="Password" />
-                    <fc:PasswordInput 
-                        LabelText="Confirm Password"
-                        PlaceholderText="Password" />
-                </VerticalStackLayout>
-            </Border>
+    <ScrollView>
+        <VerticalStackLayout Margin="0,20,0,0">
+            <VerticalStackLayout WidthRequest="320">
+                <Border>
+                    <VerticalStackLayout>
+                        <fc:TextInput 
+                            LabelText="Lastname"
+                            PlaceholderText="Lastname "/>
+                        <fc:TextInput 
+                            LabelText="Firstname"
+                            PlaceholderText="Firstname" />
+                        <fc:TextInput 
+                            LabelText="Pseudo"
+                            PlaceholderText="Pseudo" />
+                        <fc:TextInput 
+                            LabelText="Email"
+                            PlaceholderText="Email" />
+                        <fc:DateInput
+                            LabelText="Birthdate" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Margin="0,15">
+                    <VerticalStackLayout>
+                        <fc:PasswordInput 
+                            LabelText="Password"
+                            PlaceholderText="Password" />
+                        <fc:PasswordInput 
+                            LabelText="Confirm Password"
+                            PlaceholderText="Password" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+            <Button
+                Text="Register"
+                Style="{StaticResource TasklyButton}"/>
         </VerticalStackLayout>
-        <Button
-            Text="Register"
-            Style="{StaticResource TasklyButton}"/>
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

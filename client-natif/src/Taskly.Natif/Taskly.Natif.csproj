@@ -161,6 +161,9 @@
 	  <Compile Update="Components\Form\PasswordInput.xaml.cs">
 	    <DependentUpon>PasswordInput.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Components\Form\DateInput.xaml.cs">
+	    <DependentUpon>DateInput.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\LoginPage.xaml.cs">
 	    <DependentUpon>LoginPage.xaml</DependentUpon>
 	  </Compile>
@@ -180,6 +183,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Components\Form\PasswordInput.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Components\Form\DateInput.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Components\Form\TextInput.xaml">

@@ -2,18 +2,16 @@ using Taskly.Natif.Application.Validator;
 
 namespace Taskly.Natif.Components.Form;
 
-public partial class TextInput : ContentView
+public partial class DateInput : ContentView
 {
-    private string _errorMessage;
-
     public static readonly BindableProperty LabelTextProperty =
-             BindableProperty.Create(nameof(LabelText), typeof(string), typeof(TextInput), default);
+             BindableProperty.Create(nameof(LabelText), typeof(string), typeof(DateInput), default);
     public static readonly BindableProperty LabelNameProperty =
-             BindableProperty.Create(nameof(LabelName), typeof(string), typeof(TextInput), default);
+             BindableProperty.Create(nameof(LabelName), typeof(string), typeof(DateInput), default);
     public static readonly BindableProperty PlaceholderTextProperty =
-             BindableProperty.Create(nameof(PlaceholderText), typeof(string), typeof(TextInput), default);
+             BindableProperty.Create(nameof(PlaceholderText), typeof(DateOnly), typeof(DateInput), default);
     public static readonly BindableProperty ValidatorProperty =
-             BindableProperty.Create(nameof(Validator), typeof(IValidatorObject), typeof(TextInput), default);
+             BindableProperty.Create(nameof(Validator), typeof(IValidatorObject), typeof(DateInput), default);
 
     public string LabelText
     {
@@ -25,9 +23,9 @@ public partial class TextInput : ContentView
         get => (string)GetValue(LabelNameProperty);
         set => SetValue(LabelNameProperty, value);
     }
-    public string PlaceholderText
+    public DateOnly PlaceholderText
     {
-        get => (string)GetValue(PlaceholderTextProperty);
+        get => (DateOnly)GetValue(PlaceholderTextProperty);
         set => SetValue(PlaceholderTextProperty, value);
     }
     public IValidatorObject Validator
@@ -37,7 +35,7 @@ public partial class TextInput : ContentView
     }
 
 
-    public TextInput()
+    public DateInput()
 	{
 		InitializeComponent();
 	}
@@ -58,5 +56,10 @@ public partial class TextInput : ContentView
             ErrorMessage.Text = Validator.Error;
             ErrorMessage.IsVisible = true;
         }
+    }
+
+    private void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
+    {
+
     }
 }
