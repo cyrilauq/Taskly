@@ -28,6 +28,7 @@ namespace Taskly.Natif.Extensions
             services.AddTransient<LoginViewModel>();
             services.AddTransient<HomeViewModel>();
             services.AddTransient<MenuViewModel>();
+            services.AddTransient<RegisterViewModel>();
             services.AddTransient<DashboardViewModel>();
 
             return services;
