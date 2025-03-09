@@ -23,24 +23,30 @@
                 <Border>
                     <VerticalStackLayout>
                         <fc:TextInput 
+                            Validator="{Binding LastnameValidator}"
                             LabelText="Lastname"
                             PlaceholderText="Lastname "/>
-                        <fc:TextInput 
+                        <fc:TextInput                              
+                            Validator="{Binding FirstnameValidator}"
                             LabelText="Firstname"
                             PlaceholderText="Firstname" />
-                        <fc:TextInput 
+                        <fc:TextInput                                                           
+                            Validator="{Binding UsernameValidator}"
                             LabelText="Pseudo"
                             PlaceholderText="Pseudo" />
-                        <fc:TextInput 
+                        <fc:TextInput                                                                                        
+                            Validator="{Binding EmailValidator}"
                             LabelText="Email"
                             PlaceholderText="Email" />
-                        <fc:DateInput
+                        <fc:DateInput                                                                                                                     
+                            Validator="{Binding BirthdateValidator}"
                             LabelText="Birthdate" />
                     </VerticalStackLayout>
                 </Border>
                 <Border Margin="0,15">
                     <VerticalStackLayout>
-                        <fc:PasswordInput 
+                        <fc:PasswordInput                                                                                                                                               
+                            Validator="{Binding PasswordValidator}"
                             LabelText="Password"
                             PlaceholderText="Password" />
                         <fc:PasswordInput 
@@ -51,6 +57,7 @@
             </VerticalStackLayout>
             <Button
                 Text="Register"
+                Command="{Binding RegisterCommand}"
                 Style="{StaticResource TasklyButton}"/>
         </VerticalStackLayout>
     </ScrollView>
