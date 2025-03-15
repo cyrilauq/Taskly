@@ -3,9 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Taskly.Natif.Pages.RegisterPage"
              xmlns:fc="clr-namespace:Taskly.Natif.Components.Form"
+             xmlns:cv="clr-namespace:Taskly.Natif.Converters"
              xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vm:RegisterViewModel"
              Title="RegisterPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Shell.TitleView>
         <Grid 
             BackgroundColor="{StaticResource TasklyBlue}">
@@ -19,6 +26,9 @@
     </Shell.TitleView>
     <ScrollView>
         <VerticalStackLayout Margin="0,20,0,0">
+            <Label 
+                Text="{Binding Error}"
+                IsVisible="{Binding Error, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
             <VerticalStackLayout WidthRequest="320">
                 <Border>
                     <VerticalStackLayout>
