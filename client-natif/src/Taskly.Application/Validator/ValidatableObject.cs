@@ -28,7 +28,7 @@ namespace Taskly.Natif.Application.Validator
 
         public bool Validate()
         {
-            var errors = Rules.Where(r => r.Check((T)Value)).ToList();
+            var errors = Rules.Where(r => r.Check(Value is null ? default : (T)Value)).ToList();
             Error = errors.Any() ? errors[0].ValidationMessage : null;
             HasError = errors.Any();
             return errors.Any();
