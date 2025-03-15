@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using Taskly.Client.Application;
+using Taskly.Natif.Application.Services;
 using Taskly.Natif.Application.Services.Interface;
 using Taskly.Natif.Infrastructure;
 using Taskly.Natif.Pages;
@@ -40,6 +41,7 @@ namespace Taskly.Natif.Extensions
             services.AddTransient<MainPage>();
             services.AddTransient<AppShell>();
             services.AddTransient<DashboardPage>();
+            services.AddTransient<RegisterPage>();
             services.AddTransientPopup<SaveTodoPage, SaveTodoViewModel>();
 
             return services;
@@ -47,7 +49,9 @@ namespace Taskly.Natif.Extensions
 
         private static IServiceCollection AddNatifServices(this IServiceCollection services)
         {
-            services.AddTransient<IStorageService, NatifStorageService>()
+            services
+                .AddTransient<IStorageService, NatifStorageService>()
+                .AddTransient<INavigationService, NatifNavigationService>()
                 .AddSingleton<IToastService, ToastService>();
 
             return services;
