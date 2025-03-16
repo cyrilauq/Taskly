@@ -6,7 +6,7 @@
 
         public bool Check(DateOnly value)
         {
-            return value != DateOnly.MinValue && value != DateOnly.FromDateTime(DateTime.Now);
+            return value == DateOnly.MinValue || value == DateOnly.FromDateTime(DateTime.Now);
         }
     }
 }
