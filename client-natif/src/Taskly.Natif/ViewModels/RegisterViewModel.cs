@@ -69,7 +69,7 @@ namespace Taskly.Natif.ViewModels
             };
             BirthdateValidator = new()
             {
-                Rules = new() { new DateRequiredRule { ValidationMessage = "The lastname is required" } }
+                Rules = new() { new DateRequiredRule { ValidationMessage = "The birthdate is required" } }
             };
         }
 
