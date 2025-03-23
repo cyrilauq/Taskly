@@ -1,32 +1,35 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Taskly.Client.Application.Exceptions;
 using Taskly.Client.Application.Services.Interfaces;
 using Taskly.Client.Application.State.Interfaces;
+using Taskly.Natif.Application.Services;
 using Taskly.Natif.Application.Services.Interface;
 using Taskly.Natif.Application.Validator;
 using Taskly.Natif.Application.Validator.Rules;
 
-namespace Taskly.Natif.ViewModels
+namespace Taskly.Natif.Application.ViewModels
 {
     public partial class LoginViewModel : ObservableObject
     {
         private IAuthenticationService _authenticationService;
         private IStorageService _storageService;
         private IAuthState _authState;
+        private IToastService _toastService;
+        private INavigationService _navigationService;
 
         public ValidatableObject<string> UsernameValidator { get; init; }
         public ValidatableObject<string> PasswordValidator { get; init; }
 
         public bool FormCanBeEdited { get; private set; } = true;
 
-        public LoginViewModel(IAuthenticationService authenticationService, IAuthState authState, IStorageService storageService)
+        public LoginViewModel(IAuthenticationService authenticationService, IAuthState authState, IStorageService storageService, IToastService toastService, INavigationService navigationService)
         {
             _authenticationService = authenticationService;
             _authState = authState;
             _storageService = storageService;
+            _toastService = toastService;
+            _navigationService = navigationService;
 
             UsernameValidator = new()
             {
@@ -36,6 +39,8 @@ namespace Taskly.Natif.ViewModels
             {
                 Rules = new() { new StringRequiredRule { ValidationMessage = "The password is required" } }
             };
+            _toastService = toastService;
+            _navigationService = navigationService;
         }
 
         // Notice:
@@ -44,7 +49,7 @@ namespace Taskly.Natif.ViewModels
         [RelayCommand]
         private async Task OnLoginAsync()
         {
-            if(FormIsValid())
+            if (FormIsValid())
             {
                 try
                 {
@@ -54,25 +59,22 @@ namespace Taskly.Natif.ViewModels
                     if (result)
                     {
                         await _storageService.SaveAsync(_authState, nameof(IAuthState));
-                        await Shell.Current.GoToAsync("//Dashboard");
+                        await _navigationService.NavigateTo("//Dashboard");
                     }
                 }
-                catch(ServiceException se)
+                catch (ServiceException se)
                 {
-                    var toast = Toast.Make(se.Message, ToastDuration.Long, 14);
-                    await toast.Show();
+                    await _toastService.ShowErrorAsync(se.Message);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    if(ex is NotFoundException || ex is ValidationException)
+                    if (ex is NotFoundException || ex is ValidationException)
                     {
-                        var toast = Toast.Make(ex.Message, ToastDuration.Long, 14);
-                        await toast.Show();
+                        await _toastService.ShowErrorAsync(ex.Message);
                     }
                     else
                     {
-                        var toast = Toast.Make("An unexpected error occured", ToastDuration.Long, 14);
-                        await toast.Show();
+                        await _toastService.ShowErrorAsync("An unexpected error occured");
                     }
                 }
             }

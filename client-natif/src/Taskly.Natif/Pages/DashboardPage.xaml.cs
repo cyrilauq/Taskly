@@ -1,6 +1,6 @@
 using Microsoft.Maui.Layouts;
 using Taskly.Natif.Helpers;
-using Taskly.Natif.ViewModels;
+using Taskly.Natif.Application.ViewModels;
 
 namespace Taskly.Natif.Pages;
 

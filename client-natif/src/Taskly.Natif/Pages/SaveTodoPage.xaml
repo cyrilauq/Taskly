@@ -2,7 +2,7 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                x:Class="Taskly.Natif.Pages.SaveTodoPage"  
-               xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"      
+               xmlns:vm="clr-namespace:Taskly.Natif.Application.ViewModels;assembly=Taskly.Natif.Application"      
                xmlns:inputs="clr-namespace:Taskly.Natif.Components.Form"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:DataType="vm:SaveTodoViewModel"

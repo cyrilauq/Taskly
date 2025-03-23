@@ -1,18 +1,22 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Taskly.Client.Application.State.Interfaces;
+using Taskly.Natif.Application.Services;
 using Taskly.Natif.Application.Services.Interface;
 
-namespace Taskly.Natif.ViewModels
+namespace Taskly.Natif.Application.ViewModels
 {
-    public partial class HomeViewModel : BindableObject
+    public partial class HomeViewModel : ObservableObject
     {
         private IAuthState _authState;
         private IStorageService _storageService;
+        private INavigationService _navigationService;
 
-        public HomeViewModel(IAuthState authState, IStorageService storageService)
+        public HomeViewModel(IAuthState authState, IStorageService storageService, INavigationService navigationService)
         {
             _authState = authState;
             _storageService = storageService;
+            _navigationService = navigationService;
         }
 
         public async Task LoadState()
@@ -24,15 +28,14 @@ namespace Taskly.Natif.ViewModels
                 _authState.UserId = saveState.UserId;
                 _authState.UserName = saveState.UserName;
                 _authState.NotifyStateChanged();
-                // Thread safe navigation
-                Microsoft.Maui.Controls.Application.Current?.Dispatcher.Dispatch(async () => await Shell.Current.GoToAsync("//Dashboard", false));
+                await _navigationService.NavigateTo("//Dashboard");
             }
         }
 
         [RelayCommand]
         private void GoToRegister()
         {
-            Microsoft.Maui.Controls.Application.Current?.Dispatcher.Dispatch(async () => await Shell.Current.GoToAsync("auth/register", false));
+            _navigationService.NavigateTo("auth/register");
         }
 
         private class LocalAuthState : IAuthState

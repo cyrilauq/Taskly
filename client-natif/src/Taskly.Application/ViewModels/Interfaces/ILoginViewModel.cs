@@ -1,4 +1,4 @@
-﻿namespace Taskly.Natif.ViewModels.Interfaces
+﻿namespace Taskly.Natif.Application.ViewModels.Interfaces
 {
     internal interface ILoginViewModel
     {

@@ -4,7 +4,7 @@
              x:Class="Taskly.Natif.Pages.RegisterPage"
              xmlns:fc="clr-namespace:Taskly.Natif.Components.Form"
              xmlns:cv="clr-namespace:Taskly.Natif.Converters"
-             xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
+             xmlns:vm="clr-namespace:Taskly.Natif.Application.ViewModels;assembly=Taskly.Natif.Application"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vm:RegisterViewModel"
              Title="RegisterPage">

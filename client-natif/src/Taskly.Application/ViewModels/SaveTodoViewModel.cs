@@ -1,28 +1,28 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Taskly.Client.Application.Exceptions;
 using Taskly.Client.Application.Model;
 using Taskly.Client.Application.Services.Interfaces;
+using Taskly.Natif.Application.Services.Interface;
 using Taskly.Natif.Application.Validator;
 using Taskly.Natif.Application.Validator.Rules;
 
-namespace Taskly.Natif.ViewModels
+namespace Taskly.Natif.Application.ViewModels
 {
     public partial class SaveTodoViewModel : ObservableObject
     {
         private TodoModel? _todo;
         private ITodoService todoService;
+        private IToastService _toastService;
 
         public Action<TodoModel?> ClosePopup { get; set; }
 
-        public TodoModel? Todo 
-        { 
-            get => _todo; 
+        public TodoModel? Todo
+        {
+            get => _todo;
             set
             {
-                if(value != null)
+                if (value != null)
                 {
                     _todo = value;
                     TodoNameValidator.Value = value.Name;
@@ -38,9 +38,11 @@ namespace Taskly.Natif.ViewModels
         public ValidatableObject<string> TodoNameValidator { get; init; }
         public ValidatableObject<string> TodoContentValidator { get; init; }
 
-        public SaveTodoViewModel(ITodoService todoService)
+        public SaveTodoViewModel(ITodoService todoService, IToastService toastService)
         {
             this.todoService = todoService;
+            _toastService = toastService;
+
             TodoNameValidator = new()
             {
                 Rules = new()
@@ -86,13 +88,11 @@ namespace Taskly.Natif.ViewModels
             }
             catch (ServiceException se)
             {
-                var toast = Toast.Make(se.Message, ToastDuration.Long, 14);
-                await toast.Show();
+                await _toastService.ShowErrorAsync(se.Message);
             }
             catch (Exception se)
             {
-                var toast = Toast.Make("Unexpected error", ToastDuration.Long, 14);
-                await toast.Show();
+                await _toastService.ShowErrorAsync("Unexpected error");
             }
         }
 

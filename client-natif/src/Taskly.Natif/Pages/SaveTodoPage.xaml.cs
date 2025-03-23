@@ -1,6 +1,6 @@
 using CommunityToolkit.Maui.Views;
 using Taskly.Client.Application.Model;
-using Taskly.Natif.ViewModels;
+using Taskly.Natif.Application.ViewModels;
 
 namespace Taskly.Natif.Pages;
 

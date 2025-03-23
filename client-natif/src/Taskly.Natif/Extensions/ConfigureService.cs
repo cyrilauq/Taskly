@@ -7,7 +7,7 @@ using Taskly.Natif.Application.Services.Interface;
 using Taskly.Natif.Infrastructure;
 using Taskly.Natif.Pages;
 using Taskly.Natif.Services;
-using Taskly.Natif.ViewModels;
+using Taskly.Natif.Application.ViewModels;
 
 namespace Taskly.Natif.Extensions
 {
@@ -52,7 +52,8 @@ namespace Taskly.Natif.Extensions
             services
                 .AddTransient<IStorageService, NatifStorageService>()
                 .AddTransient<INavigationService, NatifNavigationService>()
-                .AddSingleton<IToastService, ToastService>();
+                .AddTransient<IPopupService, NatifPopupService>()
+                .AddSingleton<IToastService, NatifToastService>();
 
             return services;
         }

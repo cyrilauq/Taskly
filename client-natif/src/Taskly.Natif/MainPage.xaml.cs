@@ -1,4 +1,4 @@
-﻿using Taskly.Natif.ViewModels;
+﻿using Taskly.Natif.Application.ViewModels;
 
 namespace Taskly.Natif
 {

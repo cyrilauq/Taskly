@@ -3,13 +3,11 @@ using CommunityToolkit.Mvvm.Input;
 using Taskly.Client.Application.Exceptions;
 using Taskly.Client.Application.Model;
 using Taskly.Client.Application.Services.Interfaces;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
 using System.Collections.ObjectModel;
 using Microsoft.Extensions.Logging;
 using Taskly.Natif.Application.Services.Interface;
 
-namespace Taskly.Natif.ViewModels
+namespace Taskly.Natif.Application.ViewModels
 {
     public partial class DashboardViewModel(ITodoService todoService, IPopupService popupService, ILogger<DashboardViewModel> logger, IToastService toastService) : ObservableObject
     {
@@ -35,13 +33,11 @@ namespace Taskly.Natif.ViewModels
             }
             catch (ServiceException se)
             {
-                var toast = Toast.Make(se.Message, ToastDuration.Long, 14);
-                await toast.Show();
+                await toastService.ShowErrorAsync(se.Message);
             }
             catch (Exception se)
             {
-                var toast = Toast.Make("Unexpected error", ToastDuration.Long, 14);
-                await toast.Show();
+                await toastService.ShowErrorAsync("Unexpected error");
             }
         }
 
@@ -50,8 +46,8 @@ namespace Taskly.Natif.ViewModels
         {
             var foundTodo = Todos.First(t => t.Id == todoId);
             var lastIndex = Todos.IndexOf(foundTodo);
-            var todo = (TodoModel?)await popupService.ShowPopupAsync<SaveTodoViewModel>(onPresenting: viewModel => viewModel.Todo = foundTodo);
-            if(todo != null)
+            var todo = await popupService.ShowPopupAsync<SaveTodoViewModel, TodoModel>(viewModel => viewModel.Todo = foundTodo);
+            if (todo != null)
             {
                 Todos[lastIndex] = todo;
             }
@@ -61,33 +57,31 @@ namespace Taskly.Natif.ViewModels
         private async Task OnDeleteAsync(string todoId)
         {
 
-            var confirmationResult = await Shell.Current.CurrentPage.DisplayAlert("Are you sure you to delete the item?", "There is no going back after confirming the action", "Yes", "No");
+            var confirmationResult = await toastService.ShowConfirmationBoxAsync("Are you sure you to delete the item?", "There is no going back after confirming the action", "Yes", "No");
             if (!confirmationResult) return;
             try
             {
                 var deleteResult = await todoService.DeleteAsync(todoId);
-                if(deleteResult)
+                if (deleteResult)
                 {
                     Todos.Remove(Todos.First(t => t.Id == todoId));
                 }
             }
             catch (ServiceException se)
             {
-                var toast = Toast.Make(se.Message, ToastDuration.Long, 14);
-                await toast.Show();
+                await toastService.ShowErrorAsync(se.Message);
             }
             catch (Exception se)
             {
-                var toast = Toast.Make("Unexpected error", ToastDuration.Long, 14);
-                await toast.Show();
+                await toastService.ShowErrorAsync("Unexpected error");
             }
         }
 
         [RelayCommand]
         private async Task OnNewClickedAsync()
         {
-            var todo = (TodoModel?)await popupService.ShowPopupAsync<SaveTodoViewModel>();
-            if(todo != null)
+            var todo = await popupService.ShowPopupAsync<SaveTodoViewModel, TodoModel>();
+            if (todo != null)
             {
                 Todos.Add(todo);
             }
@@ -107,12 +101,12 @@ namespace Taskly.Natif.ViewModels
                     Todos[todoIndex] = todo;
                 }
             }
-            catch(ServiceException se)
+            catch (ServiceException se)
             {
                 logger.LogInformation(se, se.Message);
                 await toastService.ShowErrorAsync("An unexpected error occured");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.LogError(ex, "An unexpected error occured");
                 await toastService.ShowErrorAsync("An unexpected error occured");
@@ -144,7 +138,7 @@ namespace Taskly.Natif.ViewModels
                     }
                 }
             }
-            catch(ServiceException se)
+            catch (ServiceException se)
             {
                 logger.LogInformation(se, se.Message);
                 await toastService.ShowErrorAsync("An unexpected error occured");

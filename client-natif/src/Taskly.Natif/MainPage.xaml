@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Taskly.Natif.MainPage"
              Shell.FlyoutBehavior="Disabled"
-             xmlns:vm="clr-namespace:Taskly.Natif.ViewModels"
+             xmlns:vm="clr-namespace:Taskly.Natif.Application.ViewModels;assembly=Taskly.Natif.Application"
              x:DataType="vm:HomeViewModel">
 
     <ScrollView>
