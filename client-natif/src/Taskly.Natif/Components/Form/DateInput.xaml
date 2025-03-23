@@ -21,6 +21,7 @@
             <DatePicker 
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="Start"
+                Date="{Binding Source={x:Reference Self}, Path=Validator.Value}"
                 DateSelected="DatePicker_DateSelected"
                 TextColor="Black"
                 Format="dd/MM/yyyy" />
