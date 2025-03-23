@@ -31,7 +31,7 @@ namespace Taskly.Client.Application.Services
             authState.UserId = user.Id;
             authState.NotifyStateChanged();
 
-            return false;
+            return true;
         }
     }
 }
