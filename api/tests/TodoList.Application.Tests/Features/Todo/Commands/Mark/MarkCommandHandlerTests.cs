@@ -10,7 +10,7 @@ using TodoList.Application.Services.Interfaces;
 using TodoList.Domain.IRepository;
 using UnauthorizedAccessException = TodoList.Application.Services.Exceptions.UnauthorizedAccessException;
 
-namespace TodoList.Application.Tests;
+namespace TodoList.Application.Tests.Features.Todo.Commands.Mark;
 
 [TestClass]
 public class MarkCommandHandlerTests
@@ -70,12 +70,12 @@ public class MarkCommandHandlerTests
     {
         // Act
         _mockedTodoRepository.Setup(mtr => mtr.GetByIdAsync(It.IsAny<Guid>()))
-            .ReturnsAsync(new Todo
+            .ReturnsAsync(new Models.Todo
             {
                 Name = "Couocou",
                 UserId = connectedUserUid,
             });
-        await _handler.Handle(new MarkCommand() { TodoIds = [ Guid.NewGuid() ], IsDone = true }, CancellationToken.None);
+        await _handler.Handle(new MarkCommand() { TodoIds = [Guid.NewGuid()], IsDone = true }, CancellationToken.None);
 
         // Assert
         _mockedTodoRepository.Verify(mtr => mtr.GetByIdAsync(It.IsAny<Guid>()), Times.Once());
@@ -86,7 +86,7 @@ public class MarkCommandHandlerTests
     {
         // Arrange
         _mockedTodoRepository.Setup(mtr => mtr.GetByIdAsync(It.IsAny<Guid>()))
-            .ReturnsAsync(new Todo
+            .ReturnsAsync(new Models.Todo
             {
                 Name = "Couocou",
                 UserId = Guid.NewGuid(),
@@ -106,7 +106,7 @@ public class MarkCommandHandlerTests
     {
         // Arrange
         _mockedTodoRepository.Setup(mtr => mtr.GetByIdAsync(It.IsAny<Guid>()))
-            .ReturnsAsync((Todo?)null);
+            .ReturnsAsync((Models.Todo?)null);
         MarkCommand command = new MarkCommand() { TodoIds = [Guid.NewGuid()], IsDone = true };
 
         // Act
