@@ -60,6 +60,14 @@ public partial class DateInput : ContentView
 
     private void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
     {
-
+        // TODO : give input value to validator
+        if (Validator is null) return;
+        ErrorMessage.IsVisible = false;
+        string? error = null;
+        if (Validator.Validate())
+        {
+            ErrorMessage.Text = Validator.Error;
+            ErrorMessage.IsVisible = true;
+        }
     }
 }
