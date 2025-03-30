@@ -94,12 +94,12 @@ namespace Taskly.Natif.Application.ViewModels
             }
             catch (ServiceException se)
             {
-                _logger.LogTrace(se, se.Message);
+                _logger.LogError(se, se.Message);
                 await _toastService.ShowErrorAsync(se.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogTrace(ex, ex.Message);
+                _logger.LogCritical(ex, ex.Message);
                 await _toastService.ShowErrorAsync("An unexpected error occured");
             }
         }
